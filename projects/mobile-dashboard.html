@@ -15,7 +15,6 @@
     .case-split.phone-split {
       grid-template-columns: 1fr 1fr;
       align-items: start;
-      gap: clamp(48px, 5vw, 96px);
     }
     .case-split.phone-split .screen-showcase {
       display: flex;
@@ -48,20 +47,20 @@
 
     <header class="project-header">
       <h1>Spines - Mobile Dashboard</h1>
-      <div class="project-attrs">
+      <dl class="project-attrs">
         <div class="project-attr">
-          <label>Company</label>
-          <span>Spines</span>
+          <dt>Company</dt>
+          <dd>Spines</dd>
         </div>
         <div class="project-attr">
-          <label>Role</label>
-          <span>Product Designer</span>
+          <dt>Role</dt>
+          <dd>Product Designer</dd>
         </div>
         <div class="project-attr">
-          <label>Platform</label>
-          <span>Mobile</span>
+          <dt>Platform</dt>
+          <dd>Mobile</dd>
         </div>
-      </div>
+      </dl>
       <p class="brief">
         The existing dashboard was a single static view that didn't change based on where an author was in their publishing process. The same screen served someone just starting out and someone whose book had already shipped. The redesign replaced it with three dashboard states: library, in progress, and published. Each has a distinct focal point matched to that stage, so the interface always reflects where the author actually&nbsp;is.
       </p>

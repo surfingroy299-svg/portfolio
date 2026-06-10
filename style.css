@@ -75,7 +75,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.68);
   transition: color 0.2s;
 }
 
@@ -701,9 +701,10 @@ a { color: inherit; text-decoration: none; }
   gap: 56px;
   flex-wrap: wrap;
   margin-bottom: 36px;
+  list-style: none;
 }
 
-.project-attr label {
+.project-attr dt {
   display: block;
   font-size: 14px;
   color: var(--muted);
@@ -712,7 +713,7 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 6px;
 }
 
-.project-attr span {
+.project-attr dd {
   font-size: 14px;
   font-weight: 400;
 }
