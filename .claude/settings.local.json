@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find '/Users/roeevanounou/Desktop/Claude portfolio/assets/New mobile dashboard' -type f | sort && echo \"---\" && ls -lt '/Users/roeevanounou/Downloads/' | head -15)",
+      "WebFetch(domain:designeroy.com)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(grep -oh '#[0-9a-fA-F]\\\\{3,6\\\\}\\\\|rgba\\([^\\)]*\\)\\\\|rgb\\([^\\)]*\\)' style.css)",
+      "Bash(xargs ls -lt)",
+      "Bash(find ~/Downloads ~/Desktop /tmp -maxdepth 3 \\\\\\( -name \"*.jpg\" -o -name \"*.png\" -o -name \"*.jpeg\" \\\\\\) -newer \"/Users/roeevanounou/Desktop/Claude portfolio/assets/images/about-hero.jpg\" 2>/dev/null | head -20)",
+      "Bash(find ~/Desktop ~/Downloads ~/Documents -maxdepth 4 \\\\\\( -iname \"*surf*\" -o -iname \"*wave*\" -o -iname \"*about*hero*\" \\\\\\) 2>/dev/null && find \"/Users/roeevanounou/Desktop/Claude portfolio/assets\" -newer \"/Users/roeevanounou/Desktop/Claude portfolio/assets/images/cover-coaching.png\" 2>/dev/null)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(mkdir -p \"/Users/roeevanounou/Desktop/Claude portfolio/skills\")",
+      "Bash(sed -n '315,335p' \"/Users/roeevanounou/Desktop/Claude portfolio/projects/coaching-app.html\")",
+      "Bash(sed -n '369,390p' \"/Users/roeevanounou/Desktop/Claude portfolio/projects/coaching-app.html\")",
+      "Bash(sips -g pixelWidth -g pixelHeight -g format \"/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.png\")",
+      "Bash(sips --setProperty format jpeg --setProperty formatOptions 82 '/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.png' --out '/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.jpg')",
+      "Bash(sips --setProperty format jpeg --setProperty formatOptions 70 '/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.png' --out '/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.jpg')",
+      "Bash(sips --setProperty format jpeg --setProperty formatOptions 55 '/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.png' --out '/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.jpg')",
+      "Bash(sips --setProperty format jpeg --setProperty formatOptions 45 '/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.png' --out '/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.jpg')",
+      "Bash(sips --resampleWidth 1600 --setProperty format jpeg --setProperty formatOptions 75 '/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.png' --out '/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero-1600.jpg')",
+      "Bash(sips -g pixelWidth -g pixelHeight -g format \"/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.jpg\")",
+      "Bash(find \"/Users/roeevanounou\" -name \"About-hero*\" -o -name \"about-hero*\" 2>/dev/null | grep -v \"Claude portfolio/assets/images/About-hero.jpg\")",
+      "Bash(sips -g pixelWidth -g pixelHeight \"/Users/roeevanounou/Desktop/Claude portfolio/assets/images/About-hero.jpg\")"
+    ]
+  }
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roy Vanounou - Product Designer</title>
+  <meta name="description" content="Roy Vanounou - Product Designer. Portfolio of UX and product design work at Spines and beyond.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- grain filter -->
+  <svg style="display:none" aria-hidden="true">
+    <filter id="grain" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.62" numOctaves="4" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blended"/>
+      <feComposite in="blended" in2="SourceGraphic" operator="in"/>
+    </filter>
+  </svg>
+
+  <header class="nav">
+    <a href="index.html" class="nav-logo" data-bold="Roy Vanounou">Roy Vanounou</a>
+    <nav>
+      <a href="about.html">About</a>
+      <a href="index.html">Work</a>
+    </nav>
+  </header>
+
+  <main class="work-index">
+
+    <div class="hero">
+      <!-- abstract shapes — stay outside the grid, position: absolute -->
+      <div class="shape shape-ring-1"></div>
+      <div class="shape shape-ring-2"></div>
+      <div class="shape shape-dot-grid"></div>
+
+      <!-- Container: 2-column grid — text left, portrait right -->
+      <div class="container">
+
+        <!-- Left: text content -->
+        <div class="hero-text">
+          <h1 class="hero-name">Hey,<br>I'm Roy.</h1>
+          <p class="hero-role">Product Designer</p>
+          <p class="hero-bio">
+            I enjoy taking complex flows apart and rebuilding them into clearer, more usable product&nbsp;experiences.
+          </p>
+          <p class="hero-bio-sub">
+            Currently designing the author experience at <strong>Spines</strong>, helping writers move through publishing workflows with more clarity and&nbsp;control.
+          </p>
+          <div class="hero-tags">
+            <span>Problem solver</span>
+            <span>Builder</span>
+            <span>Surfer</span>
+          </div>
+          <div class="hero-actions">
+            <a href="https://www.linkedin.com/in/roy-vanounou-467389329" target="_blank" rel="noopener noreferrer" class="hero-action-btn" data-type="linkedin">
+              LinkedIn
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+            </a>
+            <a href="https://wa.me/972548308128" target="_blank" rel="noopener noreferrer" class="hero-action-btn" data-type="whatsapp">
+              WhatsApp
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+            </a>
+            <a href="mailto:Roee299@gmail.com" class="hero-action-btn" data-type="email">
+              Email
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+            </a>
+            <a href="assets/CV/ROY-VANOUNOU-CV.pdf" target="_blank" rel="noopener noreferrer" class="hero-action-btn" data-type="cv">
+              CV
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: portrait — grounded to hero floor via align-self: end -->
+        <div class="hero-photo">
+          <img src="assets/images/roy.png" alt="Roy Vanounou">
+        </div>
+
+      </div>
+    </div>
+
+    <!--
+    ROLLBACK: previous homepage Work section (3-col card grid).
+    Uncomment this block + the matching CSS in style.css to restore.
+
+    <div class="work-grid">
+      <a href="projects/pricing-checkout.html" class="project-card">
+        <div class="project-thumb"><img src="assets/images/cover-pricing.png" alt="Spines Pricing & Checkout"></div>
+        <div class="project-meta"><span class="project-name">Spines - Pricing &amp; Checkout</span><span class="project-tag">Product Design</span></div>
+      </a>
+      <a href="projects/mobile-dashboard.html" class="project-card">
+        <div class="project-thumb"><img src="assets/images/cover-dashboard.png" alt="Spines Mobile Dashboard"></div>
+        <div class="project-meta"><span class="project-name">Spines - Mobile Dashboard</span><span class="project-tag">Product Design</span></div>
+      </a>
+      <a href="projects/upgrade-flow.html" class="project-card">
+        <div class="project-thumb"><img src="assets/images/cover-upgrade.png" alt="Spines Upgrade Experience"></div>
+        <div class="project-meta"><span class="project-name">Spines - Upgrade Experience</span><span class="project-tag">Product Design</span></div>
+      </a>
+      <a href="projects/coaching-app.html" class="project-card">
+        <div class="project-thumb"><img src="assets/images/cover-coaching.png" alt="Coaching App"></div>
+        <div class="project-meta"><span class="project-name">Coaching App</span><span class="project-tag">End-to-end Design</span></div>
+      </a>
+    </div>
+    -->
+
+    <!-- ── WORK SECTION: editorial zigzag ── -->
+    <section class="work-section">
+      <div class="container">
+
+        <!-- 01 · text left / mockup right -->
+        <div class="work-item">
+          <div class="work-item-text">
+            <span class="work-item-meta">01 / Product Design</span>
+            <h2 class="work-item-title">Spines - Pricing &amp; Checkout</h2>
+            <p class="work-item-desc">Redesigned pricing and checkout for a publishing platform: two audiences, one system, from discovery to&nbsp;payment.</p>
+            <a href="projects/pricing-checkout.html" class="work-item-link">
+              View project<span class="sr-only">: Spines - Pricing &amp; Checkout</span>
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+            </a>
+          </div>
+          <div class="work-item-mockup">
+            <img src="assets/images/cover-pricing.png" alt="Spines Pricing & Checkout" loading="lazy">
+          </div>
+        </div>
+
+        <!-- 02 · mockup left / text right -->
+        <div class="work-item work-item--reverse">
+          <div class="work-item-text">
+            <span class="work-item-meta">02 / Product Design</span>
+            <h2 class="work-item-title">Spines - Mobile Dashboard</h2>
+            <p class="work-item-desc">Redesigned the author dashboard as a three-state adaptive experience, with each screen tied to where the author is in the publishing&nbsp;process.</p>
+            <a href="projects/mobile-dashboard.html" class="work-item-link">
+              View project<span class="sr-only">: Spines - Mobile Dashboard</span>
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+            </a>
+          </div>
+          <div class="work-item-mockup">
+            <img src="assets/images/cover-dashboard.png" alt="Spines Mobile Dashboard" loading="lazy">
+          </div>
+        </div>
+
+        <!-- 03 · text left / mockup right -->
+        <div class="work-item">
+          <div class="work-item-text">
+            <span class="work-item-meta">03 / Product Design</span>
+            <h2 class="work-item-title">Spines - Upgrade Experience</h2>
+            <p class="work-item-desc">Designed a self-serve upgrade system for plan upgrades and add-on purchases, replacing a sales-dependent&nbsp;process.</p>
+            <a href="projects/upgrade-flow.html" class="work-item-link">
+              View project<span class="sr-only">: Spines - Upgrade Experience</span>
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+            </a>
+          </div>
+          <div class="work-item-mockup">
+            <img src="assets/images/cover-upgrade.png" alt="Spines Upgrade Experience" loading="lazy">
+          </div>
+        </div>
+
+        <!-- 04 · mockup left / text right -->
+        <div class="work-item work-item--reverse">
+          <div class="work-item-text">
+            <span class="work-item-meta">04 / End-to-end Design</span>
+            <h2 class="work-item-title">Coaching App</h2>
+            <p class="work-item-desc">Feedback is a coaching app that lets athletes get timestamped critique from AI, community, or a professional coach, asynchronously. Designed end-to-end as a concept&nbsp;project.</p>
+            <a href="projects/coaching-app.html" class="work-item-link">
+              View project<span class="sr-only">: Coaching App</span>
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+            </a>
+          </div>
+          <div class="work-item-mockup">
+            <img src="assets/images/cover-coaching.png" alt="Coaching App" loading="lazy">
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Scroll-linked animation: mockup opacity/translateX driven by distance from viewport center -->
+  <script>
+    (function () {
+      // Reduced-motion: show all mockups at full opacity, skip animation entirely
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.work-item-mockup').forEach(function (el) {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+        return;
+      }
+
+      // Cache DOM references once
+      var items = [];
+      document.querySelectorAll('.work-item').forEach(function (row) {
+        var mockup = row.querySelector('.work-item-mockup');
+        if (!mockup) return;
+        var isReverse = row.classList.contains('work-item--reverse');
+        // dir: +1 = mockup on right (slides right), -1 = mockup on left (slides left)
+        items.push({ row: row, mockup: mockup, dir: isReverse ? -1 : 1 });
+        // Start offscreen so nothing pops in before first rAF
+        mockup.style.opacity = '0';
+        mockup.style.transform = 'translateX(' + (isReverse ? -48 : 48) + 'px)';
+      });
+
+      if (!items.length) return;
+
+      var MAX_OFFSET  = 48;    // px at full fade
+      var ACTIVE_HALF = 0.22;  // fraction of vh — fully-visible zone half-width
+      var FADE_WIDTH  = 0.32;  // fraction of vh — fade-out ramp beyond active zone
+
+      function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+
+      var ticking = false;
+
+      function update() {
+        var vh      = window.innerHeight;
+        var vcenter = window.scrollY + vh * 0.5;
+        var active  = vh * ACTIVE_HALF;
+        var ramp    = vh * FADE_WIDTH;
+
+        for (var i = 0; i < items.length; i++) {
+          var item = items[i];
+          // getBoundingClientRect is read-only — no layout writes until style.* below
+          var r        = item.row.getBoundingClientRect();
+          var rowMid   = window.scrollY + r.top + r.height * 0.5;
+          var dist     = Math.abs(vcenter - rowMid);
+
+          var opacity, tx;
+          if (dist <= active) {
+            opacity = 1;
+            tx      = 0;
+          } else {
+            var t   = clamp((dist - active) / ramp, 0, 1);
+            opacity = 1 - t;
+            tx      = item.dir * MAX_OFFSET * t;
+          }
+
+          item.mockup.style.opacity   = opacity;
+          item.mockup.style.transform = tx === 0 ? 'none' : 'translateX(' + tx.toFixed(2) + 'px)';
+        }
+
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      }
+
+      // Run once immediately so mockups aren't invisible before any scroll
+      update();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+  </script>
+</body>
+</html>

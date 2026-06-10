@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spines - Mobile Dashboard · Roy Vanounou</title>
+  <meta name="description" content="Case study: Spines Mobile Dashboard, adaptive three-state dashboard redesign for authors.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* phone screens — capped width, top-aligned */
+    .case-split.phone-split {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      gap: clamp(48px, 5vw, 96px);
+    }
+    .case-split.phone-split .screen-showcase {
+      display: flex;
+      justify-content: center;
+    }
+    .case-split.phone-split .screen-mockup {
+      border-radius: 26px;
+      max-width: 300px;
+      width: 100%;
+    }
+    @media (max-width: 900px) {
+      .case-split.phone-split { grid-template-columns: 1fr; }
+      .case-split.phone-split .screen-mockup { max-width: 100%; border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <a href="../index.html" class="nav-logo">Roy Vanounou</a>
+    <nav>
+      <a href="../about.html">About</a>
+      <a href="../index.html">Work</a>
+    </nav>
+  </header>
+
+  <article class="project-page">
+
+    <a href="../index.html" class="back-link">Work</a>
+
+    <header class="project-header">
+      <h1>Spines - Mobile Dashboard</h1>
+      <div class="project-attrs">
+        <div class="project-attr">
+          <label>Company</label>
+          <span>Spines</span>
+        </div>
+        <div class="project-attr">
+          <label>Role</label>
+          <span>Product Designer</span>
+        </div>
+        <div class="project-attr">
+          <label>Platform</label>
+          <span>Mobile</span>
+        </div>
+      </div>
+      <p class="brief">
+        The existing dashboard was a single static view that didn't change based on where an author was in their publishing process. The same screen served someone just starting out and someone whose book had already shipped. The redesign replaced it with three dashboard states: library, in progress, and published. Each has a distinct focal point matched to that stage, so the interface always reflects where the author actually&nbsp;is.
+      </p>
+    </header>
+
+    <!-- State 1 -->
+    <div class="case-split phone-split">
+      <div class="case-split__text">
+        <p class="section-label">State 1: Library</p>
+        <h2>A clear entry point</h2>
+        <p>Authors land on a library view showing all their books and each one's current status at a glance. The decision to lead with the library, rather than a single active project, was intentional: most authors at Spines have more than one title at different stages, and a list view makes that visible without extra&nbsp;navigation.</p>
+        <ul class="feature-list">
+          <li>Published vs. in-progress status immediately visible</li>
+          <li>Minimal, scannable list layout</li>
+          <li>Direct entry point to start a new title</li>
+        </ul>
+      </div>
+      <div class="case-split__screen">
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/dashboard-library.png" alt="Library state" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- State 2 -->
+    <div class="case-split phone-split reverse">
+      <div class="case-split__text">
+        <p class="section-label">State 2: In Progress</p>
+        <h2>Always know the next step</h2>
+        <p>For active projects, the dashboard is built around one question: what does the author need to do right now? A single primary action points to the current stage. A vertical timeline below it shows the full pipeline, so authors can see progress without having to navigate away from the&nbsp;screen.</p>
+        <ul class="feature-list">
+          <li>Prominent current-stage action, no hunting required</li>
+          <li>Step-by-step timeline with clear progress indicators</li>
+          <li>Plan and audiobook access without disrupting the flow</li>
+        </ul>
+      </div>
+      <div class="case-split__screen">
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/dashboard-inprogress.png" alt="In progress state" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- State 3 -->
+    <div class="case-split phone-split">
+      <div class="case-split__text">
+        <p class="section-label">State 3: Published</p>
+        <h2>From production to growth</h2>
+        <p>Once a book is live, production is done and the dashboard reflects that. The interface shifts focus entirely: retail channels, marketing tools, and the author's next move. The same screen that tracked progress now points forward toward growth and the next&nbsp;project.</p>
+        <ul class="feature-list">
+          <li>Direct links to Amazon and other retail channels</li>
+          <li>Marketing tools surfaced at the point of publication</li>
+          <li>Surfaces the author's next move: upsell, marketing, or starting another book</li>
+        </ul>
+        <p class="outcome">One dashboard that adapts across every stage of the publishing&nbsp;journey</p>
+      </div>
+      <div class="case-split__screen">
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/dashboard-published.png" alt="Published state" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="project-nav">
+      <a href="pricing-checkout.html" class="project-nav__item project-nav__item--prev">
+        <span class="np-arrow">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7H1"/><path d="M7 1L1 7l6 6"/></svg>
+        </span>
+        <div>
+          <p class="np-label">Previous</p>
+          <p class="np-title">Spines - Pricing &amp; Checkout</p>
+        </div>
+      </a>
+      <a href="upgrade-flow.html" class="project-nav__item project-nav__item--next">
+        <div>
+          <p class="np-label">Next</p>
+          <p class="np-title">Spines - Upgrade Experience</p>
+        </div>
+        <span class="np-arrow">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h16"/><path d="M11 1l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </nav>
+
+  </article>
+
+</body>
+</html>

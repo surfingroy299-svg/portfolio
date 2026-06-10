@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spines - Pricing & Checkout · Roy Vanounou</title>
+  <meta name="description" content="Case study: Spines Pricing & Checkout, end-to-end purchasing experience across web and mobile.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* two desktop screens side by side */
+    .two-screens {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 32px 0 0;
+      align-items: start;
+    }
+    .screen-item {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .screen-item .screen-mockup { border-radius: 8px; overflow: hidden; }
+    .screen-item .screen-mockup img { width: 100%; display: block; }
+
+    .screen-item .screen-label {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* mobile checkout flow */
+    .checkout-flow {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      margin: 36px 0 0;
+    }
+    .checkout-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .checkout-step .screen-mockup {
+      border-radius: 26px;
+      width: 100%;
+      aspect-ratio: 504 / 1020;
+      overflow: hidden;
+    }
+    .checkout-step .screen-mockup img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    .step-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--font);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-label {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .flow-arrow {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      align-self: flex-start;
+      margin-top: calc(26px + 12px + (504px / (1020 / 504) / 2));
+      /* vertically centred against the phone screens */
+      margin-top: 160px;
+      padding: 0 4px;
+    }
+    .flow-arrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.18));
+    }
+    .flow-arrow::after {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-top: 1px solid rgba(255,255,255,0.22);
+      border-right: 1px solid rgba(255,255,255,0.22);
+      transform: rotate(45deg) translate(-1px, 1px);
+    }
+    @media (max-width: 900px) {
+      .checkout-flow { flex-wrap: wrap; gap: 24px; }
+      .flow-arrow { display: none; }
+      .checkout-step { flex: 0 0 calc(50% - 12px); }
+    }
+
+    @media (max-width: 900px) {
+      .two-screens { grid-template-columns: 1fr; }
+      .three-phones { grid-template-columns: 1fr; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <a href="../index.html" class="nav-logo">Roy Vanounou</a>
+    <nav>
+      <a href="../about.html">About</a>
+      <a href="../index.html">Work</a>
+    </nav>
+  </header>
+
+  <article class="project-page">
+
+    <a href="../index.html" class="back-link">Work</a>
+
+    <header class="project-header">
+      <h1>Spines - Pricing &amp; Checkout</h1>
+      <div class="project-attrs">
+        <div class="project-attr">
+          <label>Company</label>
+          <span>Spines</span>
+        </div>
+        <div class="project-attr">
+          <label>Role</label>
+          <span>Product Designer</span>
+        </div>
+        <div class="project-attr">
+          <label>Platform</label>
+          <span>Web &amp; Mobile</span>
+        </div>
+      </div>
+      <p class="brief">
+        Spines serves two distinct audiences: fiction authors and children's book authors. Each has different pricing structures, plan names, and needs. Both were being sent to the same page. I redesigned the full purchasing experience across web and mobile: from plan discovery through checkout and payment, with dynamic pricing that adapts to manuscript&nbsp;length.
+      </p>
+      <p style="margin-top: 20px; font-size: 15px; line-height: 1.7; color: var(--muted); max-width: 560px;">
+        This pricing page shipped and is live on spines.com, with later marketing updates applied after handoff.
+        <a href="https://spines.com/pricing/" target="_blank" rel="noopener noreferrer" style="color: rgba(255,255,255,0.55); text-decoration: underline; text-decoration-color: rgba(255,255,255,0.22); text-underline-offset: 3px; transition: color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.85)'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">View live page ↗</a>
+      </p>
+    </header>
+
+    <!-- 1. Pricing — text above, screens below -->
+    <div class="content-section" style="margin-bottom: 0;">
+      <h2>Two distinct experiences, one system</h2>
+      <p>Rather than build two separate pages, I designed a single layout system that adapts through a tab toggle. Each tab loads its own pricing structure, plan names, and visual language. For the children's tab, that meant a different colour palette, illustrated plan headers, and copy written specifically for children's book authors, not reused from the general&nbsp;catalog.</p>
+    </div>
+
+    <div class="two-screens">
+      <div class="screen-item">
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/pricing-web-default.png" alt="Standard pricing, desktop" loading="lazy">
+          </div>
+        </div>
+        <span class="screen-label">Fiction / Non-fiction</span>
+      </div>
+      <div class="screen-item">
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/pricing-web-overview.png" alt="Children's pricing, desktop" loading="lazy">
+          </div>
+        </div>
+        <span class="screen-label">Children's book</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 2. Pricing system depth -->
+    <div class="case-split" style="align-items: start;">
+      <div class="case-split__text">
+        <p class="section-label">Pricing Details</p>
+        <h2>A layered system beneath the surface</h2>
+        <p>The default view is collapsed intentionally: a quick comparison without overwhelming authors up front. Expanding a plan reveals the full depth, every included service, optional add-ons, and upgrade paths, so detail is available but never forced on&nbsp;first-look.</p>
+        <p>Pricing is dynamic. A word-count slider adjusts cost in real time based on manuscript length, which matters because plan value varies significantly at different word counts. The goal was to make pricing feel relevant to the author's actual project, not&nbsp;generic.</p>
+        <ul class="feature-list">
+          <li>Dynamic pricing based on manuscript word count</li>
+          <li>Three-tier plan hierarchy with clear incremental value</li>
+          <li>Full feature lists with add-on services per tier</li>
+          <li>Children's plans adapted with custom illustrations and services</li>
+          <li>Global Premium tier for maximum-support authors</li>
+        </ul>
+      </div>
+      <div class="case-split__screen">
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/pricing-web-expanded.png" alt="Pricing expanded, full detail" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 3. Mobile checkout — text above, 3 phones below -->
+    <div class="content-section">
+      <p class="section-label">Mobile Checkout</p>
+      <h2>A guided three-step flow</h2>
+      <p>Checkout opens one step at a time, each section unlocks only when the previous one is complete. Order summary, billing, and payment are surfaced in sequence, keeping the screen focused at a high-stakes moment. The total is always visible at the&nbsp;bottom.</p>
+    </div>
+
+    <div class="checkout-flow">
+
+      <div class="checkout-step">
+        <div class="step-badge">1</div>
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/mobile.checkout-order.summary.png" alt="Checkout, order summary" loading="lazy">
+          </div>
+        </div>
+        <span class="step-label">Order Summary</span>
+      </div>
+
+      <div class="flow-arrow"></div>
+
+      <div class="checkout-step">
+        <div class="step-badge">2</div>
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/mobile.checkout-billing.png" alt="Checkout, billing info" loading="lazy">
+          </div>
+        </div>
+        <span class="step-label">Billing Info</span>
+      </div>
+
+      <div class="flow-arrow"></div>
+
+      <div class="checkout-step">
+        <div class="step-badge">3</div>
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/mobile.checkout-payment.png" alt="Checkout, payment method" loading="lazy">
+          </div>
+        </div>
+        <span class="step-label">Payment Method</span>
+      </div>
+
+
+    </div>
+
+    <hr class="divider">
+
+    <!-- 4. Web checkout — text above, two screens below -->
+    <div class="content-section">
+      <p class="section-label">Web Checkout</p>
+      <h2>The same flow, designed for desktop</h2>
+      <p>On desktop, the checkout experience opens up spatially, with payment and billing on the left, with a persistent order summary locked to the right. Both sides stay visible at all times, so authors never lose track of what they're buying while filling in their&nbsp;details.</p>
+      <p style="margin-top: 14px;">Two approaches were explored: a traditional layout with all payment methods visible at once, and a tabbed layout that separates one-time payment from installment plans. I recommended the tabbed version: it gives installment payments equal prominence from the start, rather than presenting them as a secondary option buried below the&nbsp;default.</p>
+    </div>
+
+    <div class="two-screens" style="margin-bottom: 0;">
+      <div class="screen-item">
+        <div class="screen-showcase">
+          <div class="screen-mockup checkout-screen">
+            <img src="../assets/images/checkout-web-traditional.png" alt="Web checkout, traditional layout" loading="lazy">
+          </div>
+        </div>
+        <span class="screen-label">One-time payment</span>
+      </div>
+      <div class="screen-item">
+        <div class="screen-showcase">
+          <div class="screen-mockup checkout-screen">
+            <img src="../assets/images/checkout-web-tabbed.png" alt="Web checkout, installment layout" loading="lazy">
+          </div>
+        </div>
+        <span class="screen-label">Installment payments</span>
+      </div>
+    </div>
+
+    <nav class="project-nav">
+      <a href="coaching-app.html" class="project-nav__item project-nav__item--prev">
+        <span class="np-arrow">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7H1"/><path d="M7 1L1 7l6 6"/></svg>
+        </span>
+        <div>
+          <p class="np-label">Previous</p>
+          <p class="np-title">Coaching App</p>
+        </div>
+      </a>
+      <a href="mobile-dashboard.html" class="project-nav__item project-nav__item--next">
+        <div>
+          <p class="np-label">Next</p>
+          <p class="np-title">Spines - Mobile Dashboard</p>
+        </div>
+        <span class="np-arrow">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h16"/><path d="M11 1l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </nav>
+
+  </article>
+
+</body>
+</html>
