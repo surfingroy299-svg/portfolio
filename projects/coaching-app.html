@@ -27,70 +27,6 @@
       width: 100%;
     }
 
-    /* ── LOOP MARKER — 4-step journey ── */
-    .loop-marker {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0;
-      margin-top: 32px;
-      padding: 18px 20px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-    }
-    .loop-step {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .loop-step__num {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: rgba(0,122,255,0.12);
-      border: 1px solid rgba(0,122,255,0.25);
-      font-size: 10px;
-      font-weight: 500;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .loop-step__label {
-      font-size: 14px;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .loop-connector {
-      flex: 1;
-      min-width: 20px;
-      display: flex;
-      align-items: center;
-      margin: 0 8px;
-    }
-    .loop-connector::before {
-      content: '';
-      display: block;
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--border), rgba(255,255,255,0.1));
-    }
-    .loop-connector::after {
-      content: '';
-      display: block;
-      width: 5px;
-      height: 5px;
-      border-top: 1px solid rgba(255,255,255,0.15);
-      border-right: 1px solid rgba(255,255,255,0.15);
-      transform: rotate(45deg) translate(-1px, 1px);
-      flex-shrink: 0;
-    }
-
     /* ── UPLOAD SPLIT — text left, phones right ── */
     .upload-split {
       grid-template-columns: 1fr 1fr;
@@ -380,8 +316,6 @@
       .ai-split .screen-mockup,
       .community-split .screen-mockup { max-width: 100%; }
       .upload-split .case-split__screen { justify-content: flex-start; }
-      .loop-marker { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .loop-connector { display: none; }
       .coach-phones { grid-template-columns: 1fr 1fr; }
       .coach-phones-row { flex-wrap: wrap; gap: 24px; }
       .coach-phones__connector { display: none; }
