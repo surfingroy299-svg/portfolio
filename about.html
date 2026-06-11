@@ -177,7 +177,11 @@
       font-size: 14px;
       height: 38px;
       gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.20);
+      color: rgba(255, 255, 255, 0.82) !important;
+      background: rgba(255, 255, 255, 0.04);
     }
+    .about-links-row .hero-action-btn[data-type="email"] { margin-left: 0; }
     .about-links-row .hero-action-btn svg {
       width: 13px;
       height: 13px;
@@ -200,7 +204,15 @@
     }
     @media (max-width: 600px) {
       .about-hero { height: 52vh; min-height: 280px; margin-top: 60px; }
-      .about-body { margin-top: -160px; padding: 40px 24px 80px; }
+      .about-body { margin-top: -160px; padding: 24px 24px 72px; }
+      .about-greeting {
+        font-size: clamp(15px, 5.2vw, 28px);
+        margin-bottom: 32px;
+        padding-bottom: 32px;
+      }
+      .about-utility-section { padding-bottom: 22px; margin-bottom: 22px; }
+      .about-links-row { margin-top: 32px; padding-top: 24px; }
+      .about-links-row .hero-actions { display: grid; grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
