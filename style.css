@@ -340,7 +340,7 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 900px) {
   .hero {
     min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 100svh;
   }
   .hero > .container {
     display: flex;
@@ -364,6 +364,7 @@ a { color: inherit; text-decoration: none; }
     flex: 1;
     min-height: 200px;
     overflow: hidden;
+    padding-bottom: 20px;
   }
   .hero-photo img {
     width: min(55%, 270px);
