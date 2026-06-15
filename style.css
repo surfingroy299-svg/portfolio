@@ -978,6 +978,9 @@ hr.divider {
   letter-spacing: 0.04em;
   line-height: 1.6;
 }
+.footer-accent {
+  color: #C97A52;
+}
 @media (max-width: 768px) {
   .site-footer { padding: 24px; }
 }
