@@ -165,7 +165,7 @@ a { color: inherit; text-decoration: none; }
   color: var(--muted);
   line-height: 1.75;
   font-weight: 300;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   max-width: 480px;
   text-wrap: pretty;
 }
@@ -175,11 +175,11 @@ a { color: inherit; text-decoration: none; }
   font-weight: 400;
 }
 
-.hero-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 20px;
+.hero-traits {
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 32px;
 }
 
 /* ── HERO ACTION BUTTONS ── */
@@ -269,23 +269,6 @@ a { color: inherit; text-decoration: none; }
 .hero-action-btn[data-type="linkedin"]:hover::before,
 .hero-action-btn[data-type="whatsapp"]:hover::before {
   transform: translateX(0);
-}
-
-.hero-tags span {
-  font-size: 14px;
-  padding: 8px 20px;
-  border: 1px solid rgba(0, 122, 255, 0.52);
-  border-radius: 100px;
-  background: rgba(0, 122, 255, 0.11);
-  color: rgba(0, 122, 255, 1);
-  letter-spacing: 0.03em;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
-}
-
-.hero-tags span:hover {
-  border-color: rgba(0, 122, 255, 0.75);
-  background: rgba(0, 122, 255, 0.18);
-  color: #3d9bff;
 }
 
 /* Right: portrait column — grounded to hero floor */
@@ -386,6 +369,43 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
+/* ── Ultra-wide breakpoints: restore balance between text + portrait ──
+   width: 100% is required on .hero > .container because margin: 0 auto on a
+   flex child disables cross-axis stretch, so max-width alone won't expand the
+   grid — the container must be told to fill the flex parent first. */
+@media (min-width: 1800px) {
+  .container {
+    max-width: 1680px;
+  }
+  .hero > .container {
+    width: 100%;
+    grid-template-columns: 1fr 360px;
+    gap: 96px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .container {
+    max-width: 2100px;
+  }
+  .hero > .container {
+    width: 100%;
+    grid-template-columns: 1fr 480px;
+    gap: 120px;
+  }
+}
+
+@media (min-width: 3200px) {
+  .container {
+    max-width: 2600px;
+  }
+  .hero > .container {
+    width: 100%;
+    grid-template-columns: 1fr 580px;
+    gap: 140px;
+  }
+}
+
 /* ── WORK INDEX ── */
 .work-index {
   padding: 0;
@@ -461,7 +481,7 @@ a { color: inherit; text-decoration: none; }
   grid-template-areas: "mockup text";
 }
 
-.work-item-text  { grid-area: text; position: relative; z-index: 1; }
+.work-item-text  { grid-area: text; position: relative; z-index: 3; }
 .work-item-mockup { grid-area: mockup; }
 
 /* Metadata + numbering */
@@ -494,6 +514,15 @@ a { color: inherit; text-decoration: none; }
   max-width: 460px;
   margin-bottom: 28px;
   text-wrap: pretty;
+}
+
+/* Full-row cover link — sits behind text column (z: 3), above the mockup.
+   z-index: 2 ensures it's above the JS-animated mockup which may form a stacking context.
+   Handles clicks on the image area and row background. aria-hidden/tabindex=-1 in HTML. */
+.work-item-cover-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
 }
 
 /* View project link */
@@ -892,6 +921,67 @@ hr.divider {
   .project-nav .np-title { font-size: 18px; }
 }
 
+/* ── LIGHTBOX ── */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.88);
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.lightbox-overlay.is-open {
+  display: flex;
+}
+.lightbox-overlay img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  object-fit: contain;
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.6);
+  cursor: default;
+  user-select: none;
+}
+.lightbox-close {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.lightbox-close:hover { background: rgba(255, 255, 255, 0.18); }
+
+[data-lightbox] { cursor: zoom-in; }
+
+/* ── SITE FOOTER ── */
+.site-footer {
+  padding: 28px 80px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.site-footer p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.70);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+@media (max-width: 768px) {
+  .site-footer { padding: 24px; }
+}
+
 /* Very small screens — keep hero buttons readable */
 @media (max-width: 400px) {
   .hero-action-btn {
@@ -899,7 +989,6 @@ hr.divider {
     padding: 0 12px;
     height: 32px;
   }
-  .hero-tags span { font-size: 13px; padding: 7px 16px; }
 }
 
 /* ── ACCESSIBILITY UTILITIES ── */
