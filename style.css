@@ -973,15 +973,8 @@ hr.divider {
   text-align: center;
   border-top: 1px solid var(--border);
 }
-.about-cta-label {
-  font-size: 12px;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 14px;
-}
 .about-cta-heading {
-  font-size: clamp(22px, 3vw, 34px);
+  font-size: clamp(20px, 2.4vw, 28px);
   font-weight: 300;
   letter-spacing: -0.02em;
   color: var(--text);
