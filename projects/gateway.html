@@ -93,6 +93,18 @@
       color: var(--text-body);
       text-wrap: pretty;
     }
+    .system-intro p + p { margin-top: 12px; }
+
+    /* The Origin — evolution chain strip */
+    .origin-chain {
+      font-size: 12.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 2.1;
+      margin: 4px 0 6px;
+    }
+    .origin-chain span { color: rgba(0, 122, 255, 0.65); padding: 0 2px; }
 
     .sys-flow { display: flex; flex-direction: column; align-items: center; }
     /* level 1 — plain-language actions */
@@ -183,8 +195,9 @@
   <header class="nav">
     <a href="../index.html" class="nav-logo">Roy Vanounou</a>
     <nav>
-      <a href="../about.html">About</a>
       <a href="../index.html">Work</a>
+      <a href="../workflow.html">Workflow</a>
+      <a href="../about.html">About</a>
     </nav>
   </header>
 
@@ -209,47 +222,20 @@
         </div>
       </dl>
       <p class="brief">
-        GateWay started as a personalized interview simulator. While building the intelligence behind it, I realized the real problem starts earlier: deciding which roles deserve a candidate's time, and how to close the distance between their experience and the job in front of them. So the simulator became one stage of a larger product - analyze, prepare, practice, debrief - with one principle throughout: every recommendation is traceable back to evidence. I designed the product end to end, then built it: a working prototype with an implemented backend and orchestrated&nbsp;intelligence.
+        GateWay is an AI-powered career product that helps candidates decide which opportunities deserve their time, understand how their experience maps to a role, prepare an evidence-based case, and practice through realistic interviews. I designed and built the product end to end, including its working backend and orchestrated&nbsp;intelligence.
       </p>
     </header>
 
-    <!-- Stage 1: Analyze — the header's own border carries the transition; no repeated cover here -->
-    <div class="case-split report-split reverse">
-      <div class="case-split__text">
-        <p class="section-label">Stage 1: Analyze</p>
-        <h2>A decision, not a report</h2>
-        <p>A candidate starts with what they already have - a CV, a job description, and any context worth adding. The first thing GateWay returns is a position, not information: pursue this role, or don't. Every claim beneath the verdict shows where it came from, so the reasoning can be inspected - and argued&nbsp;with.</p>
-        <ul class="feature-list">
-          <li>A clear verdict on a confidence spectrum, not a score</li>
-          <li>Requirements matched one by one to the candidate's evidence</li>
-          <li>Company signals pulled from live public sources</li>
-        </ul>
-      </div>
-      <div class="case-split__screen">
-        <div class="screen-showcase">
-          <div class="screen-mockup">
-            <img src="../assets/images/gateway-analyze.png" alt="GateWay analysis screen: a verdict on pursuing the role, requirements mapped to the candidate's evidence, live company signals, and hidden advantages with sources" width="2880" height="4076" loading="lazy" data-lightbox>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <hr class="divider">
-
-    <!-- The Principle — Hidden Advantages component, exported by Roy from Figma -->
-    <div class="case-split">
-      <div class="case-split__text">
-        <p class="section-label">The Principle</p>
-        <h2>Designing trust, not output</h2>
-        <p>The hard problem wasn't generating insight - a system like this can produce endless plausible advice. It was giving a candidate a reason to believe it. So every recommendation is traceable back to evidence: when GateWay calls a healthcare background a hidden advantage, it names its sources and lets the candidate open them. Insight that couldn't show its origin didn't&nbsp;ship.</p>
-      </div>
-      <div class="case-split__screen">
-        <div class="screen-showcase">
-          <div class="screen-mockup">
-            <img src="../assets/images/gateway-advantages.jpg" alt="Hidden Advantages section: three insight cards with impact labels, each naming its sources - CV, context, and company research - with a View Sources action" width="1248" height="462" loading="lazy" data-lightbox>
-          </div>
-        </div>
-      </div>
+    <!-- The Origin -->
+    <div class="content-section">
+      <p class="section-label">The Origin</p>
+      <h2>How the idea evolved</h2>
+      <p>The idea started with my own experience searching for my first product design role. Reading a job description was only the beginning. The harder part was understanding what the company was really looking for, how well my experience matched, where the gaps were, and which examples from my work would make the strongest case in an&nbsp;interview.</p>
+      <p>That experience led me to explore a broader question: could a job description become the starting point for a structured preparation&nbsp;process?</p>
+      <p>The first version I built was a personalized interview simulator. While developing the intelligence behind it, I realized that useful practice depends on context that begins much earlier. Before candidates can practice effectively, they need to understand the role and company, assess how their experience maps to the opportunity, identify their gaps, and decide which evidence to bring into the&nbsp;interview.</p>
+      <p>The simulator therefore became one stage of a connected preparation&nbsp;system:</p>
+      <p class="origin-chain">Understand the opportunity <span aria-hidden="true">&#8594;</span> Assess fit <span aria-hidden="true">&#8594;</span> Identify gaps <span aria-hidden="true">&#8594;</span> Build your case <span aria-hidden="true">&#8594;</span> Practice <span aria-hidden="true">&#8594;</span> Learn from your answers</p>
+      <p>The product evolved from a single interview experience into a system that supports the candidate before, during, and after&nbsp;practice.</p>
     </div>
 
     <hr class="divider">
@@ -260,7 +246,9 @@
         <div class="system-intro">
           <p class="section-label">The System</p>
           <h2>One system, every stage</h2>
-          <p>GateWay runs one shared intelligence pipeline across the experience. Candidate inputs are structured, enriched with live company research, and reused to power the match summary, preparation plan, interview, and&nbsp;feedback.</p>
+          <p>A candidate starts with a CV, a job description, and any additional context. GateWay defines the research scope, researches the role and company, and filters the findings into one structured understanding of the&nbsp;opportunity.</p>
+          <p>That same intelligence generates the match summary, preparation plan, and mock interview. When the candidate responds, the answers return to the system for analysis. The personalized debrief turns that performance into strengths, gaps, and actions that connect back to the preparation&nbsp;journey.</p>
+          <p>This intelligence was tested and built before any interface existed. I ran structured experiments to prove the system could parse a CV, research a company, and cross-reference the two reliably, then hardened the pipeline against real CVs and postings. The screens that follow were designed around what it proved it could&nbsp;do.</p>
         </div>
 
         <div class="sys-flow">
@@ -324,6 +312,49 @@
 
     <hr class="divider">
 
+    <!-- Stage 1: Analyze -->
+    <div class="case-split report-split reverse">
+      <div class="case-split__text">
+        <p class="section-label">Stage 1: Analyze</p>
+        <h2>A decision, not a report</h2>
+        <p>A candidate starts with what they already have - a CV, a job description, and any context worth adding. The first thing GateWay returns is a position, not information: pursue this role, or don't. Every claim beneath the verdict shows where it came from, so the reasoning can be inspected - and argued&nbsp;with.</p>
+        <ul class="feature-list">
+          <li>A clear verdict on a confidence spectrum, not a score</li>
+          <li>Requirements matched one by one to the candidate's evidence</li>
+          <li>Company signals pulled from live public sources</li>
+        </ul>
+      </div>
+      <div class="case-split__screen">
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/gateway-analyze.png" alt="GateWay analysis screen: a verdict on pursuing the role, requirements mapped to the candidate's evidence, live company signals, and hidden advantages with sources" width="2880" height="4064" loading="lazy" data-lightbox>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- The Principle — Hidden Advantages component, exported by Roy from Figma -->
+    <div class="case-split">
+      <div class="case-split__text">
+        <p class="section-label">The Principle</p>
+        <h2>Designing trust, not output</h2>
+        <p>The hard problem wasn't generating insight - a system like this can produce endless plausible advice. It was giving a candidate a reason to believe it. So every recommendation is traceable back to evidence: when GateWay calls a healthcare background a hidden advantage, it names its sources and lets the candidate open them. Insight that couldn't show its origin didn't&nbsp;ship.</p>
+      </div>
+      <div class="case-split__screen">
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/gateway-advantages.png" alt="Hidden Advantages section: three insight cards with impact labels, each naming its sources - CV, context, and company research - with a View Sources action" width="2496" height="924" loading="lazy" data-lightbox>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+
+
     <!-- Stage 2: Prepare -->
     <div class="case-split report-split">
       <div class="case-split__text">
@@ -334,7 +365,7 @@
       <div class="case-split__screen">
         <div class="screen-showcase">
           <div class="screen-mockup">
-            <img src="../assets/images/gateway-prepare.png" alt="GateWay preparation plan: company research, gap-bridging coaching, a one-line story, and a preparation checklist leading into the interview room" width="2880" height="3590" loading="lazy" data-lightbox>
+            <img src="../assets/images/gateway-prepare.png" alt="GateWay preparation plan: company research, gap-bridging coaching, a one-line story, and a preparation checklist leading into the interview room" width="2880" height="3578" loading="lazy" data-lightbox>
           </div>
         </div>
       </div>
@@ -375,7 +406,7 @@
       <div class="case-split__screen">
         <div class="screen-showcase">
           <div class="screen-mockup">
-            <img src="../assets/images/gateway-debrief.png" alt="GateWay interview debrief: the interviewer's verdict on a spectrum, measured dimensions, per-question grades, and the option to revisit the plan" width="2880" height="5810" loading="lazy" data-lightbox>
+            <img src="../assets/images/gateway-debrief.png" alt="GateWay interview debrief: the interviewer's verdict on a spectrum, measured dimensions, per-question grades, and the option to revisit the plan" width="2880" height="5798" loading="lazy" data-lightbox>
           </div>
         </div>
       </div>
@@ -383,14 +414,6 @@
 
     <hr class="divider">
 
-    <!-- Intelligence First -->
-    <div class="content-section">
-      <p class="section-label">Intelligence First</p>
-      <h2>Building the intelligence before the interface</h2>
-      <p>None of these screens were designed first. Before any interface existed, I ran structured experiments to answer one question: could the system parse a CV, research a company, and cross-reference the two reliably enough to build on? Once the answers held, I built the working pipeline and hardened it against real CVs and real postings. The interface came last, designed around what the intelligence had proven it could do - and around what it&nbsp;couldn't.</p>
-    </div>
-
-    <hr class="divider">
 
     <!-- Current Status -->
     <div class="content-section" style="margin-bottom: 0;">
@@ -399,13 +422,13 @@
     </div>
 
     <nav class="project-nav">
-      <a href="coaching-app.html" class="project-nav__item project-nav__item--prev">
+      <a href="mobile-dashboard.html" class="project-nav__item project-nav__item--prev">
         <span class="np-arrow">
           <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7H1"/><path d="M7 1L1 7l6 6"/></svg>
         </span>
         <div>
           <p class="np-label">Previous</p>
-          <p class="np-title">Feedback - Sports Coaching Platform</p>
+          <p class="np-title">Spines - Mobile Dashboard</p>
         </div>
       </a>
       <a href="pricing-checkout.html" class="project-nav__item project-nav__item--next">

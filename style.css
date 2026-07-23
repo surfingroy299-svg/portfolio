@@ -76,10 +76,12 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.68);
+  white-space: nowrap;
   transition: color 0.2s;
 }
 
 .nav nav a:hover { color: var(--text); }
+.nav nav a[aria-current="page"] { color: var(--text); }
 
 /* ── HERO ── */
 .hero {
@@ -464,6 +466,370 @@ a { color: inherit; text-decoration: none; }
 
 /* ── WORK SECTION (editorial zigzag) ── */
 
+/* ── WORKFLOW PAGE (workflow.html) ── */
+.wf-header { padding-top: 148px; margin-bottom: 84px; }
+.wf-header h1 {
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin-bottom: 26px;
+}
+.ai-intro { max-width: 760px; }
+.ai-intro p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--text-body);
+  font-weight: 300;
+  text-wrap: pretty;
+}
+.ai-intro p + p { margin-top: 14px; }
+.ai-key {
+  max-width: 760px;
+  margin: 30px 0 0;
+  padding: 18px 22px;
+  border-left: 2px solid var(--accent);
+  background: rgba(0, 122, 255, 0.06);
+  border-radius: 0 10px 10px 0;
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+/* two-column layout: sticky stage map + detail column */
+.wf-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: clamp(48px, 6vw, 110px);
+  align-items: start;
+  padding-bottom: 40px;
+}
+.wf-map { position: sticky; top: 100px; display: flex; flex-direction: column; }
+.wf-map a {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 11px 18px;
+  border-left: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 14.5px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.wf-map a .wf-map-num {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.2s;
+}
+.wf-map a:hover { color: var(--text); }
+.wf-map a.active { color: var(--text); border-left-color: var(--accent); }
+.wf-map a.active .wf-map-num { color: var(--accent); }
+
+.wf-stage { padding-bottom: 64px; scroll-margin-top: 100px; }
+.wf-stage:last-of-type { padding-bottom: 24px; }
+.wf-stage-num {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.wf-stage h2 {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.wf-stage > p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--text-body);
+  font-weight: 300;
+  max-width: 680px;
+  text-wrap: pretty;
+}
+.wf-stage > p + p { margin-top: 12px; }
+.wf-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  max-width: 680px;
+}
+.wf-chips span {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Equip: internal capability sequence */
+.ai-substeps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-top: 16px;
+  max-width: 680px;
+}
+.ai-substeps span {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.ai-substeps .ai-arrow,
+.ai-loop-chain .ai-arrow {
+  border: none;
+  padding: 0;
+  height: auto;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+/* final branch: two finishing routes */
+.ai-routes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 18px;
+  max-width: 680px;
+}
+.ai-route {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.2s;
+}
+.ai-route:hover { border-color: rgba(255, 255, 255, 0.3); }
+.ai-route h4 {
+  font-size: 15.5px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.ai-route p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-body);
+  font-weight: 300;
+}
+.ai-route p.ai-route-flow {
+  margin-top: 12px;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+/* tool sits at the foot of each route so both align across equal-height cards */
+/* Stage 06: each route's tool sits at the card foot (cap + tool), so both align */
+.wf-route-tool {
+  margin-top: auto;
+  padding-top: 16px;
+}
+.wf-route-tool .wf-tool-cap { margin-bottom: 7px; }
+
+/* both routes reconverge into the loop */
+.ai-loop { margin-top: 22px; max-width: 680px; }
+.ai-loop-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+.ai-loop-chain span:not(.ai-arrow) {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 16px;
+  border: 1px solid rgba(0, 122, 255, 0.5);
+  background: rgba(0, 122, 255, 0.07);
+  border-radius: 999px;
+  font-size: 13.5px;
+  color: var(--text);
+}
+.ai-loop-chain .ai-arrow { color: rgba(0, 122, 255, 0.6); }
+.ai-loop-note {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* the map collapses to a sticky horizontal strip under the fixed nav */
+/* tablet + mobile: single column, map leaves the left rail */
+@media (max-width: 1100px) {
+  .wf-layout { display: block; }
+  .wf-stage { scroll-margin-top: 140px; }
+}
+/* tablet only: the map becomes a sticky horizontal strip */
+@media (min-width: 641px) and (max-width: 1100px) {
+  .wf-map {
+    position: sticky;
+    top: 68px;
+    z-index: 20;
+    flex-direction: row;
+    overflow-x: auto;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    margin: 0 0 44px;
+    padding: 6px 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .wf-map::-webkit-scrollbar { display: none; }
+  .wf-map a {
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 12px;
+    white-space: nowrap;
+    flex: none;
+    font-size: 13.5px;
+  }
+  .wf-map a.active { border-left-color: transparent; border-bottom-color: var(--accent); }
+}
+@media (max-width: 768px) {
+  .wf-header { padding-top: 118px; margin-bottom: 48px; }
+  .wf-map { top: 56px; }
+}
+@media (max-width: 640px) {
+  /* mobile is linear: no persistent stage strip, just clear the fixed nav */
+  .wf-map { display: none; }
+  .wf-stage { scroll-margin-top: 80px; }
+  .ai-key { font-size: 15.5px; }
+  .wf-stage { padding-bottom: 52px; }
+  .ai-routes { grid-template-columns: 1fr; }
+  /* long capability chips may wrap to two lines on narrow screens */
+  .ai-substeps span:not(.ai-arrow) {
+    white-space: normal;
+    height: auto;
+    min-height: 36px;
+    padding: 8px 14px;
+    line-height: 1.45;
+  }
+}
+
+/* ── Stage tools: quiet supporting metadata (always visible, low emphasis) ── */
+.wf-tools {
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  max-width: 680px;
+}
+.wf-tools-eyebrow {
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+  margin-bottom: 15px;
+}
+.wf-tool-group + .wf-tool-group { margin-top: 15px; }
+.wf-tool-cap {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.wf-tool-set { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.wf-tool {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  color: var(--text-body);
+  white-space: nowrap;
+}
+.wf-tool-set .wf-tool { display: inline-flex; }
+.wf-tool + .wf-tool { margin-top: 9px; }
+.wf-tool-set .wf-tool + .wf-tool { margin-top: 0; }
+/* uniform 22px tile; app-style icons fill it edge to edge, brand glyphs sit centered
+   at a matched optical size so the whole set reads as one weight */
+.wf-tool-mark {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #1e1e1e; /* matches the plate baked into the exported icon set */
+  border-radius: 6px;
+  overflow: hidden;
+}
+/* app-style icons: inset 1px so their solid mass sits at the same optical weight
+   as the centered brand glyphs (tile bg = icon plate = #1e1e1e, so the inset is seamless) */
+.wf-tool-mark img { width: 20px; height: 20px; object-fit: contain; display: block; }
+.wf-tool-mark svg { display: block; } /* optical size + aspect set per glyph in markup */
+
+/* the collapse control exists for touch widths only; desktop always shows the body */
+.wf-tools-toggle { display: none; }
+
+/* wide desktop: tools sit in a narrow sidecar to the right of the stage content */
+@media (min-width: 1360px) {
+  .wf-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 680px) 220px;
+    column-gap: 44px;
+    align-items: start;
+  }
+  .wf-stage > * { grid-column: 1; }
+  .wf-stage > .wf-tools {
+    grid-column: 2;
+    grid-row: 1 / span 30;
+    margin: 6px 0 0;
+    padding: 0 0 0 20px;
+    border-top: none;
+    border-left: 1px solid var(--border);
+    max-width: none;
+  }
+}
+
+/* tablet and mobile: tools below the stage, collapsed behind a small control */
+@media (max-width: 1100px) {
+  .wf-tools-eyebrow { display: none; }
+  .wf-tools { padding-top: 12px; }
+  .wf-tools-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 44px;
+    padding: 0;
+    background: none;
+    border: none;
+    font-family: var(--font);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .wf-tools-toggle:hover { color: var(--text); }
+  .wf-tools-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .wf-tools-toggle svg { transition: transform 0.2s; }
+  .wf-tools.open .wf-tools-toggle svg { transform: rotate(180deg); }
+  .wf-tools.open .wts-show { display: none; }
+  .wf-tools:not(.open) .wts-hide { display: none; }
+  .wf-tools-body { display: none; }
+  .wf-tools.open .wf-tools-body { display: block; margin-top: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wf-tools-toggle svg { transition: none; }
+}
+
 .work-section {
   padding-bottom: 120px;
 }
@@ -652,7 +1018,8 @@ a { color: inherit; text-decoration: none; }
   .work-item--reverse { padding: 36px 0; gap: 16px; }
 
   /* Match work section container padding to hero mobile padding */
-  .work-section .container {
+  .work-section .container,
+  .workflow-page .container {
     padding-left: 24px;
     padding-right: 24px;
   }
@@ -1191,6 +1558,12 @@ hr.divider {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
   }
+
+  /* Three-item nav: tighten so logo + Work · My Workflow · About fit one row */
+  .nav { padding: 0 20px; }
+  .nav nav { gap: 15px; }
+  .nav nav a { font-size: 13px; letter-spacing: 0.02em; }
+  .nav-logo { font-size: 13px; letter-spacing: 0.02em; }
 }
 
 /* ── ACCESSIBILITY UTILITIES ── */
