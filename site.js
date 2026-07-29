@@ -309,3 +309,88 @@
     });
   });
 }());
+
+// ── Mobile navigation menu ──────────────────────────────────────────────────
+// Independent of the lightbox above. Hamburger toggle + slide-in panel that
+// consolidates the nav links and contact/social links on small screens.
+// No-ops on any page that lacks the toggle/menu markup, so it's safe to load
+// site.js everywhere.
+(function () {
+  var toggle = document.querySelector('.nav-toggle');
+  var menu   = document.getElementById('mobile-menu');
+  if (!toggle || !menu) return;
+
+  var isOpen = false;
+
+  // Collapsed panel is hidden from assistive tech (CSS visibility:hidden already
+  // removes it; aria-hidden makes the intent explicit and robust across AT).
+  menu.setAttribute('aria-hidden', 'true');
+
+  // Toggle first, then every focusable inside the panel — the tab cycle wraps
+  // across this whole set so the toggle (which doubles as the close control on
+  // touch) stays reachable from the keyboard while the panel is open.
+  function getFocusables() {
+    var list = [toggle];
+    menu.querySelectorAll('a[href], button:not([disabled])').forEach(function (el) {
+      list.push(el);
+    });
+    return list;
+  }
+
+  function openMenu() {
+    if (isOpen) return;
+    isOpen = true;
+    menu.classList.add('is-open');
+    menu.removeAttribute('aria-hidden');   // expose before moving focus inside
+    toggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    var links = menu.querySelectorAll('.mobile-menu__links a');
+    if (links.length) links[0].focus();
+  }
+
+  // Focus always returns to the toggle before the panel is hidden, so aria-hidden
+  // is never set on an element that still contains the focused node.
+  function closeMenu() {
+    if (!isOpen) return;
+    isOpen = false;
+    menu.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    if (toggle.focus) toggle.focus();
+    menu.setAttribute('aria-hidden', 'true');
+  }
+
+  toggle.addEventListener('click', function () {
+    isOpen ? closeMenu() : openMenu();
+  });
+
+  // Close on the scrim / any explicit close control…
+  menu.querySelectorAll('[data-menu-close]').forEach(function (el) {
+    el.addEventListener('click', function () { closeMenu(); });
+  });
+  // …and after selecting any link in the panel (the page is navigating away).
+  menu.querySelectorAll('.mobile-menu__panel a').forEach(function (a) {
+    a.addEventListener('click', function () { closeMenu(); });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!isOpen) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeMenu(); return; }
+    if (e.key === 'Tab') {
+      var f = getFocusables();
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+  });
+
+  // If the viewport grows back to desktop while the menu is open, reset cleanly
+  // so the scroll lock is never left applied.
+  window.addEventListener('resize', function () {
+    if (isOpen && window.innerWidth > 768) closeMenu();
+  });
+}());
