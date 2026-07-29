@@ -83,6 +83,112 @@ a { color: inherit; text-decoration: none; }
 .nav nav a:hover { color: var(--text); }
 .nav nav a[aria-current="page"] { color: var(--text); }
 
+/* ── MOBILE NAV MENU (hamburger) ──
+   Desktop shows the inline links and hides these controls entirely; the ≤768px
+   block below swaps to the hamburger + slide-down panel. */
+.nav-toggle {
+  display: none;              /* revealed ≤768px */
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;        /* optically align the glyph to the nav padding edge */
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+}
+.nav-toggle svg { display: block; }
+/* Specificity must beat `.nav-toggle svg` (0,1,1) so the inactive glyph hides */
+.nav-toggle .nav-toggle__close { display: none; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__open { display: none; }
+.nav-toggle[aria-expanded="true"] .nav-toggle__close { display: block; }
+
+.mobile-menu { display: none; }  /* becomes a positioned overlay ≤768px */
+
+@media (max-width: 768px) {
+  /* Replace the inline links with the hamburger */
+  .nav nav { display: none; }
+  .nav-toggle { display: inline-flex; }
+
+  .mobile-menu {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 95;               /* below the fixed nav (100) so the logo stays visible */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.24s ease, visibility 0s linear 0.24s;
+  }
+  .mobile-menu.is-open {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.24s ease;
+  }
+
+  .mobile-menu__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+  }
+
+  .mobile-menu__panel {
+    position: absolute;
+    top: 56px;                 /* clear the mobile nav bar */
+    left: 0;
+    right: 0;
+    max-height: calc(100vh - 56px);
+    overflow-y: auto;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+    padding: 8px 24px 28px;
+    transform: translateY(-14px);
+    transition: transform 0.24s ease;
+  }
+  .mobile-menu.is-open .mobile-menu__panel { transform: translateY(0); }
+
+  .mobile-menu__links { display: flex; flex-direction: column; }
+  .mobile-menu__links a {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.68);
+    border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+  }
+  .mobile-menu__links a:hover,
+  .mobile-menu__links a[aria-current="page"] { color: var(--text); }
+
+  .mobile-menu__contacts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 22px;
+  }
+
+  /* On-brand focus ring for the menu controls, matching the lightbox pattern */
+  .nav-toggle:focus-visible,
+  .mobile-menu__links a:focus-visible,
+  .mobile-menu__contacts a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .mobile-menu.is-open { transition: opacity 0s, visibility 0s; }
+  .mobile-menu__panel,
+  .mobile-menu.is-open .mobile-menu__panel { transition: none; transform: none; }
+}
+
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
@@ -150,25 +256,26 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 32px;
 }
 
-/* Primary statement — strongest body text in the hero */
+/* Primary value statement — the strongest body text: larger, brighter, widest
+   measure. Natural (pretty) wrapping keeps a real ragged edge. */
 .hero-bio {
-  font-size: clamp(16px, 1.5vw, 19px);
-  color: var(--text-body);
-  line-height: 1.65;
+  font-size: clamp(17px, 1.6vw, 21px);
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.6;
   font-weight: 300;
-  margin-bottom: 14px;
-  max-width: 520px;
+  margin-bottom: 24px;      /* one step up — a clearer break before the supporting line */
+  max-width: 540px;
   text-wrap: pretty;
 }
 
-/* Supporting context — lighter and smaller */
+/* Supporting context — quieter, smaller, and a narrower measure than the lead */
 .hero-bio-sub {
   font-size: clamp(15px, 1.35vw, 17px);
   color: var(--muted);
   line-height: 1.75;
   font-weight: 300;
   margin-bottom: 16px;
-  max-width: 480px;
+  max-width: 470px;
   text-wrap: pretty;
 }
 
@@ -225,6 +332,66 @@ a { color: inherit; text-decoration: none; }
   background: rgba(255, 255, 255, 0.04);
 }
 .hero-action-btn:hover svg { opacity: 1; }
+
+/* ── HERO CTA GROUP ──
+   Two intentional actions — a filled primary and an outlined secondary. Both
+   modifiers are scoped to .hero-cta (0,2,0) so they reliably beat the single-
+   class .hero-action-btn rules, including the global mobile height override.
+   flex-wrap keeps them side by side where they fit and stacks only when cramped. */
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;   /* + .hero-traits margin-bottom → intentional yet connected */
+}
+
+/* Primary — filled accent, dominant */
+.hero-cta .hero-action-btn--primary {
+  height: 42px;
+  padding: 0 24px;
+  font-size: 14px;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff !important;
+}
+.hero-cta .hero-action-btn--primary svg { opacity: 1; }
+.hero-cta .hero-action-btn--primary:hover {
+  background: #1a86ff;
+  border-color: #1a86ff;
+  color: #ffffff !important;
+}
+
+/* Secondary — outlined, quieter; clearly subordinate to the filled primary */
+.hero-cta .hero-action-btn--secondary {
+  height: 42px;
+  padding: 0 22px;
+  font-size: 14px;
+  border-color: rgba(255, 255, 255, 0.24);
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+.hero-cta .hero-action-btn--secondary svg { opacity: 0.7; }
+.hero-cta .hero-action-btn--secondary:hover {
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff !important;
+}
+
+/* On-brand keyboard focus for the CTA group */
+.hero-cta .hero-action-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Mobile: larger, ≥44px touch targets for both actions */
+@media (max-width: 768px) {
+  .hero-cta .hero-action-btn--primary,
+  .hero-cta .hero-action-btn--secondary { height: 48px; }
+}
+
+/* Contact pills are text-only (arrow removed) — a little more horizontal
+   padding keeps the short labels balanced within the pill. */
+.hero-action-btn[data-type] { padding: 0 18px; }
 
 /* Group gap — Email starts the second group */
 .hero-action-btn[data-type="email"] { margin-left: 10px; }
@@ -358,7 +525,6 @@ a { color: inherit; text-decoration: none; }
     height: auto;
     display: block;
   }
-  .hero-actions { flex-direction: row; flex-wrap: wrap; }
 }
 
 /* Mobile portrait: smaller, flush to hero bottom divider */
@@ -1287,17 +1453,14 @@ hr.divider {
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .nav { height: 56px; padding: 0 24px; }
-  .nav nav { gap: 18px; }
 
   .work-index { padding: 0; }
   /* .work-grid { grid-template-columns: 1fr 1fr; column-gap: 12px; row-gap: 16px; padding: 24px 24px 60px; } — rollback */
 
   .hero > .container { padding-left: 24px; padding-right: 24px; }
 
-  /* Nav links: expand tap area to 44px without changing visual appearance */
-  .nav nav a { padding: 15px 0; }
-
-  /* Hero CTA buttons: 44px tap target; 2×2 grid applied via narrower breakpoint below */
+  /* Pill buttons: comfortable mobile height/tap target (mobile-menu CV + About
+     Links; the hero CTA group sets its own 48px via the modifiers above) */
   .hero-actions { gap: 8px; }
   .hero-action-btn { height: 44px; }
   .hero-action-btn[data-type="email"] { margin-left: 0; }
@@ -1551,18 +1714,9 @@ hr.divider {
   .site-footer { padding: 24px; }
 }
 
-/* Small mobile: 2×2 grid for hero CTA buttons — prevents CV stranding on its own row */
+/* Small mobile: keep the nav bar (logo + hamburger) comfortable */
 @media (max-width: 480px) {
-  .hero-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-
-  /* Three-item nav: tighten so logo + Work · My Workflow · About fit one row */
   .nav { padding: 0 20px; }
-  .nav nav { gap: 15px; }
-  .nav nav a { font-size: 13px; letter-spacing: 0.02em; }
   .nav-logo { font-size: 13px; letter-spacing: 0.02em; }
 }
 
