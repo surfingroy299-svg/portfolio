@@ -75,8 +75,8 @@
     .system-section { margin-bottom: 80px; }
     .system-split {
       display: grid;
-      grid-template-columns: 30fr 70fr;
-      gap: clamp(40px, 4vw, 64px);
+      grid-template-columns: 2fr 3fr;   /* matches .case-split so the diagram aligns with the page's right-side mockups */
+      gap: clamp(48px, 5vw, 96px);
       align-items: start;
     }
     .system-intro .section-label { margin-bottom: 12px; }
@@ -105,6 +105,11 @@
       margin: 4px 0 6px;
     }
     .origin-chain span { color: rgba(0, 122, 255, 0.65); padding: 0 2px; }
+
+    /* Balance only the two new section headings (The Origin, Current Status) so neither
+       orphans a single word at any width. Direct child (> h2) + :not(.room-intro) targets
+       exactly those two — Stage 3's room-intro heading and all nested/other headings are untouched. */
+    .content-section:not(.room-intro) > h2 { text-wrap: balance; }
 
     .sys-flow { display: flex; flex-direction: column; align-items: center; }
     /* level 1 — plain-language actions */
@@ -258,13 +263,10 @@
     <!-- The Origin -->
     <div class="content-section">
       <p class="section-label">The Origin</p>
-      <h2>How the idea evolved</h2>
-      <p>The idea started with my own experience searching for my first product design role. Reading a job description was only the beginning. The harder part was understanding what the company was really looking for, how well my experience matched, where the gaps were, and which examples from my work would make the strongest case in an&nbsp;interview.</p>
-      <p>That experience led me to explore a broader question: could a job description become the starting point for a structured preparation&nbsp;process?</p>
-      <p>The first version I built was a personalized interview simulator. While developing the intelligence behind it, I realized that useful practice depends on context that begins much earlier. Before candidates can practice effectively, they need to understand the role and company, assess how their experience maps to the opportunity, identify their gaps, and decide which evidence to bring into the&nbsp;interview.</p>
-      <p>The simulator therefore became one stage of a connected preparation&nbsp;system:</p>
+      <h2>From interview simulator to preparation system</h2>
+      <p>The idea started while I was searching for my first product design role. Reading the job description was only the start — the real challenge was understanding what the company needed, where my experience fit, which gaps mattered, and what evidence would make the strongest case in an&nbsp;interview.</p>
+      <p>My first version was an interview simulator. While building the intelligence behind it, I realized useful preparation had to begin before the interview itself — turning the simulator into one stage of a larger, connected&nbsp;system:</p>
       <p class="origin-chain">Understand the opportunity <span aria-hidden="true">&#8594;</span> Assess fit <span aria-hidden="true">&#8594;</span> Identify gaps <span aria-hidden="true">&#8594;</span> Build your case <span aria-hidden="true">&#8594;</span> Practice <span aria-hidden="true">&#8594;</span> Learn from your answers</p>
-      <p>The product evolved from a single interview experience into a system that supports the candidate before, during, and after&nbsp;practice.</p>
     </div>
 
     <hr class="divider">
@@ -275,9 +277,9 @@
         <div class="system-intro">
           <p class="section-label">The System</p>
           <h2>One system, every stage</h2>
-          <p>A candidate starts with a CV, a job description, and any additional context. GateWay defines the research scope, researches the role and company, and filters the findings into one structured understanding of the&nbsp;opportunity.</p>
-          <p>That same intelligence generates the match summary, preparation plan, and mock interview. When the candidate responds, the answers return to the system for analysis. The personalized debrief turns that performance into strengths, gaps, and actions that connect back to the preparation&nbsp;journey.</p>
-          <p>This intelligence was tested and built before any interface existed. I ran structured experiments to prove the system could parse a CV, research a company, and cross-reference the two reliably, then hardened the pipeline against real CVs and postings. The screens that follow were designed around what it proved it could&nbsp;do.</p>
+          <p>This intelligence was tested and built before any interface existed. I ran structured experiments to prove it could parse a CV, research a company, and cross-reference the two&nbsp;reliably.</p>
+          <p>I then hardened the pipeline against real CVs and postings. The screens that follow were designed around what it proved it could&nbsp;do.</p>
+          <p>The same intelligence turns a candidate's inputs into a structured understanding of the opportunity, builds the preparation from it, and uses their interview answers to produce a debrief of strengths, gaps, and actions that connect back to the preparation&nbsp;journey.</p>
         </div>
 
         <div class="sys-flow">
@@ -346,7 +348,7 @@
       <div class="case-split__text">
         <p class="section-label">Stage 1: Analyze</p>
         <h2>A decision, not a report</h2>
-        <p>A candidate starts with what they already have - a CV, a job description, and any context worth adding. The first thing GateWay returns is a position, not information: pursue this role, or don't. Every claim beneath the verdict shows where it came from, so the reasoning can be inspected - and argued&nbsp;with.</p>
+        <p>The first thing GateWay returns is a position, not information: pursue this role, or don't. Every claim beneath the verdict shows where it came from, so the reasoning can be inspected - and argued&nbsp;with.</p>
         <ul class="feature-list">
           <li>A clear verdict on a confidence spectrum, not a score</li>
           <li>Requirements matched one by one to the candidate's evidence</li>
@@ -447,6 +449,7 @@
     <!-- Current Status -->
     <div class="content-section" style="margin-bottom: 0;">
       <p class="section-label">Current Status</p>
+      <h2>A working product, built end to end</h2>
       <p>GateWay is a working product, not a UI exploration. The backend is implemented, the orchestration runs end to end, and the prototype is functional - designed and built by me, using Claude Code as the development environment. The screens above are the product's real surfaces, showing what its intelligence produces. A public version is planned; the next step is exposing the live product alongside this case&nbsp;study.</p>
     </div>
 
