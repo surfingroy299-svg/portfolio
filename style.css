@@ -93,6 +93,11 @@ a { color: inherit; text-decoration: none; }
 
 .nav nav a:hover { color: var(--text); }
 .nav nav a[aria-current="page"] { color: var(--text); }
+.nav nav a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
 
 /* ── MOBILE NAV MENU (hamburger) ──
    Desktop shows the inline links and hides these controls entirely; the ≤768px
@@ -176,17 +181,9 @@ a { color: inherit; text-decoration: none; }
   .mobile-menu__links a:hover,
   .mobile-menu__links a[aria-current="page"] { color: var(--text); }
 
-  .mobile-menu__contacts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding-top: 22px;
-  }
-
   /* On-brand focus ring for the menu controls, matching the lightbox pattern */
   .nav-toggle:focus-visible,
-  .mobile-menu__links a:focus-visible,
-  .mobile-menu__contacts a:focus-visible {
+  .mobile-menu__links a:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 2px;
@@ -268,87 +265,97 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* Primary value statement — the strongest body text: larger, brighter, widest
-   measure. Natural (pretty) wrapping keeps a real ragged edge. */
+   measure. Balanced wrapping keeps even line lengths at every breakpoint. */
 .hero-bio {
   font-size: clamp(17px, 1.6vw, 21px);
   color: rgba(255, 255, 255, 0.92);
   line-height: 1.6;
   font-weight: 300;
-  margin-bottom: 24px;      /* one step up — a clearer break before the supporting line */
-  max-width: 540px;
-  text-wrap: pretty;
+  margin-bottom: 32px;      /* the lead now stands alone — a clear break before the traits */
+  max-width: 560px;
+  text-wrap: balance;
 }
 
-/* Supporting context — quieter, smaller, and a narrower measure than the lead */
-.hero-bio-sub {
-  font-size: clamp(15px, 1.35vw, 17px);
-  color: var(--muted);
-  line-height: 1.75;
-  font-weight: 300;
-  margin-bottom: 16px;
-  max-width: 470px;
-  text-wrap: pretty;
-}
-
-.hero-bio-sub strong {
-  color: var(--text-body);
-  font-weight: 400;
-}
-
+/* Positioning statement — an intentional, near-white line, not muted metadata */
 .hero-traits {
-  font-size: 14px;
-  color: var(--muted);
-  letter-spacing: 0.04em;
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
   margin-bottom: 32px;
 }
 
-/* ── HERO ACTION BUTTONS ── */
+/* ── BUTTON SYSTEM ──
+   One system, three content-CTA variants: Primary (filled), Secondary (outlined),
+   Tertiary (borderless text link). Header navigation is a separate component (.nav). */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.btn svg { width: 13px; height: 13px; display: block; flex-shrink: 0; }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Primary — solid filled blue, the single strongest action. Slightly muted from
+   the raw #007AFF accent (a touch less saturated/bright) so it feels calmer on
+   the dark background while keeping ≥4.5:1 contrast with white text. */
+.btn--primary {
+  background: #1272d9;
+  border-color: #1272d9;
+  color: #ffffff;
+}
+.btn--primary:hover { background: #187eec; border-color: #187eec; }
+.btn--primary:active { background: #0f5eb3; border-color: #0f5eb3; }
+
+/* Secondary — restrained semi-transparent blue; same pill, size and icon as Primary */
+.btn--secondary {
+  background: rgba(0, 122, 255, 0.15);
+  border-color: rgba(0, 122, 255, 0.50);
+  color: #78b1ff;   /* lighter blue accent — text + icons (icons inherit via currentColor) */
+}
+.btn--secondary:hover {
+  background: rgba(0, 122, 255, 0.24);
+  border-color: rgba(0, 122, 255, 0.75);
+}
+.btn--secondary:active { background: rgba(0, 122, 255, 0.32); }
+
+/* Tertiary — neutral outlined pill, lowest emphasis */
+.btn--tertiary {
+  border-color: rgba(255, 255, 255, 0.24);
+  color: rgba(255, 255, 255, 0.85);
+}
+.btn--tertiary svg { opacity: 0.7; }
+.btn--tertiary:hover {
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+}
+.btn--tertiary:hover svg { opacity: 1; }
+.btn--tertiary:active { background: rgba(255, 255, 255, 0.07); }
+
+/* Button row container */
 .hero-actions {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.hero-action-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  height: 34px;
-  padding: 0 15px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  border-radius: 999px;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.68) !important;
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0.03em;
-  line-height: 1;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
-  white-space: nowrap;
-}
-
-.hero-action-btn svg {
-  width: 11px;
-  height: 11px;
-  display: block;
-  flex-shrink: 0;
-  opacity: 0.7;
-}
-
-.hero-action-btn:hover {
-  border-color: rgba(255, 255, 255, 0.24);
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.04);
-}
-.hero-action-btn:hover svg { opacity: 1; }
-
-/* ── HERO CTA GROUP ──
-   Two intentional actions — a filled primary and an outlined secondary. Both
-   modifiers are scoped to .hero-cta (0,2,0) so they reliably beat the single-
-   class .hero-action-btn rules, including the global mobile height override.
-   flex-wrap keeps them side by side where they fit and stacks only when cramped. */
+/* ── HERO CTA GROUP — filled primary + outlined secondary ── */
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
@@ -357,99 +364,52 @@ a { color: inherit; text-decoration: none; }
   margin-top: 8px;   /* + .hero-traits margin-bottom → intentional yet connected */
 }
 
-/* Primary — filled accent, dominant */
-.hero-cta .hero-action-btn--primary {
-  height: 42px;
-  padding: 0 24px;
-  font-size: 14px;
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #ffffff !important;
-}
-.hero-cta .hero-action-btn--primary svg { opacity: 1; }
-.hero-cta .hero-action-btn--primary:hover {
-  background: #1a86ff;
-  border-color: #1a86ff;
-  color: #ffffff !important;
-}
-
-/* Secondary — outlined, quieter; clearly subordinate to the filled primary */
-.hero-cta .hero-action-btn--secondary {
-  height: 42px;
-  padding: 0 22px;
-  font-size: 14px;
-  border-color: rgba(255, 255, 255, 0.24);
-  color: rgba(255, 255, 255, 0.85) !important;
-}
-.hero-cta .hero-action-btn--secondary svg { opacity: 0.7; }
-.hero-cta .hero-action-btn--secondary:hover {
-  border-color: rgba(255, 255, 255, 0.42);
-  background: rgba(255, 255, 255, 0.04);
-  color: #ffffff !important;
-}
-
-/* On-brand keyboard focus for the CTA group */
-.hero-cta .hero-action-btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* Mobile: larger, ≥44px touch targets for both actions */
+/* Mobile: larger, ≥44px touch targets for every button */
 @media (max-width: 768px) {
-  .hero-cta .hero-action-btn--primary,
-  .hero-cta .hero-action-btn--secondary { height: 48px; }
+  .btn { min-height: 48px; }
 }
 
-/* Contact pills are text-only (arrow removed) — a little more horizontal
-   padding keeps the short labels balanced within the pill. */
-.hero-action-btn[data-type] { padding: 0 18px; }
+/* Quiet copy glyph on the right of Email buttons (injected by JS; decorative,
+   not a separate target). currentColor + low opacity keeps it consistent with
+   each variant and quieter than the label and left icon. */
+.btn .btn-copy-icon { width: 12px; height: 12px; opacity: 0.4; }
+.btn:hover .btn-copy-icon { opacity: 0.55; }
 
-/* Group gap — Email starts the second group */
-.hero-action-btn[data-type="email"] { margin-left: 10px; }
-
-/* Email + CV: quiet blue hover */
-.hero-action-btn[data-type="email"]:hover,
-.hero-action-btn[data-type="cv"]:hover {
-  border-color: var(--accent);
-  background: rgba(0, 122, 255, 0.10);
+/* Copy-confirmation toast — restrained, accessible (role=status / aria-live),
+   auto-dismissed by JS. */
+.copy-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%) translateY(10px);
+  z-index: 300;
+  max-width: calc(100vw - 32px);
+  padding: 13px 22px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.24s ease, transform 0.24s ease, visibility 0s linear 0.24s;
+}
+.copy-toast.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  transition: opacity 0.24s ease, transform 0.24s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .copy-toast,
+  .copy-toast.is-visible { transition: opacity 0.2s ease; transform: translateX(-50%); }
 }
 
-/* LinkedIn + WhatsApp: paper-slide fill on hover via ::before */
-.hero-action-btn[data-type="linkedin"],
-.hero-action-btn[data-type="whatsapp"] {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate; /* new stacking context so ::before stays behind text */
-  transition: border-color 0.24s ease-out, color 0.2s ease-out;
-}
-
-.hero-action-btn[data-type="linkedin"] { --slide-color: #0A66C2; }
-.hero-action-btn[data-type="whatsapp"] { --slide-color: #25D366; }
-
-/* Fill layer — starts fully off-screen to the left */
-.hero-action-btn[data-type="linkedin"]::before,
-.hero-action-btn[data-type="whatsapp"]::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--slide-color);
-  border-radius: inherit;
-  transform: translateX(-100%);
-  transition: transform 0.26s ease-out;
-  z-index: -1; /* behind text/icon within the isolated stacking context */
-}
-
-/* On hover: slide fill in, swap border + text colour */
-.hero-action-btn[data-type="linkedin"]:hover,
-.hero-action-btn[data-type="whatsapp"]:hover {
-  border-color: var(--slide-color);
-  color: #ffffff !important;
-  background: transparent;
-}
-.hero-action-btn[data-type="linkedin"]:hover::before,
-.hero-action-btn[data-type="whatsapp"]:hover::before {
-  transform: translateX(0);
-}
+/* Contact links (LinkedIn / WhatsApp / Email) use .btn .btn--secondary with a
+   monochrome recognition icon — no branded per-service hover treatment. */
 
 /* Right: portrait column — grounded to hero floor */
 .hero-photo {
@@ -652,10 +612,10 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.15;
   margin-bottom: 26px;
 }
-.ai-intro { max-width: 760px; }
+.ai-intro { max-width: 700px; }
 .ai-intro p {
-  font-size: 16px;
-  line-height: 1.85;
+  font-size: 18px;
+  line-height: 1.6;
   color: var(--text-body);
   font-weight: 300;
   text-wrap: pretty;
@@ -672,6 +632,8 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.75;
   color: var(--text);
 }
+/* keep the final sentence together so it wraps to a new line as one unit */
+.ai-key-unit { white-space: nowrap; }
 
 /* two-column layout: sticky stage map + detail column */
 .wf-layout {
@@ -1025,20 +987,24 @@ a { color: inherit; text-decoration: none; }
 /* Project row — default: text left (0.85fr), mockup right (1.15fr) */
 .work-item {
   display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
+  grid-template-columns: minmax(320px, 0.56fr) 1.44fr;   /* larger mockup on desktop; text floored at 320px so it stays readable on smaller desktops (scales responsively, not one fixed size) */
   grid-template-areas: "text mockup";
   gap: 80px;
   align-items: center;
-  padding: 64px 0;
-  position: relative; /* anchor for the stretched ::after block-link */
-  cursor: pointer;
+  align-content: center;   /* vertically center the content within the tall section */
+  min-height: 88vh;        /* close to a full-screen section, but flexible — not a rigid 100vh */
+  padding: 56px 0;
+  position: relative;
 }
 
-/* Reverse row: mockup left (1.15fr), text right (0.85fr) */
+/* Reverse row: mockup left (1.42fr), text right (0.58fr) */
 .work-item--reverse {
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: 1.42fr 0.58fr;
   grid-template-areas: "mockup text";
 }
+
+/* Very subtle divider between consecutive projects — clarifies where each section starts/ends */
+.work-item + .work-item { border-top: 1px solid rgba(255, 255, 255, 0.07); }
 
 .work-item-text  { grid-area: text; position: relative; z-index: 3; }
 .work-item-mockup { grid-area: mockup; }
@@ -1046,16 +1012,16 @@ a { color: inherit; text-decoration: none; }
 /* Metadata + numbering */
 .work-item-meta {
   display: block;
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: 14px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 14px;
+  margin-bottom: 18px;
 }
 
 /* Title */
 .work-item-title {
-  font-size: clamp(20px, 2.2vw, 28px);
+  font-size: clamp(22px, 2.4vw, 32px);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.15;
@@ -1066,11 +1032,11 @@ a { color: inherit; text-decoration: none; }
 
 /* Description */
 .work-item-desc {
-  font-size: 16px;
-  line-height: 1.7;
+  font-size: 18px;
+  line-height: 1.75;
   color: var(--text-body);
   font-weight: 300;
-  max-width: 460px;
+  max-width: 480px;
   margin-bottom: 28px;
   text-wrap: pretty;
 }
@@ -1083,76 +1049,20 @@ a { color: inherit; text-decoration: none; }
   margin-bottom: 28px;
 }
 
-/* Full-row cover link — sits behind text column (z: 3), above the mockup.
-   z-index: 2 ensures it's above the JS-animated mockup which may form a stacking context.
-   Handles clicks on the image area and row background. aria-hidden/tabindex=-1 in HTML. */
-.work-item-cover-link {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-}
+/* "View project" is the only interactive element in a row — styled by
+   .btn .btn--tertiary. The row and image have no hover or click behavior. */
 
-/* View project link */
-.work-item-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
-  transition: color 0.2s;
-  /* Stretch to cover the entire .work-item row — block-link pattern */
-  position: static; /* do not position this element itself */
-}
-
-/* Invisible overlay that makes the whole row clickable */
-.work-item-link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-}
-
-.work-item-link svg {
-  width: 11px;
-  height: 11px;
-  display: block;
-  flex-shrink: 0;
-  opacity: 0.85;
-  transition: opacity 0.2s, transform 0.2s;
-  position: relative; /* sit above the ::after overlay */
-}
-
-/* Focus ring on the overlay (keyboard navigation) */
-.work-item-link:focus { outline: none; }
-.work-item-link:focus-visible::after {
-  box-shadow: inset 0 0 0 2px var(--accent);
-  border-radius: 2px;
-}
-
-/* Row-level hover — all elements respond together */
-.work-item:hover .work-item-title {
-  color: rgba(255, 255, 255, 0.95);
-}
-.work-item:hover .work-item-link {
-  color: #3d9bff; /* slightly brighter than --accent */
-}
-.work-item:hover .work-item-link svg {
-  opacity: 1;
-  transform: translateX(2px);
-}
-.work-item:hover .work-item-mockup img {
-  filter: drop-shadow(0 20px 52px rgba(0, 0, 0, 0.45)) brightness(1.06);
-}
-
-/* Mockup: PNG floats freely — scroll-linked animation driven entirely by JS */
+/* Mockup: PNG floats freely */
 .work-item-mockup {
   display: flex;
   align-items: center;
+  position: relative;   /* positioning context for the mockup click link */
   will-change: opacity, transform;
-  /* No CSS transition here — JS rAF loop handles all animation */
 }
+/* Only the mockup itself is clickable (mouse convenience; the "View project"
+   button is the keyboard/AT link to the same page). No hover or visual change —
+   just the standard pointer cursor. The surrounding row stays non-clickable. */
+.work-item-mockup-link { position: absolute; inset: 0; }
 
 .work-item-mockup img {
   width: 100%;
@@ -1176,11 +1086,10 @@ a { color: inherit; text-decoration: none; }
   .work-item--reverse {
     grid-template-columns: 1fr;
     grid-template-areas: "mockup" "text"; /* image always above text on mobile */
-    gap: 20px;
+    gap: 24px;
     padding: 48px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    min-height: auto;   /* no forced full-screen height on mobile */
   }
-  .work-item:last-child { border-bottom: none; }
   .work-item-mockup {
     opacity: 1 !important;
     transform: none !important;
@@ -1470,12 +1379,6 @@ hr.divider {
 
   .hero > .container { padding-left: 24px; padding-right: 24px; }
 
-  /* Pill buttons: comfortable mobile height/tap target (mobile-menu CV + About
-     Links; the hero CTA group sets its own 48px via the modifiers above) */
-  .hero-actions { gap: 8px; }
-  .hero-action-btn { height: 44px; }
-  .hero-action-btn[data-type="email"] { margin-left: 0; }
-
   /* .project-meta { padding: 12px 0 20px; } — rollback */
 
   .project-page { padding: 100px 24px 80px; max-width: 100%; }
@@ -1689,21 +1592,90 @@ hr.divider {
   .lightbox-viewport.is-loading::after { animation: none; }
 }
 
-/* ── ABOUT CTA ── */
-.about-cta {
+/* ── PROCESS TEASER (homepage workflow entry — project-section composition) ── */
+/* Collapse the work section's trailing space so the teaser keeps the same
+   row-to-row rhythm as the project sections above it. */
+.work-section:has(+ .process-teaser) { padding-bottom: 0; }
+.process-teaser {
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+}
+.process-row {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  grid-template-areas: "text visual";
+  gap: 80px;
+  align-items: center;
+  padding: 80px 0 96px;
+}
+.process-text { grid-area: text; }
+.process-visual { grid-area: visual; display: flex; justify-content: center; }
+.process-diagram { width: 100%; height: auto; max-width: 680px; display: block; }
+
+@media (max-width: 900px) {
+  .process-row {
+    grid-template-columns: 1fr;
+    grid-template-areas: "visual" "text";
+    gap: 28px;
+    padding: 48px 0 64px;
+  }
+}
+@media (max-width: 768px) {
+  .process-teaser .container { padding-left: 24px; padding-right: 24px; }
+}
+
+/* ── CONTACT FOOTER (global, #contact target) ── */
+.contact-footer {
+  border-top: 1px solid var(--border);
   padding: 80px;
   text-align: center;
-  border-top: 1px solid var(--border);
+  scroll-margin-top: 88px;   /* clear the fixed nav when scrolled to */
 }
-.about-cta-heading {
-  font-size: clamp(20px, 2.4vw, 28px);
+.contact-footer:focus { outline: none; }   /* focus is moved here programmatically; no ring on the section */
+.contact-footer__heading {
+  font-size: clamp(24px, 3vw, 34px);
   font-weight: 300;
   letter-spacing: -0.02em;
   color: var(--text);
-  margin-bottom: 28px;
+  margin-bottom: 14px;
+}
+.contact-footer__lead {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-body);
+  font-weight: 300;
+  max-width: 440px;
+  margin: 0 auto 32px;
+  text-wrap: pretty;
+}
+.contact-footer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
 }
 @media (max-width: 600px) {
-  .about-cta { padding: 48px 24px; }
+  .contact-footer { padding: 56px 24px; }
+  /* the footer's own 24px padding is enough — drop the inner container's 80px so
+     the content isn't squeezed into a too-narrow column on phones */
+  .contact-footer .container { padding-left: 0; padding-right: 0; }
+  /* keep each sentence whole so the lead reads as exactly two clear lines */
+  .contact-footer__lead span { white-space: nowrap; }
+  /* Email + WhatsApp: equal width, balanced, side by side (they fit comfortably) */
+  .contact-footer__actions { display: grid; grid-template-columns: 1fr 1fr; }
+}
+
+/* ── ARRIVAL SPOTLIGHT ──
+   A brief, restrained highlight applied to #contact when navigated to. Uses only
+   box-shadow + background (no layout shift) and never dims the rest of the page. */
+@keyframes contact-spotlight {
+  0%   { box-shadow: inset 0 0 0 0 rgba(0, 122, 255, 0);     background-color: rgba(0, 122, 255, 0); }
+  18%  { box-shadow: inset 0 0 0 1px rgba(0, 122, 255, 0.45), 0 0 26px rgba(0, 122, 255, 0.16); background-color: rgba(0, 122, 255, 0.07); }
+  100% { box-shadow: inset 0 0 0 0 rgba(0, 122, 255, 0);     background-color: rgba(0, 122, 255, 0); }
+}
+.is-contact-spotlight { animation: contact-spotlight 1100ms ease-out; border-radius: 12px; }
+@media (prefers-reduced-motion: reduce) {
+  .is-contact-spotlight { animation: none; }
 }
 
 /* ── SITE FOOTER ── */
