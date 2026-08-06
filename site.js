@@ -394,3 +394,123 @@
     if (isOpen && window.innerWidth > 768) closeMenu();
   });
 }());
+
+// ── Contact anchor: smooth scroll + focus + arrival spotlight ────────────────
+// Progressive enhancement over the native #contact fragment link. Works on every
+// page (the global Contact footer, or the About page's local Contact section) and
+// from inside the mobile menu. No-ops when #contact is absent.
+(function () {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function spotlight(el) {
+    if (reduceMotion.matches) return;
+    el.classList.remove('is-contact-spotlight');
+    void el.offsetWidth;                 // force reflow so the animation restarts on repeat visits
+    el.classList.add('is-contact-spotlight');
+  }
+
+  function goToContact(updateHash) {
+    var target = document.getElementById('contact');
+    if (!target) return false;
+    target.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
+    target.focus({ preventScroll: true }); // move focus without a second, competing scroll
+    spotlight(target);
+    if (updateHash && window.history && history.replaceState) {
+      history.replaceState(null, '', '#contact');
+    }
+    return true;
+  }
+
+  // Delegated so it also covers the Contact link rendered inside the mobile menu
+  // (whose own handler closes the menu first; this runs on bubble, after).
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest ? e.target.closest('a[href="#contact"]') : null;
+    if (!link || !document.getElementById('contact')) return;
+    e.preventDefault();
+    goToContact(true);
+  });
+
+  // Let the spotlight be re-triggered on subsequent visits.
+  document.addEventListener('animationend', function (e) {
+    if (e.animationName === 'contact-spotlight') {
+      e.target.classList.remove('is-contact-spotlight');
+    }
+  });
+
+  // Deep link: if the page opens at #contact, apply the same treatment once.
+  if (window.location.hash === '#contact') {
+    window.addEventListener('load', function () {
+      setTimeout(function () { goToContact(false); }, 60);
+    });
+  }
+}());
+
+// ── Email actions copy to clipboard (toast + graceful fallback) ──────────────
+// Every Email button/link (a mailto: address) copies the address instead of
+// opening a mail client. Progressive enhancement: with JS off, the mailto still
+// works. A small, quiet "copy" icon is added to each Email button, and an
+// accessible, auto-dismissing toast confirms the copy. Applies on every page,
+// component and breakpoint, since all Email actions share the same mailto href.
+(function () {
+  var mailLinks = document.querySelectorAll('a[href^="mailto:"]');
+  if (!mailLinks.length) return;
+
+  // Shared toast — polite live region, visible but restrained, auto-dismissing.
+  var toast = document.createElement('div');
+  toast.className = 'copy-toast';
+  toast.setAttribute('role', 'status');
+  toast.setAttribute('aria-live', 'polite');
+  document.body.appendChild(toast);
+  var toastTimer;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('is-visible'); }, 2600);
+  }
+
+  // Legacy execCommand copy, used where the Clipboard API is missing or rejects.
+  function execCommandCopy(text) {
+    return new Promise(function (resolve, reject) {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.top = '-1000px';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        ok ? resolve() : reject(new Error('execCommand failed'));
+      } catch (err) { reject(err); }
+    });
+  }
+  // Clipboard API first; fall back to execCommand if it's absent or rejects.
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).catch(function () { return execCommandCopy(text); });
+    }
+    return execCommandCopy(text);
+  }
+
+  // Quiet, decorative copy glyph appended to the right of each Email button.
+  var COPY_ICON = '<svg class="btn-copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  mailLinks.forEach(function (link) {
+    if (!link.querySelector('.btn-copy-icon')) link.insertAdjacentHTML('beforeend', COPY_ICON);
+  });
+
+  // Delegated so it covers Email actions anywhere (footer, menu, About section).
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest ? e.target.closest('a[href^="mailto:"]') : null;
+    if (!link) return;
+    e.preventDefault();
+    var email = link.getAttribute('href').replace(/^mailto:/i, '').split('?')[0].trim();
+    copyText(email).then(function () {
+      showToast(email + ' copied to your clipboard.');
+    }).catch(function () {
+      showToast('Email: ' + email);   // last-resort fallback: surface it to copy manually
+    });
+  });
+}());
