@@ -322,6 +322,18 @@
 
   var isOpen = false;
 
+  // Track the last input modality. A *pointer* close returns focus to the toggle
+  // without painting a focus ring on it; a *keyboard* (Escape) close keeps the
+  // ring. A click synthesised from Enter/Space carries no pointer event, so
+  // watching the raw input is more reliable than inspecting the click itself.
+  var keyboardMode = false;
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Tab' || e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+      keyboardMode = true;
+    }
+  }, true);
+  document.addEventListener('pointerdown', function () { keyboardMode = false; }, true);
+
   // Collapsed panel is hidden from assistive tech (CSS visibility:hidden already
   // removes it; aria-hidden makes the intent explicit and robust across AT).
   menu.setAttribute('aria-hidden', 'true');
@@ -344,8 +356,16 @@
     menu.removeAttribute('aria-hidden');   // expose before moving focus inside
     toggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
-    var links = menu.querySelectorAll('.mobile-menu__links a');
-    if (links.length) links[0].focus();
+    // Move focus into the panel container (not the first link), so opening the
+    // menu never paints a focus ring on an actionable item. The Tab focus-trap
+    // still carries the first Tab onto "Work"; the panel is announced as the
+    // "Mobile" nav landmark. preventScroll avoids an iOS viewport jump (the
+    // panel is overflow-y:auto inside a fixed overlay with body overflow hidden).
+    var panel = menu.querySelector('.mobile-menu__panel');
+    if (panel) {
+      if (!panel.hasAttribute('tabindex')) panel.setAttribute('tabindex', '-1');
+      panel.focus({ preventScroll: true });
+    }
   }
 
   // Focus always returns to the toggle before the panel is hidden, so aria-hidden
@@ -356,12 +376,22 @@
     menu.classList.remove('is-open');
     toggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
-    if (toggle.focus) toggle.focus();
+    if (toggle.focus) toggle.focus({ preventScroll: true });
+    // Suppress the focus ring only for pointer-initiated closes (scrim / X /
+    // link tap); a keyboard (Escape) close leaves the ring so keyboard users
+    // can see where focus landed. Cleared on blur so a later Tab rings normally.
+    toggle.toggleAttribute('data-quiet-focus', !keyboardMode);
     menu.setAttribute('aria-hidden', 'true');
   }
 
   toggle.addEventListener('click', function () {
     isOpen ? closeMenu() : openMenu();
+  });
+
+  // Once the toggle loses focus, drop the quiet-focus flag so a subsequent
+  // keyboard focus (Tab back to it) shows the ring as normal.
+  toggle.addEventListener('blur', function () {
+    toggle.removeAttribute('data-quiet-focus');
   });
 
   // Close on the scrim / any explicit close control…
