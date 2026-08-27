@@ -4,341 +4,193 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feedback - Sports Coaching Platform · Roy Vanounou</title>
-  <meta name="description" content="Case study: Feedback, a sports coaching platform concept built around asynchronous frame-level video feedback for athletes and coaches.">
+  <meta name="description" content="Case study: Feedback, a concept app for surfers. Each upload can be shared with the community or sent privately to a paid coach, with optional AI analysis - and human feedback is connected to the relevant moments in the footage.">
   <!-- Open Graph -->
-  <meta property="og:type"         content="website">
+  <meta property="og:type"         content="article">
   <meta property="og:site_name"    content="Roy Vanounou">
-  <meta property="og:title"        content="Roy Vanounou">
-  <meta property="og:description"  content="Product designer focused on complex systems, product thinking, and AI-powered workflows.">
+  <meta property="og:title"        content="Feedback - Sports Coaching Platform · Roy Vanounou">
+  <meta property="og:description"  content="A concept app for surfers who want frequent, specific critique. One upload, two destinations - community or paid coach - with optional instant AI.">
   <meta property="og:url"          content="https://designeroy.com/projects/coaching-app.html">
-  <meta property="og:image"        content="https://designeroy.com/assets/images/og-social.png">
-  <meta property="og:image:width"  content="1200">
-  <meta property="og:image:height" content="630">
+  <meta property="og:image"        content="https://designeroy.com/assets/images/feedback-hero.jpg">
+  <meta property="og:image:width"  content="3114">
+  <meta property="og:image:height" content="2000">
   <!-- Twitter / X -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Roy Vanounou">
-  <meta name="twitter:description" content="Product designer focused on complex systems, product thinking, and AI-powered workflows.">
-  <meta name="twitter:image"       content="https://designeroy.com/assets/images/og-social.png">
+  <meta name="twitter:title"       content="Feedback - Sports Coaching Platform · Roy Vanounou">
+  <meta name="twitter:description" content="A concept app for surfers who want frequent, specific critique. One upload, two destinations - community or paid coach - with optional instant AI.">
+  <meta name="twitter:image"       content="https://designeroy.com/assets/images/feedback-hero.jpg">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
   <link rel="stylesheet" href="../style.css">
   <style>
+    /* ── Feedback-specific compositions only.
+          Reusable primitives live in style.css as .case-study-*. ── */
 
-    /* ── OVERVIEW ── */
-    .overview-split {
-      grid-template-columns: 3fr 2fr;
-      align-items: center;
-    }
-    .overview-split .screen-showcase {
-      display: flex;
-      justify-content: center;
-    }
-    .overview-split .screen-mockup {
-      border-radius: 26px;
-      max-width: 200px;
-      width: 100%;
-    }
+    /* Methodology labels in accent — this page only. Out-specifies
+       .content-section p (0,1,1), which otherwise washes them to body white.
+       Every label is backed by an adjacent h2, so nothing rests on colour. */
+    .project-page .content-section > .section-label { color: var(--accent); }
 
-    /* ── UPLOAD SPLIT — text left, phones right ── */
-    .upload-split {
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
+    /* the project header now carries two paragraphs of description */
+    .project-page .brief + .brief { margin-top: 16px; }
+
+    /* Athletes / Coaches subsection headings read as headings, not as
+       methodology labels — white, not the accent. Local to this page:
+       .case-study-compare__title stays blue on any other case study.
+       0,3,0 beats the shared .project-page .case-study-compare__title (0,2,0). */
+    .project-page .case-study-compare .case-study-compare__title { color: var(--text); }
+
+    /* Shared .content-section caps at 760px — right for prose, too narrow for
+       the wide components. Paragraphs keep their own 680px max-width. */
+    .fb-wide-section { max-width: 100%; }
+    .fb-wide-section > h2,
+    .fb-wide-section > h3 { max-width: 760px; }
+
+    /* even out two-line headings so none strands a lone word */
+    .project-page h2,
+    .project-page h3 { text-wrap: balance; }
+
+    /* attaches DOWNWARD to the three insights, not up to the compare block */
+    .project-page h3.fb-insights-heading { margin-top: 88px; margin-bottom: 20px; }
+
+    /* ── Final Design rows ────────────────────────────────────────────────
+       One grid for all three rows: media left, explanation right, same gap,
+       same left edge, no reversal. The media column is prioritised so the
+       screens stay legible as the viewport narrows; the text column has a
+       240px floor. Relationship comes from proximity and alignment — there
+       are no anchors, connectors, or positioned notes. */
+    .fb-row {
+      display: grid;
+      grid-template-columns: minmax(0, 690px) minmax(240px, 1fr);
+      gap: 48px;
+      align-items: start;        /* text sits at the top of the screen group */
+      margin-top: 32px;
     }
-    .upload-split .case-split__screen {
-      display: flex;
-      justify-content: flex-end;
-    }
-    .two-phones-upload {
+    .fb-row__media { min-width: 0; }
+
+    /* a lone screen is left-aligned in the media column, never centred */
+    .fb-screen-single { max-width: 360px; }
+
+    /* Home row: a lone phone does not need the paired-screen column width,
+       so its explanation sits close instead of across a 330px void */
+    .fb-row--single { grid-template-columns: minmax(0, 360px) minmax(240px, 1fr); }
+    .fb-row--single .fb-row__text { max-width: 422px; }
+
+    .fb-screens {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      width: 100%;
+      gap: 24px;
+      align-items: start;
     }
-    .two-phones-upload .phone-item {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .two-phones-upload .screen-mockup { border-radius: 26px; max-width: 250px; width: 100%; }
-    .two-phones-upload .phone-label {
-      font-size: 14px;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-align: center;
-    }
+    .fb-screen { min-width: 0; }
+    .fb-screen .screen-mockup,
+    .fb-screen-single .screen-mockup { border-radius: 26px; }
 
-    /* ── SECTION STEP INDICATOR ── */
-    .step-indicator {
+    /* identifies the two human-feedback screens at a glance. Both headers
+       are the same fixed height so the screens below stay aligned. */
+    .fb-screen__header {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 18px;
+      gap: 10px;
+      height: 40px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
     }
-    .step-indicator__num {
-      width: 36px;
-      height: 36px;
+    .fb-screen__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
-      background: transparent;
-      border: 1.5px solid rgba(0,122,255,0.55);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      letter-spacing: 0.02em;
-    }
-    .step-indicator .section-label {
-      margin-bottom: 0;
-    }
-
-    /* ── MILESTONE ACCENT — top-left blue rule on key sections ── */
-    .milestone {
-      position: relative;
-      padding-top: 32px;
-    }
-    .milestone::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 36px;
-      height: 2px;
-      background: var(--accent);
-      border-radius: 1px;
-      opacity: 0.7;
-    }
-
-    /* ── DIVIDER CONNECTOR — subtle flow cue ── */
-    hr.divider {
-      position: relative;
-      overflow: visible;
-    }
-    hr.divider::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #2a2a2a;
-      border: 1px solid #333;
-    }
-
-    /* ── AI FEEDBACK — hero phone ── */
-    .ai-split {
-      grid-template-columns: 1fr 1fr;
-      align-items: start;
-    }
-    .ai-split .screen-mockup {
-      border-radius: 26px;
-      max-width: 260px;
-      width: 100%;
-      margin: 0 auto;
-      display: block;
-    }
-    .ai-split .screen-showcase {
-      display: flex;
-      justify-content: center;
-    }
-
-    /* AI instant badge */
-    .instant-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      background: rgba(0,122,255,0.08);
-      border: 1px solid rgba(0,122,255,0.2);
-      border-radius: 100px;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-    .instant-badge::before {
-      content: '⚡';
-      font-size: 10px;
-    }
-
-    /* ── COMMUNITY — hero phone, reversed ── */
-    .community-split {
-      grid-template-columns: 1fr 1fr;
-      align-items: start;
-    }
-    .community-split .screen-mockup {
-      border-radius: 26px;
-      max-width: 260px;
-      width: 100%;
-      margin: 0 auto;
-      display: block;
-    }
-    .community-split .screen-showcase {
-      display: flex;
-      justify-content: center;
-    }
-
-    /* ── TIMELINE — timestamped comment list ── */
-    .timeline-visual {
-      margin-top: 24px;
-      border-left: 2px solid rgba(0,122,255,0.35);
-      border-radius: 0 2px 2px 0;
-      padding: 2px 0 2px 16px;
-    }
-    .timeline-entry {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      padding: 7px 0;
-    }
-    .timeline-entry + .timeline-entry {
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-    .timeline-entry__time {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--accent);
-      letter-spacing: 0.02em;
-      flex-shrink: 0;
-      min-width: 34px;
-    }
-    .timeline-entry__text {
-      font-size: 14px;
-      color: var(--text-body);
-      line-height: 1.6;
-    }
-
-    /* ── COACH — two phones, equal scale ── */
-    .coach-phones {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      margin: 36px 0 0;
-      align-items: start;
-      max-width: 560px;
-    }
-    .coach-phones .phone-item {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .coach-phones .screen-mockup { border-radius: 26px; }
-    .coach-phones .phone-label {
-      font-size: 14px;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-align: center;
-    }
-    /* arrow connector between the two coach screens */
-    .coach-phones__connector {
-      display: flex;
-      align-items: flex-start;
-      padding-top: 120px;
-      justify-content: center;
-      width: 40px;
-      flex-shrink: 0;
-    }
-    .coach-phones__connector::before {
-      content: '';
-      display: block;
-      width: 18px;
-      height: 1px;
-      background: rgba(255,255,255,0.12);
-    }
-    .coach-phones__connector::after {
-      content: '';
-      display: block;
-      width: 5px;
-      height: 5px;
-      border-top: 1px solid rgba(255,255,255,0.15);
-      border-right: 1px solid rgba(255,255,255,0.15);
-      transform: rotate(45deg) translate(-1px, 1px);
-      flex-shrink: 0;
-      margin-left: -1px;
-    }
-    /* override: coach phones wrapper uses flex to include connector */
-    .coach-phones-row {
-      display: flex;
-      align-items: start;
-      gap: 0;
-      margin: 36px 0 0;
-      max-width: 820px;
-    }
-    .coach-phones-row .phone-item {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      flex: 1;
-    }
-    .coach-phones-row .screen-mockup { border-radius: 26px; }
-    .coach-phones-row .phone-label {
-      font-size: 14px;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-align: center;
-    }
-
-    /* capability chips */
-    .capability-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 28px;
-    }
-    .capability-chip {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 14px;
-      padding: 6px 14px;
-      background: var(--bg2);
       border: 1px solid var(--border);
-      border-radius: 100px;
       color: var(--muted);
-      letter-spacing: 0.02em;
+      flex-shrink: 0;
     }
-    .capability-chip::before {
-      content: '→';
-      font-size: 10px;
-      color: var(--accent);
+    .fb-screen__id { display: block; min-width: 0; }
+    .project-page .fb-screen__name {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--text);
+      margin: 0;
+      max-width: none;
+    }
+    .project-page .fb-screen__meta {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.3;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 3px 0 0;
+      max-width: none;
     }
 
-    /* Milestone sections — h2 gets full white for extra emphasis */
-    .milestone .case-split__text h2,
-    .milestone h2 {
-      color: #ffffff;
-      font-size: 24px;
+    .project-page .fb-screen__caption {
+      display: block;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);        /* neutral — never the accent */
+      margin: 14px 0 0;
+      max-width: none;
     }
 
-    /* ── RESPONSIVE ── */
+    /* .project-page prefix out-specifies .content-section p (0,1,1), which
+       otherwise forces 16px/1.85 and its own colour onto all of these */
+    .project-page .fb-row__label {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      max-width: none;
+    }
+    .fb-decision + .fb-decision { margin-top: 22px; }
+    .project-page .fb-decision__title {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--text);
+      margin: 0 0 5px;
+      max-width: none;
+    }
+    .project-page .fb-decision__body {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-body);
+      margin: 0;
+      max-width: none;
+      text-wrap: pretty;
+    }
+
     @media (max-width: 900px) {
-      .overview-split,
-      .upload-split,
-      .ai-split,
-      .community-split { grid-template-columns: 1fr; }
-      .overview-split .screen-mockup { max-width: 180px; }
-      .ai-split .screen-mockup,
-      .community-split .screen-mockup { max-width: 100%; }
-      .upload-split .case-split__screen { justify-content: flex-start; }
-      .coach-phones { grid-template-columns: 1fr 1fr; }
-      .coach-phones-row { flex-wrap: wrap; gap: 24px; }
-      .coach-phones__connector { display: none; }
+      /* one column, media first, decisions directly below — normal flow only */
+      .fb-row,
+      .fb-row--single { grid-template-columns: 1fr; gap: 26px; }
+      .fb-screen-single { max-width: min(100%, 400px); }
+      .project-page h3.fb-insights-heading { margin-top: 56px; margin-bottom: 16px; }
     }
 
-    @media (max-width: 600px) {
-      .coach-phones { grid-template-columns: 1fr; max-width: 280px; }
-      .coach-phones-row .phone-item { flex: 0 0 calc(50% - 12px); }
+    @media (max-width: 768px) {
+      /* paired screens stack; 400px cap holds the 2x source gate (860/400) */
+      .fb-screens { grid-template-columns: 1fr; gap: 26px; }
+      .fb-screens .fb-screen { max-width: min(100%, 400px); }
     }
+
   </style>
 </head>
 <body>
@@ -379,6 +231,10 @@
           <dd>Studio Six B</dd>
         </div>
         <div class="project-attr">
+          <dt>Role</dt>
+          <dd>Product Designer</dd>
+        </div>
+        <div class="project-attr">
           <dt>Type</dt>
           <dd>Concept · End-to-end Design</dd>
         </div>
@@ -388,186 +244,294 @@
         </div>
       </dl>
       <p class="brief">
-        Feedback is a coaching app that lets athletes get timestamped, frame-accurate critique from AI, community, or a professional coach: asynchronously, with no scheduling required. Designed end-to-end as a concept project at Studio Six&nbsp;B.
+        Feedback is a concept mobile platform connecting athletes and coaches through video-based critique. Athletes can share a performance with the community or send it privately to a paid coach, with optional instant AI analysis. Human feedback stays tied to the relevant moments in the&nbsp;footage.
+      </p>
+      <p class="brief">
+        The product was conceived for athletes across sports. Surfing became the first use case because I know the problem from both sides, after 18 years as a surfer and five as a&nbsp;coach.
       </p>
     </header>
 
-    <!-- ── 1. PRODUCT OVERVIEW ── -->
-    <div class="case-split overview-split">
-      <div class="case-split__text">
-        <p class="section-label">The Product</p>
-        <h2>One upload. Three feedback channels.</h2>
-        <p>Access to quality coaching is limited by time zones, scheduling, and cost. Feedback is designed around a different model: upload once, receive critique at the frame level from three independent channels, on your own schedule. No session booking, no waiting for a reply window, no geographic&nbsp;constraint.</p>
-        <p>The core mechanic is the same across all three channels: feedback is anchored to specific moments in the footage, not delivered as a general&nbsp;impression.</p>
+    <!-- ── 2. PROBLEM STATEMENT ── -->
+    <div class="content-section fb-wide-section">
+      <p class="section-label">Problem Statement</p>
+      <h2>Frequent feedback is essential, but difficult to sustain</h2>
+      <div class="case-study-statement">
+        Improvement in individual sports requires frequent, specific feedback, but ongoing professional coaching is difficult for many athletes to&nbsp;sustain.
       </div>
-      <div class="case-split__screen">
-        <div class="screen-showcase">
-          <div class="screen-mockup">
-            <img src="../assets/images/feedback-home.jpg" alt="Feedback, home feed" width="430" height="932" loading="lazy" data-lightbox>
-          </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── 3. USER RESEARCH ── -->
+    <div class="content-section fb-wide-section">
+      <p class="section-label">User Research</p>
+      <h2>What I learned from athletes and coaches</h2>
+      <p>These findings came from conversations with surfers and coaches. Surfing became the first use case for a broader challenge shared across individual&nbsp;sports.</p>
+
+      <div class="case-study-compare">
+        <div class="case-study-compare__side">
+          <p class="case-study-compare__title">Athletes</p>
+          <p class="case-study-compare__lead">Athletes in individual sports need regular feedback to improve, but often rely on informal critique from friends or more experienced&nbsp;peers.</p>
+          <ul class="feature-list">
+            <li>Progress depends on frequent, specific critique</li>
+            <li>Ongoing professional coaching is a recurring expense many athletes cannot sustain for years</li>
+            <li>Athletes often keep videos of their performance and share them with friends or more experienced peers for informal feedback</li>
+          </ul>
+        </div>
+        <div class="case-study-compare__rule" aria-hidden="true"></div>
+        <div class="case-study-compare__side">
+          <p class="case-study-compare__title">Coaches</p>
+          <p class="case-study-compare__lead">Coaches need ways to build reputation and increase income without adding more physically demanding coaching&nbsp;hours.</p>
+          <ul class="feature-list">
+            <li>Building a trusted professional reputation takes time</li>
+            <li>Earning more often means taking on additional physically demanding coaching sessions</li>
+            <li>Public content and community feedback can help coaches demonstrate expertise and build trust</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="case-study-subheading fb-insights-heading">Key research insights</h3>
+      <div class="case-study-index">
+        <div class="case-study-index__item">
+          <span class="case-study-index__num">01</span>
+          <p class="case-study-index__title">Improvement requires recurring feedback</p>
+          <p class="case-study-index__body">Progress comes from many small corrections over time, while recurring professional coaching is difficult to sustain&nbsp;financially.</p>
+        </div>
+        <div class="case-study-index__item">
+          <span class="case-study-index__num">02</span>
+          <p class="case-study-index__title">The feedback-seeking behavior already exists</p>
+          <p class="case-study-index__body">Athletes in individual sports often keep videos of their performance and seek informal feedback from friends or more experienced peers. The behavior exists; reliable expertise is harder to&nbsp;access.</p>
+        </div>
+        <div class="case-study-index__item">
+          <span class="case-study-index__num">03</span>
+          <p class="case-study-index__title">A coach's expertise can scale; their physical time cannot</p>
+          <p class="case-study-index__body">Income is capped by the hours a coach's body can take. What they know carries no such&nbsp;cap.</p>
         </div>
       </div>
     </div>
 
     <hr class="divider">
 
-    <!-- ── 2. UPLOAD ── -->
-    <div class="case-split upload-split">
-      <div class="case-split__text">
-        <div class="step-indicator">
-          <span class="step-indicator__num" aria-hidden="true">1</span>
-          <p class="section-label">Submit a Performance</p>
-        </div>
-        <h2>Select, configure, send.</h2>
-        <p>Athletes pick a clip from their camera roll, describe the context: sport, level, what they want feedback on — and choose how to receive it: publicly from the community, privately from a coach, or immediately from AI. Each path starts from the same upload, but leads to a different feedback&nbsp;experience.</p>
+    <!-- ── 4. BUSINESS OPPORTUNITY ── -->
+    <div class="content-section fb-wide-section">
+      <p class="section-label">Business Opportunity</p>
+      <h2>Make feedback affordable for athletes and expertise scalable for coaches</h2>
+      <div class="case-study-statement">
+        Create an affordable feedback loop for athletes while allowing coaches to earn from their expertise without adding more physically demanding coaching&nbsp;hours.
       </div>
-      <div class="case-split__screen">
-        <div class="two-phones-upload">
-          <div class="phone-item">
-            <div class="screen-showcase">
-              <div class="screen-mockup">
-                <img src="../assets/images/feedback-upload-1.png" alt="Select clip" width="430" height="932" loading="lazy" data-lightbox>
-              </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── 5. SOLUTION ── -->
+    <div class="content-section fb-wide-section">
+      <p class="section-label">Solution</p>
+      <h2>One upload, multiple feedback paths</h2>
+      <p>At upload the athlete chooses where the clip goes &mdash; to the community or to a coach &mdash; and can switch on AI analysis alongside that choice. AI is not a third destination and not a step before or after one; it attaches to the upload&nbsp;itself.</p>
+
+      <div class="case-study-flow">
+        <div class="case-study-flow__source-row">
+          <div class="case-study-flow__node case-study-flow__node--accent">
+            <p class="case-study-flow__title">One uploaded <span class="case-study-flow__nowrap">performance</span></p>
+          </div>
+          <div class="case-study-flow__sidecar">
+            <span class="case-study-flow__sidecar-link" aria-hidden="true"></span>
+            <div class="case-study-flow__node case-study-flow__node--layer">
+              <p class="case-study-flow__title">+ AI analysis</p>
+              <p class="case-study-flow__meta">Instant &middot; Free &middot; Optional</p>
+              <p class="case-study-flow__body">A toggle at upload. Runs alongside either destination rather than replacing one.</p>
             </div>
-            <span class="phone-label">Select clip</span>
-          </div>
-          <div class="phone-item">
-            <div class="screen-showcase">
-              <div class="screen-mockup">
-                <img src="../assets/images/feedback-upload-2.png" alt="Configure feedback" width="430" height="932" loading="lazy" data-lightbox>
-              </div>
-            </div>
-            <span class="phone-label">Configure</span>
           </div>
         </div>
+
+        <div class="case-study-flow__pipe case-study-flow__pipe--accent" aria-hidden="true"></div>
+
+        <p class="case-study-flow__caption">Destination choice</p>
+
+        <div class="case-study-flow__fork case-study-flow__fork--two">
+          <div class="case-study-flow__node">
+            <p class="case-study-flow__title">Community</p>
+            <p class="case-study-flow__meta">Social &middot; Free</p>
+            <p class="case-study-flow__body">Published to the sport's community, where replies attach to the stretch of footage they describe rather than to the post.</p>
+          </div>
+          <div class="case-study-flow__node case-study-flow__node--accent">
+            <p class="case-study-flow__title">Coach</p>
+            <p class="case-study-flow__meta">Personal &middot; Paid</p>
+            <p class="case-study-flow__body">A private request to a chosen coach, answered on their own schedule. This is the one paid part of the product, priced in tokens.</p>
+          </div>
+        </div>
+
+        <p class="case-study-flow__note">Everything in the product is free except a personal review from a professional coach. Athletes buy tokens; coaches set their own token price based on experience, skill, ratings, and demand, and later convert what they earn into money. The wallet, purchase, and payout system sits outside the UI shown here.</p>
       </div>
+
+      <div class="case-study-statement">
+        Feedback is not another social network for athletes. It is an <em>improvement network</em> designed around practice, critique, and&nbsp;progress.
+      </div>
+
+      <p>The product&rsquo;s value comes from combining timeline-anchored critique, a sport-specific community, and paid professional coaching around the same uploaded&nbsp;performance.</p>
     </div>
 
     <hr class="divider">
 
-    <!-- ── 3. AI FEEDBACK ── -->
-    <div class="case-split ai-split milestone">
-      <div class="case-split__text">
-        <div class="instant-badge">Instant</div>
-        <div class="step-indicator">
-          <span class="step-indicator__num" aria-hidden="true">2</span>
-          <p class="section-label">AI Feedback</p>
-        </div>
-        <h2>Feedback before anyone else has seen it</h2>
-        <p>When an athlete enables AI analysis, structured feedback arrives the moment the upload completes — no waiting for a coach to respond, no waiting for the community to engage. The analysis identifies specific strengths and technique improvements, each pinned to the exact moment in the footage where they&nbsp;occur.</p>
-        <ul class="feature-list">
-          <li>Arrives the moment the upload completes, no scheduling required</li>
-          <li>No coach required, no additional cost</li>
-          <li>Feedback anchored to specific moments, not general impressions</li>
-          <li>Works standalone or alongside community and coach reviews</li>
-        </ul>
-      </div>
-      <div class="case-split__screen">
-        <div class="screen-showcase">
-          <div class="screen-mockup">
-            <img src="../assets/images/feedback-upload-3.png" alt="AI feedback result" width="430" height="932" loading="lazy" data-lightbox>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <hr class="divider">
-
-    <!-- ── 4. COMMUNITY FEEDBACK ── -->
-    <div class="case-split community-split reverse milestone">
-      <div class="case-split__text">
-        <div class="step-indicator">
-          <span class="step-indicator__num" aria-hidden="true">3</span>
-          <p class="section-label">Community Feedback</p>
-        </div>
-        <h2>Not a comment section. A critique tool.</h2>
-        <p>Athletes can publish a clip to the community and receive feedback from other athletes and coaches. What makes this different from a social feed is how the feedback is structured: every comment is timestamped and anchored to a specific frame in the&nbsp;video.</p>
-        <p>Scrubbing through the footage surfaces comments exactly where they apply. Multiple reviewers annotate independently, and the result is a composite critique across perspectives, not a stream of generic&nbsp;reactions.</p>
-        <ul class="feature-list">
-          <li>Comments anchored to specific frames, not the video in general</li>
-          <li>Multiple reviewers, each annotating independently</li>
-          <li>Coaches and athletes participate in the same community layer</li>
-        </ul>
-        <div class="timeline-visual">
-          <div class="timeline-entry">
-            <span class="timeline-entry__time">0:04</span>
-            <span class="timeline-entry__text">Drop your back shoulder here</span>
-          </div>
-          <div class="timeline-entry">
-            <span class="timeline-entry__time">0:11</span>
-            <span class="timeline-entry__text">Good weight transfer on the turn</span>
-          </div>
-          <div class="timeline-entry">
-            <span class="timeline-entry__time">0:18</span>
-            <span class="timeline-entry__text">Arms too high going into the snap</span>
-          </div>
-        </div>
-      </div>
-      <div class="case-split__screen">
-        <div class="screen-showcase">
-          <div class="screen-mockup">
-            <img src="../assets/images/feedback-community.png" alt="Community post with timestamped feedback" width="430" height="932" loading="lazy" data-lightbox>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <hr class="divider">
-
-    <!-- ── 5. COACH FEEDBACK ── -->
-    <div class="content-section milestone" style="max-width: 100%;">
-      <div class="step-indicator">
-        <span class="step-indicator__num" aria-hidden="true">4</span>
-        <p class="section-label">Professional Coaching</p>
-      </div>
-      <h2>A real coaching session, delivered asynchronously</h2>
-      <p>Athletes initiate a review through a direct message: no forms, no booking flow. The coach receives it as a structured feedback request and responds on their own schedule. The review interface lets coaches annotate directly on the timeline, numbered and timestamped at specific frames, with the option to attach reference images or demo&nbsp;clips.</p>
-      <p>The athlete receives the full breakdown: every note in context on the video timeline, plus a written&nbsp;summary.</p>
-      <div class="capability-chips">
-        <span class="capability-chip">Written feedback &amp; summary</span>
-        <span class="capability-chip">Timeline-anchored annotations</span>
-        <span class="capability-chip">Supporting images</span>
-        <span class="capability-chip">Reference videos</span>
-        <span class="capability-chip">Numbered notes per frame</span>
-      </div>
-    </div>
-
-    <div class="coach-phones-row">
-      <div class="phone-item">
-        <div class="screen-showcase">
-          <div class="screen-mockup">
-            <img src="../assets/images/feedback-chats.png" alt="Messages, coach inbox" width="430" height="930" loading="lazy" data-lightbox>
-          </div>
-        </div>
-        <span class="phone-label">Messages</span>
-      </div>
-      <div class="coach-phones__connector"></div>
-      <div class="phone-item">
-        <div class="screen-showcase">
-          <div class="screen-mockup">
-            <img src="../assets/images/feedback-coach-request.png" alt="Athlete sends feedback request" width="430" height="930" loading="lazy" data-lightbox>
-          </div>
-        </div>
-        <span class="phone-label">Request sent</span>
-      </div>
-      <div class="coach-phones__connector"></div>
-      <div class="phone-item">
-        <div class="screen-showcase">
-          <div class="screen-mockup">
-            <img src="../assets/images/feedback-coach-review.jpg" alt="Coach review, timestamped annotations" width="430" height="932" loading="lazy" data-lightbox>
-          </div>
-        </div>
-        <span class="phone-label">Coach review</span>
-      </div>
-    </div>
-
-    <hr class="divider">
-
+    <!-- ── 6. FINAL DESIGN ── -->
     <div class="content-section">
-      <p class="section-label">Why Async</p>
-      <p>As someone who has surfed for 18 years and previously worked as a coach, I understood the problem from the inside. That background shaped the core product decision: useful sports feedback usually depends on reviewing recorded movement, not talking through it in the&nbsp;moment.</p>
-      <p>Athletes train, record, and review. The critique that actually changes technique is tied to a specific frame - a body position, a transition point, a mistake that happens in under a second. Asynchronous feedback supports that process directly: an athlete uploads footage, a coach or the AI responds with notes pinned to the exact moment, and the athlete can review it as many times as they&nbsp;need.</p>
-      <p>The design challenge was building a platform around that model in a way that felt structured without being rigid. Three feedback channels - AI, community, and coach - each serving a different need, all anchored to the same footage and the same&nbsp;moment.</p>
+      <p class="section-label">Final Design</p>
+      <h2>Where the model becomes an interface</h2>
+      <p>The screens below are the current state of the interface. I came back to it about a year and a half after the original work and reworked typography, hierarchy, spacing, and consistency &mdash; a craft pass on the UI, not a new round of product&nbsp;decisions.</p>
+    </div>
+
+    <!-- 6.A — Home -->
+    <div class="content-section fb-wide-section">
+      <h3 class="case-study-subheading">A. Home</h3>
+      <div class="fb-row fb-row--single">
+        <div class="fb-row__media">
+          <div class="fb-screen-single">
+            <div class="screen-showcase">
+              <div class="screen-mockup">
+                <img src="../assets/images/feedback-home.png" alt="Feedback home screen: a personal greeting, a summary of new feedback and comments on the athlete's recent post, an ask-anything prompt, a suggested technique lesson, and a notifications list" width="860" height="1864" loading="lazy" data-lightbox>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fb-row__text">
+          <p class="fb-row__label">Design decisions</p>
+          <div class="fb-decision">
+            <p class="fb-decision__title">Own activity first</p>
+            <p class="fb-decision__body">The home screen centers feedback and activity around the athlete&rsquo;s own uploads rather than a generic content&nbsp;feed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 6.B — Upload and instant AI -->
+    <div class="content-section fb-wide-section">
+      <h3 class="case-study-subheading">B. Upload and instant AI</h3>
+      <div class="fb-row">
+        <div class="fb-row__media">
+          <div class="fb-screens">
+            <div class="fb-screen">
+            <div class="screen-showcase">
+              <div class="screen-mockup">
+                <img src="../assets/images/feedback-upload.png" alt="Upload screen: the selected clip, an optional caption, a Get feedback from choice between Your coaches and The community, an optional Get AI feedback toggle, and a send button" width="860" height="1864" loading="lazy" data-lightbox>
+              </div>
+            </div>
+            <span class="fb-screen__caption">Upload</span>
+          </div>
+            <div class="fb-screen">
+            <div class="screen-showcase">
+              <div class="screen-mockup">
+                <img src="../assets/images/feedback-ai.png" alt="AI feedback screen: the uploaded clip, an intro message, a Strengths card listing smooth transitions and posture, and an Areas to improve card noting slow wave entry and knee bend" width="860" height="1864" loading="lazy" data-lightbox>
+              </div>
+            </div>
+            <span class="fb-screen__caption">AI feedback</span>
+          </div>
+          </div>
+        </div>
+        <div class="fb-row__text">
+          <p class="fb-row__label">Design decisions</p>
+          <div class="fb-decision">
+            <p class="fb-decision__title">One submission flow</p>
+            <p class="fb-decision__body">Community publishing and private coaching are selected inside the same upload&nbsp;form.</p>
+          </div>
+          <div class="fb-decision">
+            <p class="fb-decision__title">AI as an add-on</p>
+            <p class="fb-decision__body">AI can be enabled alongside either human-feedback&nbsp;destination.</p>
+          </div>
+          <div class="fb-decision">
+            <p class="fb-decision__title">An immediate general read</p>
+            <p class="fb-decision__body">AI provides a general response as soon as the upload is&nbsp;complete.</p>
+          </div>
+          <div class="fb-decision">
+            <p class="fb-decision__title">Clear feedback categories</p>
+            <p class="fb-decision__body">Strengths and areas to improve are separated into two distinct&nbsp;blocks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 6.C — Community and professional coaching -->
+    <div class="content-section fb-wide-section">
+      <h3 class="case-study-subheading">C. Community and professional coaching</h3>
+      <div class="fb-row">
+        <div class="fb-row__media">
+          <div class="fb-screens">
+            <div class="fb-screen">
+            <div class="fb-screen__header">
+              <span class="fb-screen__icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.5 20v-1.4a3.4 3.4 0 0 0-3.4-3.4H6.9a3.4 3.4 0 0 0-3.4 3.4V20"/><circle cx="9.5" cy="8" r="3.1"/><path d="M20.5 20v-1.4a3.4 3.4 0 0 0-2.6-3.3"/><path d="M15.2 4.9a3.1 3.1 0 0 1 0 6"/></svg></span>
+              <span class="fb-screen__id">
+                <span class="fb-screen__name">Community feedback</span>
+                <span class="fb-screen__meta">Multiple reviewers</span>
+              </span>
+            </div>
+            <div class="screen-showcase">
+              <div class="screen-mockup">
+                <img src="../assets/images/feedback-community.png" alt="Community feedback screen: a published clip whose scrubber carries coloured segments marking where feedback exists, above a comment list where each reply shows a time range such as 0:05 to 0:14 beside a clock icon" width="860" height="1864" loading="lazy" data-lightbox>
+              </div>
+            </div>
+          </div>
+            <div class="fb-screen">
+            <div class="fb-screen__header">
+              <span class="fb-screen__icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.5 20v-1.5a3.8 3.8 0 0 0-3.8-3.8H9.3a3.8 3.8 0 0 0-3.8 3.8V20"/><circle cx="12" cy="8" r="3.4"/></svg></span>
+              <span class="fb-screen__id">
+                <span class="fb-screen__name">Coach review</span>
+                <span class="fb-screen__meta">One professional</span>
+              </span>
+            </div>
+            <div class="screen-showcase">
+              <div class="screen-mockup">
+                <img src="../assets/images/feedback-coach.png" alt="Coach review screen: the clip with coloured markers on the scrubber, three numbered notes timestamped at 00:15, 00:40 and 00:56, and a written Summary carrying an attachment chip" width="860" height="1864" loading="lazy" data-lightbox>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="fb-row__text">
+          <p class="fb-row__label">Design decisions</p>
+          <div class="fb-decision">
+            <p class="fb-decision__title">Feedback on the timeline</p>
+            <p class="fb-decision__body">Colored segments and time ranges connect community feedback to the movement being&nbsp;discussed.</p>
+          </div>
+          <div class="fb-decision">
+            <p class="fb-decision__title">Multiple perspectives</p>
+            <p class="fb-decision__body">Feedback from several reviewers stays organized around the same uploaded&nbsp;performance.</p>
+          </div>
+          <div class="fb-decision">
+            <p class="fb-decision__title">Moment-specific coaching</p>
+            <p class="fb-decision__body">Coach notes are numbered and timestamped to connect each point to the&nbsp;clip.</p>
+          </div>
+          <div class="fb-decision">
+            <p class="fb-decision__title">Supporting context</p>
+            <p class="fb-decision__body">An attachment and written summary complement the individual moment-specific&nbsp;notes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── 7. REFLECTION ── -->
+    <div class="content-section fb-wide-section">
+      <p class="section-label">Reflection</p>
+      <h2>What I would keep, and what is still open</h2>
+
+      <div class="case-study-ledger">
+        <div class="case-study-ledger__row">
+          <p class="case-study-ledger__label">Strongest decision</p>
+          <p class="case-study-ledger__body">Building <strong>timeline-anchored community critique</strong> around one shared performance. The timestamped annotation is not remarkable by itself &mdash; what the product is actually made of is putting that critique, a sport-specific community, AI analysis, and paid professional coaching around the same&nbsp;upload.</p>
+        </div>
+        <div class="case-study-ledger__row">
+          <p class="case-study-ledger__label">Current limitation</p>
+          <p class="case-study-ledger__body">The <strong>token and payment mechanics were never fully represented in the UI</strong>. Coaches set their own price and convert earnings in the model, but the wallet, purchase, and payout flows were not designed &mdash; so the paid half of the product is described rather than&nbsp;shown.</p>
+        </div>
+        <div class="case-study-ledger__row">
+          <p class="case-study-ledger__label">To validate next</p>
+          <p class="case-study-ledger__body">Whether athletes will <strong>pay</strong> for an asynchronous review, whether they <strong>upload more than once</strong>, and whether the <strong>upload-to-feedback loop</strong> holds when no coach is involved. These are open questions rather than findings: Feedback stayed a concept and was never&nbsp;shipped.</p>
+        </div>
+      </div>
     </div>
 
     <nav class="project-nav">
@@ -583,7 +547,7 @@
       <a href="mobile-dashboard.html" class="project-nav__item project-nav__item--next">
         <div>
           <p class="np-label">Next</p>
-          <p class="np-title">Spines - Mobile Dashboard</p>
+          <p class="np-title">Spines - Mobile Dashboard Redesign</p>
         </div>
         <span class="np-arrow">
           <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h16"/><path d="M11 1l6 6-6 6"/></svg>
