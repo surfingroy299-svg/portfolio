@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spines - Mobile Dashboard · Roy Vanounou</title>
+  <title>Spines - Mobile Dashboard Redesign · Roy Vanounou</title>
   <meta name="description" content="Case study: Spines Mobile Dashboard, adaptive three-state dashboard redesign for authors.">
   <!-- Open Graph -->
   <meta property="og:type"         content="website">
@@ -25,7 +25,90 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
   <link rel="stylesheet" href="../style.css">
   <style>
-    /* phone screens — capped width, top-aligned */
+    /* Blue methodology labels — this page only. The .project-page prefix
+       out-specifies .content-section p (0,1,1), which otherwise washes them to
+       body white. The neutral "State N:" labels sit in .case-split__text and
+       are deliberately left alone. */
+    .project-page .content-section > .section-label { color: var(--accent); }
+
+    /* Shared .content-section caps at 760px — right for prose, too narrow for
+       the Before row. Paragraphs keep their own 680px max-width. */
+    .md-wide { max-width: 100%; }
+    .md-wide > h2 { max-width: 760px; }
+
+    /* even out multi-line headings so none strands a lone word. h1 is included
+       because "Redesign" pushes the title onto a second line at >=1024px, and
+       without balancing it strands that single word (649px + 226px). */
+    .project-page h1,
+    .project-page h2,
+    .project-page h3 { text-wrap: balance; }
+
+    /* ── Before: the full old screen, with a sticky analysis column.
+       align-items:start + position:sticky mirrors the .wf-layout/.wf-map
+       pattern already used on workflow.html. ── */
+    .md-before {
+      display: grid;
+      grid-template-columns: 320px minmax(240px, 1fr);
+      gap: 56px;
+      align-items: start;
+      margin-top: 36px;
+    }
+    .md-before__figure { min-width: 0; }
+    .md-before__figure .screen-mockup { border-radius: 22px; }
+    .md-before__analysis {
+      position: sticky;
+      top: 100px;              /* clears the fixed 68px nav */
+      min-width: 0;
+    }
+    .project-page .md-caption {
+      font-size: 12px;
+      line-height: 1.4;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 16px 0 0;
+      max-width: none;
+    }
+
+    .md-block + .md-block { margin-top: 32px; }
+    .project-page .md-block__title {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin: 0 0 12px;
+      max-width: none;
+    }
+    .project-page .md-block__body {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-body);
+      margin: 0;
+      /* the analysis column runs to 784px at 1440; without a cap the measure
+         hits ~106ch, well past the 65-75ch readable range */
+      max-width: 540px;
+      text-wrap: pretty;
+    }
+    .md-block .feature-list { margin-top: 0; max-width: 540px; }
+    .md-block .feature-list li { font-size: 15px; line-height: 1.65; }
+
+    /* ── What needed to change: three principles on top rules ── */
+    .md-principles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0 36px;
+      margin-top: 36px;
+    }
+    .md-principles .md-block {
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+    }
+    .md-principles .md-block + .md-block { margin-top: 0; }
+
+    /* phone screens — capped width, top-aligned (existing pattern) */
     .case-split.phone-split {
       grid-template-columns: 1fr 1fr;
       align-items: start;
@@ -39,9 +122,23 @@
       max-width: 300px;
       width: 100%;
     }
+
+    .md-last { margin-bottom: 0; }
+
     @media (max-width: 900px) {
+      /* one column, image first, analysis below in normal flow */
+      .md-before { grid-template-columns: 1fr; gap: 28px; }
+      .md-before__analysis { position: static; }
+      .md-principles { grid-template-columns: 1fr; gap: 28px; }
+      .md-principles .md-block + .md-block { margin-top: 0; }
       .case-split.phone-split { grid-template-columns: 1fr; }
-      .case-split.phone-split .screen-mockup { max-width: 100%; border-radius: 24px; }
+      .case-split.phone-split .screen-mockup { border-radius: 24px; }
+
+      /* Cap every stacked figure at 400px. Without this the column is ~775px
+         at the 900 breakpoint, which upscales the 430px phone exports to 0.55x
+         — blurry on any display — and drops the 880px old screen to 1.14x. */
+      .md-before__figure,
+      .case-split.phone-split .screen-mockup { max-width: min(100%, 400px); }
     }
   </style>
 </head>
@@ -76,7 +173,7 @@
     <a href="../index.html" class="back-link">Work</a>
 
     <header class="project-header">
-      <h1>Spines - Mobile Dashboard</h1>
+      <h1>Spines - Mobile Dashboard Redesign</h1>
       <dl class="project-attrs">
         <div class="project-attr">
           <dt>Company</dt>
@@ -92,15 +189,88 @@
         </div>
       </dl>
       <p class="brief">
-        The existing dashboard was a single static view that didn't change based on where an author was in their publishing process. The same screen served someone just starting out and someone whose book had already shipped. The redesign replaced it with three dashboard states: library, in progress, and published. Each has a distinct focal point matched to that stage, so the interface always reflects where the author actually&nbsp;is.
+        The Spines author dashboard brings together book status, production progress, and publishing tools. I redesigned its mobile experience to make a complex publishing journey easier to understand and act&nbsp;on.
       </p>
     </header>
 
-    <!-- State 1 -->
+    <!-- ── 1. BEFORE ── -->
+    <div class="content-section md-wide">
+      <p class="section-label">Before</p>
+      <h2>One dashboard tried to do everything</h2>
+      <p>The dashboard as it existed, captured end to end &mdash; one continuous scroll, shown here at full&nbsp;length.</p>
+
+      <div class="md-before">
+        <div class="md-before__figure">
+          <div class="screen-showcase">
+            <div class="screen-mockup">
+              <img src="../assets/images/dashboard-old.png" alt="The Spines mobile dashboard before the redesign: one continuous scroll containing a book-switching strip, the current book with its cover, a full-width upgrade button, a five-stage production tracker, an audiobook sample player, and an eight-tile grid of publishing tools" width="880" height="3426" loading="lazy" data-lightbox>
+            </div>
+          </div>
+          <p class="md-caption">440 &times; 1,713 px &mdash; one continuous scroll</p>
+        </div>
+
+        <div class="md-before__analysis">
+          <div class="md-block">
+            <p class="md-block__title">What existed</p>
+            <p class="md-block__body">One scrolling view carried everything at once: switching between books, the current book, upgrade messaging, a five-stage production tracker, audiobook playback, and an eight-tile grid of publishing&nbsp;tools.</p>
+          </div>
+
+          <div class="md-block">
+            <p class="md-block__title">What was not working</p>
+            <ul class="feature-list">
+              <li>The upgrade button carries the strongest visual emphasis on the screen, ahead of the author's current stage and next action</li>
+              <li>The production stepper is too small and compressed to communicate progress clearly</li>
+              <li>The audiobook sample interrupts the main journey, sitting between the production tracker and the tools</li>
+              <li>Cover design, formatting, and proofreading each appear in both the production stepper and the tool grid, and the audiobook appears once as an inline sample player and again as a separate tool tile</li>
+            </ul>
+          </div>
+
+          <div class="md-block">
+            <p class="md-block__title">What needed to be preserved</p>
+            <p class="md-block__body">Book context, progress visibility, and tool access all still mattered and had to survive the redesign. What had to go was the duplication &mdash; and a flat hierarchy that gave an upgrade prompt greater visual weight than the next production step. The fix was to keep all three, remove the repeats, and let the hierarchy change with each publishing&nbsp;state.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── 2. WHAT NEEDED TO CHANGE ── -->
+    <div class="content-section md-wide">
+      <p class="section-label">What needed to change</p>
+      <h2>Turn one overloaded screen into a state-based experience</h2>
+      <p>The previous dashboard was a compressed version of the web experience &mdash; most of the same information, reduced to fit a smaller screen. The challenge was not to add states. It was to decide what to remove, and to organize what remained around what an author needs at each&nbsp;stage.</p>
+
+      <div class="md-principles">
+        <div class="md-block">
+          <p class="md-block__title">Separate the states</p>
+          <p class="md-block__body">A library, a book in production, and a published book are three different situations. One layout could not rank all three at&nbsp;once.</p>
+        </div>
+        <div class="md-block">
+          <p class="md-block__title">Make the next step obvious</p>
+          <p class="md-block__body">Each state leads with a single action tied to the current stage, so the next move is never something the author has to look&nbsp;for.</p>
+        </div>
+        <div class="md-block">
+          <p class="md-block__title">Keep tools available, but secondary</p>
+          <p class="md-block__body">The publishing tools stay one tap away in a persistent bar instead of repeating work already shown in the progress&nbsp;area.</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ── 3. FINAL DESIGN ── -->
+    <div class="content-section">
+      <p class="section-label">Final design</p>
+      <h2>A dashboard that changes with the publishing journey</h2>
+      <p>The same dashboard resolves differently depending on where the book&nbsp;is.</p>
+    </div>
+
+    <!-- 3.A -->
     <div class="case-split phone-split">
       <div class="case-split__text">
         <p class="section-label">State 1: Library</p>
-        <h2>A clear entry point</h2>
+        <h3 class="case-study-subheading">A clear entry point</h3>
         <p>Authors land on a library view showing all their books and each one's current status at a glance. The decision to lead with the library, rather than a single active project, was intentional: most authors at Spines have more than one title at different stages, and a list view makes that visible without extra&nbsp;navigation.</p>
         <ul class="feature-list">
           <li>Published vs. in-progress status immediately visible</li>
@@ -119,11 +289,11 @@
 
     <hr class="divider">
 
-    <!-- State 2 -->
+    <!-- 3.B -->
     <div class="case-split phone-split reverse">
       <div class="case-split__text">
         <p class="section-label">State 2: In Progress</p>
-        <h2>Always know the next step</h2>
+        <h3 class="case-study-subheading">Always know the next step</h3>
         <p>For active projects, the dashboard is built around one question: what does the author need to do right now? A single primary action points to the current stage. A vertical timeline below it shows the full pipeline, so authors can see progress without having to navigate away from the&nbsp;screen.</p>
         <ul class="feature-list">
           <li>Prominent current-stage action, no hunting required</li>
@@ -142,11 +312,11 @@
 
     <hr class="divider">
 
-    <!-- State 3 -->
+    <!-- 3.C -->
     <div class="case-split phone-split">
       <div class="case-split__text">
         <p class="section-label">State 3: Published</p>
-        <h2>From production to growth</h2>
+        <h3 class="case-study-subheading">From production to growth</h3>
         <p>Once a book is live, production is done and the dashboard reflects that. The interface shifts focus entirely: retail channels, marketing tools, and the author's next move. The same screen that tracked progress now points forward toward growth and the next&nbsp;project.</p>
         <ul class="feature-list">
           <li>Direct links to Amazon and other retail channels</li>
@@ -165,17 +335,9 @@
 
     <hr class="divider">
 
-    <div class="content-section">
-      <p class="section-label">The Structure</p>
-      <p>The previous mobile dashboard was a compressed version of the web experience. Most of the same information, reduced to fit a smaller screen. The design challenge was not to add states - it was to decide what to&nbsp;remove.</p>
-      <p>On mobile, an author should be able to check their book in seconds. The redesign was built around one question: what does the author actually need to know right now, and what can be left out? That meant cutting detail that is useful on desktop but adds noise on mobile - and organizing what remained around three clear situations: a book in progress, a published book, and the library&nbsp;view.</p>
-      <p>The three-state model came from deciding what matters at each stage, not from exposing the production system in smaller&nbsp;form.</p>
-    </div>
-
-    <hr class="divider">
-
-    <div class="content-section" style="margin-bottom: 0;">
+    <div class="content-section md-last">
       <p class="section-label">Outcome</p>
+      <h2>An approved direction for the mobile experience</h2>
       <p>The redesign established an approved product direction for the mobile author experience. The three-state model replaces a static single-view dashboard with one that reflects where the author actually is in the publishing journey, rather than showing the same information at every&nbsp;stage.</p>
     </div>
 
