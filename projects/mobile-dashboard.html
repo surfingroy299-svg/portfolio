@@ -140,6 +140,97 @@
       .md-before__figure,
       .case-split.phone-split .screen-mockup { max-width: min(100%, 400px); }
     }
+
+    /* ── States 1-2 — the library and the active book as one pairing.
+       Five flat grid children placed explicitly per breakpoint: desktop groups
+       both copy parts in a column beside the phones, mobile interleaves each
+       part under its own screen. Same DOM either way, nothing duplicated. ── */
+    .md-states {
+      display: grid;
+      grid-template-columns: minmax(0, 300px) minmax(0, 300px) minmax(424px, 1fr);
+      grid-template-rows: auto auto 1fr;
+      column-gap: 24px;
+      row-gap: 28px;
+      align-items: start;
+      margin-bottom: 80px;              /* matches .case-split */
+    }
+    .md-state--library  { grid-column: 1; grid-row: 1 / 4; }
+    .md-state--progress { grid-column: 2; grid-row: 1 / 4; }
+    /* 24px column-gap + 24px padding = a 48px gutter before the prose, while
+       the two phones stay 24px apart so they still read as a pair */
+    .md-states__head    { grid-column: 3; grid-row: 1; padding-left: 24px; }
+    .md-copy--library   { grid-column: 3; grid-row: 2; padding-left: 24px; }
+    .md-copy--progress  { grid-column: 3; grid-row: 3; padding-left: 24px; }
+
+    .md-state, .md-copy { min-width: 0; }
+    .md-state .screen-mockup { border-radius: 26px; }
+    .project-page .md-states__head { margin-bottom: 0; }   /* row-gap owns the spacing */
+
+    .project-page .md-copy p {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--text-body);
+      max-width: 620px;
+      text-wrap: pretty;
+    }
+    .md-copy .feature-list { margin-top: 16px; max-width: 620px; }   /* matches .case-split__text */
+
+    /* Neutral, and one tier below the blue methodology labels. The number
+       prefix is the only difference: numbered = a screen, unnumbered = its copy.
+       Element-qualified and placed last: the labels are <p>, so .md-copy p above
+       matches them too and would otherwise win on specificity and order. */
+    .project-page p.md-state__label,
+    .project-page p.md-copy__label {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 12px;
+      max-width: none;
+    }
+
+    /* Tablet — the pair centres, the prose keeps the page's own left edge and
+       full width so the block never reads as a centred island. */
+    @media (max-width: 1200px) {
+      .md-states {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-rows: auto auto auto auto;
+        row-gap: 32px;
+      }
+      .md-states__head    { grid-column: 1 / -1; grid-row: 1; padding-left: 0; }
+      /* Pinned to the inner edges so the pair centres and stays 24px apart.
+         The width is definite rather than a max-width: an auto margin (like
+         justify-self) sizes the item to fit-content, and the width:100% image
+         contributes nothing to max-content, which collapses each screen to the
+         width of its own label. max-width:100% then yields to a narrower cell. */
+      .md-state--library  { grid-column: 1; grid-row: 2;
+                            width: 300px; max-width: 100%; margin-left: auto; }
+      .md-state--progress { grid-column: 2; grid-row: 2;
+                            width: 300px; max-width: 100%; margin-right: auto; }
+      .md-copy--library   { grid-column: 1 / -1; grid-row: 3; padding-left: 0; }
+      .md-copy--progress  { grid-column: 1 / -1; grid-row: 4; padding-left: 0; }
+    }
+
+    /* Mobile — each part reads directly under the screen it describes */
+    @media (max-width: 640px) {
+      .md-states {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: repeat(5, auto);
+        row-gap: 24px;
+      }
+      .md-states__head    { grid-column: 1; grid-row: 1; }
+      .md-state--library  { grid-column: 1; grid-row: 2;
+                            width: 400px; max-width: 100%; margin-left: 0; }
+      .md-copy--library   { grid-column: 1; grid-row: 3; }
+      .md-state--progress { grid-column: 1; grid-row: 4;
+                            width: 400px; max-width: 100%; margin-right: auto;
+                            margin-top: 16px; }   /* opens the part boundary */
+      .md-copy--progress  { grid-column: 1; grid-row: 5; }
+      .md-state .screen-mockup { border-radius: 24px; }
+      .md-copy__label { display: none; }   /* the screen label above already names it */
+    }
   </style>
 </head>
 <body>
@@ -266,47 +357,44 @@
       <p>The same dashboard resolves differently depending on where the book&nbsp;is.</p>
     </div>
 
-    <!-- 3.A -->
-    <div class="case-split phone-split">
-      <div class="case-split__text">
-        <p class="section-label">State 1: Library</p>
-        <h3 class="case-study-subheading">A clear entry point</h3>
-        <p>Authors land on a library view showing all their books and each one's current status at a glance. The decision to lead with the library, rather than a single active project, was intentional: most authors at Spines have more than one title at different stages, and a list view makes that visible without extra&nbsp;navigation.</p>
-        <ul class="feature-list">
-          <li>Published vs. in-progress status immediately visible</li>
-          <li>Minimal, scannable list layout</li>
-          <li>Direct entry point to start a new title</li>
-        </ul>
-      </div>
-      <div class="case-split__screen">
+    <!-- 3.A+B — states 1 and 2 as one pairing, sharing a single explanation -->
+    <div class="md-states">
+      <h3 class="md-states__head case-study-subheading">From the library to the next required action</h3>
+
+      <div class="md-state md-state--library">
+        <p class="md-state__label">1 &middot; Library</p>
         <div class="screen-showcase">
           <div class="screen-mockup">
             <img src="../assets/images/dashboard-library.png" alt="Library state" width="430" height="932" loading="lazy" data-lightbox>
           </div>
         </div>
       </div>
-    </div>
 
-    <hr class="divider">
-
-    <!-- 3.B -->
-    <div class="case-split phone-split reverse">
-      <div class="case-split__text">
-        <p class="section-label">State 2: In Progress</p>
-        <h3 class="case-study-subheading">Always know the next step</h3>
-        <p>For active projects, the dashboard is built around one question: what does the author need to do right now? A single primary action points to the current stage. A vertical timeline below it shows the full pipeline, so authors can see progress without having to navigate away from the&nbsp;screen.</p>
+      <div class="md-copy md-copy--library">
+        <p class="md-copy__label">Library</p>
+        <p>The library gives authors a clear entry point across their titles, with each book's status visible at a&nbsp;glance.</p>
         <ul class="feature-list">
-          <li>Prominent current-stage action, no hunting required</li>
-          <li>Step-by-step timeline with clear progress indicators</li>
-          <li>Plan and audiobook access without disrupting the flow</li>
+          <li>Clear book status and direct entry from the library</li>
         </ul>
       </div>
-      <div class="case-split__screen">
+
+      <div class="md-state md-state--progress">
+        <p class="md-state__label">2 &middot; In Progress</p>
         <div class="screen-showcase">
           <div class="screen-mockup">
             <img src="../assets/images/dashboard-inprogress.png" alt="In progress state" width="434" height="936" loading="lazy" data-lightbox>
           </div>
         </div>
+      </div>
+
+      <div class="md-copy md-copy--progress">
+        <p class="md-copy__label">In Progress</p>
+        <p>Once a book is active, the dashboard shifts its focus to the current production stage: one primary action shows what needs to happen next, while a vertical timeline keeps the full publishing process&nbsp;visible.</p>
+        <ul class="feature-list">
+          <li>One primary action tied to the current production stage</li>
+          <li>A step-by-step timeline keeps progress visible without leaving the screen</li>
+          <li>Secondary tools remain accessible without competing with the current task</li>
+        </ul>
       </div>
     </div>
 
