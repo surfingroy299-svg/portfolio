@@ -34,6 +34,8 @@
   </script>
   <style>
     /* Hero — the cover frame opens the page, wider than the prose column */
+    .project-page .brief + .brief { margin-top: 18px; }
+
     /* Lead — the laptop and the way into it read as one thing. The cover export
        is already transparent, so the machine sits on the page with no panel. */
     .qv-lead { display: grid; grid-template-columns: 7fr 3fr; align-items: center; column-gap: 44px; margin: 0 0 72px; }
@@ -297,7 +299,10 @@
         </div>
       </dl>
       <p class="brief">
-        Surfers can describe exactly how a board feels - sluggish through turns, slow into waves, unstable underfoot. Almost none can turn that into a category, a set of dimensions, and a shortlist worth paying for. Quiver asks nine plain questions about how somebody surfs, reads them into a structured profile, and returns a size range with three genuinely different boards and the reasoning attached. I designed and built it end to end: intake, interpretation, sizing, and the comparison&nbsp;experience.
+        I have surfed for nearly nineteen years, worked in surf shops, taught beginners, and helped hundreds of people choose a board across a counter. The conversation was always the same shape: a surfer could tell me exactly how they surfed, what was holding them back and what they wanted more of &mdash; and none of it turned cleanly into a category, a volume and a length. That translation was something I did in my head, over and over, one surfer at a&nbsp;time.
+      </p>
+      <p class="brief">
+        Quiver is that translation written down. Nine plain questions about how somebody surfs, read into a structured profile, returning a size range and three genuinely different boards with the reasoning attached. I designed and built it end to end: intake, interpretation, sizing and the comparison&nbsp;experience.
       </p>
     </header>
 
@@ -335,7 +340,7 @@
     <div class="content-section qv-wide">
       <p class="section-label">Research &amp; Discovery</p>
       <h2>Four questions, before any screen</h2>
-      <p>None of this was user research. It was exploratory: reading other products, costing approaches, weighing&nbsp;trade-offs.</p>
+      <p>The surfing side of this I already knew. What I did not know was how to build it, so the discovery work went into the product rather than the domain: reading other interfaces, costing approaches, weighing&nbsp;trade-offs.</p>
 
       <div class="case-study-compare">
         <div class="case-study-compare__side">
@@ -687,8 +692,8 @@
     <!-- Iterations, Delivery & Reflection -->
     <div class="content-section" style="margin-bottom: 0;">
       <p class="section-label">Reflection</p>
-      <h2>What I&rsquo;d change, and what isn&rsquo;t real yet</h2>
-      <p>Building the reasoning before the interface was the decision that paid off most. The honest parts &mdash; the widened range, the preserved ambiguity, the disclosure &mdash; came out of that order rather than being added to&nbsp;it.</p>
+      <h2>Knowing it is not the same as writing it down</h2>
+      <p>Nineteen years of answering this across a counter did not survive contact with a rule engine. Every shortcut I took in conversation had to become an explicit precedence, a boundary, or an admission of uncertainty. Building the reasoning before the interface is what forced that, and the honest parts &mdash; the widened range, the preserved ambiguity &mdash; came out of the order rather than being added to&nbsp;it.</p>
 
       <div class="case-study-ledger">
         <div class="case-study-ledger__row">
@@ -704,13 +709,13 @@
           <p class="case-study-ledger__body">A catalogue worth matching against. The dataset is <strong>one brand and ten models</strong>, with gaps in the fields matching would need &mdash; so that layer stayed a&nbsp;specification.</p>
         </div>
         <div class="case-study-ledger__row">
-          <p class="case-study-ledger__label">What I did not do</p>
-          <p class="case-study-ledger__body">Talk to surfers. <strong>There is no user research here</strong> &mdash; the audience is an assumption and the sizing coefficients are industry-informed, not validated. That is the honest gap in the&nbsp;work.</p>
+          <p class="case-study-ledger__label">What needs validation</p>
+          <p class="case-study-ledger__body">The methodology rests on years in shops and on the water, on hundreds of conversations across a counter, and on informal feedback from surfers and friends during the build. <strong>None of that is structured testing</strong> &mdash; the sizing coefficients and the experience around them still have to go in front of a wider group of&nbsp;surfers.</p>
         </div>
       </div>
 
       <h3 class="case-study-subheading qv-h3">What comes next</h3>
-      <p>Board matching against a real catalogue, and a first calibration of the sizing coefficients against what surfers end up riding. The measure I would want, not taken yet: how often the board someone chooses lands inside the recommended&nbsp;range.</p>
+      <p>Board matching against a real catalogue, so the shortlist comes from stock rather than three fixed examples. The measure I would want once it does, not taken yet: how often the board someone chooses lands inside the recommended&nbsp;range.</p>
     </div>
 
     <nav class="project-nav">
