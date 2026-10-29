@@ -57,6 +57,23 @@
     .qv-figs--1 { grid-template-columns: 1fr; }
     .qv-figs--2 { grid-template-columns: repeat(2, 1fr); }
     .qv-hero-actions--inline { margin: 32px 0 0; }
+    /* Comparison — the four modes at a glance; the lightbox carries the detail.
+       The four views are genuinely different heights, so subgrid lines the
+       captions up per row instead of cropping anything to match. */
+    .qv-figs--compare { grid-template-rows: auto auto auto auto; column-gap: 20px; row-gap: 34px; }
+    .qv-figs--compare .qv-fig { display: grid; grid-template-rows: subgrid; grid-row: span 2; row-gap: 10px; }
+    .qv-figs--compare .screen-mockup { align-self: start; }
+    @supports not (grid-template-rows: subgrid) {
+      .qv-figs--compare .qv-fig { display: flex; grid-row: auto; }
+    }
+
+    /* Inspect — half screen, half the three things it answers, anchored to the
+       areas they describe (same marker language as the profile) */
+    .qv-inspect { display: grid; grid-template-columns: 1fr 1fr; column-gap: 22px; align-items: stretch; margin: 36px 0 0; }
+    .qv-inspect__shot { position: relative; }
+    .qv-inspect__shot .screen-mockup { border: 1px solid rgba(170, 195, 255, 0.16); border-radius: 8px; overflow: hidden; }
+    .qv-inspect__shot img { width: 100%; height: auto; display: block; }
+    .qv-inspect__side { position: relative; list-style: none; margin: 0; padding: 0; }
 
     /* Question index — every question at a glance, as an editorial index rather
        than nine cards. Conditional ones say so and explain nothing further. */
@@ -158,8 +175,11 @@
     /* placed after the base rules so it actually wins: the screen first, then
        the four regions read as a plain list */
     @media (max-width: 1099px) {
-      .qv-profile { display: block; }
-      .qv-profile__side { margin-top: 8px; }
+      .qv-profile, .qv-inspect { display: block; }
+      .qv-profile__side, .qv-inspect__side { margin-top: 8px; }
+      /* the comparison views stack from tablet down, with the rest of the page */
+      .qv-figs--compare { grid-template-columns: 1fr; grid-template-rows: none; row-gap: 28px; }
+      .qv-figs--compare .qv-fig { display: flex; grid-row: auto; }
       .qv-reg { position: static; margin-top: 30px; }
       .qv-reg::after, .qv-dot { display: none; }
       .project-page .qv-reg__b { font-size: 15px; }
@@ -181,6 +201,8 @@
     @media (max-width: 620px) { .qv-qlist { grid-template-columns: 1fr; } }
     @media (max-width: 900px) {
       .qv-figs--3, .qv-figs--2 { grid-template-columns: 1fr; }
+      .qv-figs--compare { grid-template-rows: none; row-gap: 28px; }
+      .qv-figs--compare .qv-fig { display: flex; grid-row: auto; }
       .qv-hero-actions { margin-bottom: 56px; }
       .qv-screen { margin-top: 40px; }
       .qv-match__stage { padding: 22px 16px 16px; }
@@ -557,12 +579,12 @@
 
       <p>The comparison refuses to pick a winner: three qualified boards across four views, with the live profile carried in the top&nbsp;bar.</p>
 
-      <div class="qv-figs qv-figs--1">
+      <div class="qv-figs qv-figs--2 qv-figs--compare">
         <figure class="qv-fig">
           <div class="screen-mockup">
             <img src="../assets/images/quiver-comparison-overview.png" alt="Comparison overview: the three boards as objects, each with its dimensions, construction and four characteristic scales from wave catching to speed generation" width="2560" height="2632" loading="lazy" data-lightbox>
           </div>
-          <figcaption>Overview &middot; three boards as objects</figcaption>
+          <figcaption>Overview &middot; boards as objects</figcaption>
         </figure>
         <figure class="qv-fig">
           <div class="screen-mockup">
@@ -574,7 +596,7 @@
           <div class="screen-mockup">
             <img src="../assets/images/quiver-comparison-rocker.png" alt="Comparison rocker view: side profiles with nose rocker and maximum thickness callouts" width="2560" height="2541" loading="lazy" data-lightbox>
           </div>
-          <figcaption>Rocker &middot; side profiles with callouts</figcaption>
+          <figcaption>Rocker &middot; side profiles</figcaption>
         </figure>
         <figure class="qv-fig">
           <div class="screen-mockup">
@@ -587,15 +609,34 @@
       <p>Every observation carries its consequence and its cost. &ldquo;Pronounced nose rocker&rdquo; is followed by &ldquo;the nose stays clear on a late drop. The cost is a slower&nbsp;paddle.&rdquo;</p>
 
       <h3 class="case-study-subheading qv-h3">Inspect</h3>
-      <p>Inspect opens as a layer over the comparison, so you never lose the set you were comparing. It separates the spec grid from what the board means for you &mdash; why it fits, what you will notice, and the trade-off. Every board gets one; none is purely good. The stock, the stores and the assistant are all simulated: no model is called and no shop is&nbsp;queried.</p>
+      <p>Inspect opens as a layer over the comparison, so you never lose the set you were comparing. It reads in one direction &mdash; what the board is, what that means for this surfer, then where to get&nbsp;it.</p>
 
-      <div class="qv-figs qv-figs--1">
-        <figure class="qv-fig">
+      <div class="qv-inspect">
+        <div class="qv-inspect__shot">
           <div class="screen-mockup">
             <img src="../assets/images/quiver-inspect.png" alt="The Inspect layer for the Tidalform Edge: a specification grid, three characteristic chips, the why it fits, what you'll notice and trade-off sections, and an availability card with contact, directions and save actions" width="2800" height="2840" loading="lazy" data-lightbox>
           </div>
-          <figcaption>Inspect &middot; the spec grid, what it means for you, and a simulated availability card</figcaption>
-        </figure>
+          <span class="qv-dot qv-dot--r" data-note="i1" style="--top:15%" aria-hidden="true"></span>
+          <span class="qv-dot qv-dot--r" data-note="i2" style="--top:37%" aria-hidden="true"></span>
+          <span class="qv-dot qv-dot--r" data-note="i3" style="--top:67%" aria-hidden="true"></span>
+        </div>
+        <ol class="qv-inspect__side">
+          <li class="qv-reg qv-reg--r" data-note="i1" style="--top:15%">
+            <span class="case-study-note__num">1</span>
+            <h3 class="qv-reg__t">What it is</h3>
+            <p class="qv-reg__b">Length, width, thickness, volume, construction, tail and fin setup &mdash; the facts, stated once in a grid and not repeated&nbsp;elsewhere.</p>
+          </li>
+          <li class="qv-reg qv-reg--r" data-note="i2" style="--top:37%">
+            <span class="case-study-note__num">2</span>
+            <h3 class="qv-reg__t">What it means for you</h3>
+            <p class="qv-reg__b">Why it fits, what you will notice underfoot, and the trade-off. Every board carries all three, because none of them is purely&nbsp;good.</p>
+          </li>
+          <li class="qv-reg qv-reg--r" data-note="i3" style="--top:67%">
+            <span class="case-study-note__num">3</span>
+            <h3 class="qv-reg__t">Where to find it</h3>
+            <p class="qv-reg__b">A shop, a distance and three actions. Simulated end to end: no inventory is queried, no shop exists and the assistant calls no&nbsp;model.</p>
+          </li>
+        </ol>
       </div>
 
       <div class="qv-hero-actions qv-hero-actions--inline">
@@ -699,7 +740,7 @@
 
     // Hovering a region lifts its marker on the screenshot. Markers are
     // decorative (aria-hidden) so the lightbox stays clickable.
-    document.querySelectorAll('.qv-profile').forEach(function (block) {
+    document.querySelectorAll('.qv-profile, .qv-inspect').forEach(function (block) {
       block.querySelectorAll('.qv-reg').forEach(function (note) {
         var dot = block.querySelector('.qv-dot[data-note="' + note.dataset.note + '"]');
         if (!dot) return;
