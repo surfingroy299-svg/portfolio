@@ -36,6 +36,18 @@
     /* Hero — the cover frame opens the page, wider than the prose column */
     .project-page .brief + .brief { margin-top: 18px; }
 
+    /* Lead statement — the shared statement, minus the panel: a blue rule and
+       air, so it reads as an aside rather than a card. */
+    .project-page .case-study-statement.qv-statement {
+      background: none;
+      border-radius: 0;
+      padding: 2px 0 2px 30px;
+      margin: 8px 0 64px;
+      max-width: 820px;
+      font-size: clamp(21px, 1.2rem + 0.5vw, 26px);
+      line-height: 1.5;
+    }
+
     /* Lead — the laptop and the way into it read as one thing. The cover export
        is already transparent, so the machine sits on the page with no panel. */
     .qv-lead { display: grid; grid-template-columns: 7fr 3fr; align-items: center; column-gap: 44px; margin: 0 0 72px; }
@@ -243,6 +255,7 @@
       .qv-figs--compare { grid-template-rows: none; row-gap: 28px; }
       .qv-figs--compare .qv-fig { display: flex; grid-row: auto; }
       .qv-hero-actions { margin-bottom: 56px; }
+      .project-page .case-study-statement.qv-statement { padding-left: 20px; margin-bottom: 44px; }
       .qv-match__stage { padding: 20px 12px 14px; }
       .qv-screen { margin-top: 40px; }
       .qv-match__stage { padding: 22px 16px 16px; }
@@ -299,12 +312,16 @@
         </div>
       </dl>
       <p class="brief">
-        I have surfed for nearly nineteen years, worked in surf shops, taught beginners, and helped hundreds of people choose a board across a counter. The conversation was always the same shape: a surfer could tell me exactly how they surfed, what was holding them back and what they wanted more of &mdash; and none of it turned cleanly into a category, a volume and a length. That translation was something I did in my head, over and over, one surfer at a&nbsp;time.
+        I have surfed for nearly nineteen years, worked in surf shops, taught beginners, and helped hundreds of people choose a board across a counter. The conversation was always the same: a surfer could describe how they surfed and what held them back, and none of it turned into a category, a volume and a length. I did that translation in my head, one surfer at a&nbsp;time.
       </p>
       <p class="brief">
-        Quiver is that translation written down. Nine plain questions about how somebody surfs, read into a structured profile, returning a size range and three genuinely different boards with the reasoning attached. I designed and built it end to end: intake, interpretation, sizing and the comparison&nbsp;experience.
+        Quiver is that translation written down. Nine plain questions about how somebody surfs, read into a structured profile and a size range, with three worked examples showing the reasoning. I designed and built it end to end: intake, interpretation, sizing and&nbsp;comparison.
       </p>
     </header>
+
+    <div class="case-study-statement qv-statement">
+      The biggest lesson wasn&rsquo;t how to recommend a surfboard. It was how to design a system that makes its reasoning visible, its uncertainty honest, and its recommendations open to&nbsp;question.
+    </div>
 
     <!-- Hero — the screen and the way into it, as one composition -->
     <div class="qv-lead">
@@ -693,24 +710,24 @@
     <div class="content-section" style="margin-bottom: 0;">
       <p class="section-label">Reflection</p>
       <h2>Knowing it is not the same as writing it down</h2>
-      <p>Nineteen years of answering this across a counter did not survive contact with a rule engine. Every shortcut I took in conversation had to become an explicit precedence, a boundary, or an admission of uncertainty. Building the reasoning before the interface is what forced that, and the honest parts &mdash; the widened range, the preserved ambiguity &mdash; came out of the order rather than being added to&nbsp;it.</p>
+      <p>Across a counter I could weigh a dozen things at once and answer without unpacking any of it. A system cannot. Every judgement had to become an explicit rule &mdash; which signal outranks which, where a range widens, when to stop short of a single number. Writing those down was the&nbsp;work.</p>
 
       <div class="case-study-ledger">
         <div class="case-study-ledger__row">
           <p class="case-study-ledger__label">What runs</p>
-          <p class="case-study-ledger__body">Onboarding, <strong>interpretation, guidance and sizing</strong>. The profile re-derives from scratch on every answer change, so correcting one thing leaves nothing stale&nbsp;behind.</p>
+          <p class="case-study-ledger__body">Onboarding, <strong>interpretation, guidance and sizing</strong>. The profile re-derives on every answer change, so a correction leaves nothing stale&nbsp;behind.</p>
         </div>
         <div class="case-study-ledger__row">
           <p class="case-study-ledger__label">What is staged</p>
-          <p class="case-study-ledger__body">The narrowing sequence and the <strong>three example boards</strong>, which are the same every time. The product says so on the profile&nbsp;screen.</p>
+          <p class="case-study-ledger__body">The narrowing sequence and the <strong>three example boards</strong> &mdash; the same every time, and the product says so on the profile&nbsp;screen.</p>
         </div>
         <div class="case-study-ledger__row">
           <p class="case-study-ledger__label">What is missing</p>
-          <p class="case-study-ledger__body">A catalogue worth matching against. The dataset is <strong>one brand and ten models</strong>, with gaps in the fields matching would need &mdash; so that layer stayed a&nbsp;specification.</p>
+          <p class="case-study-ledger__body">A catalogue worth matching against. <strong>One brand, ten models</strong>, with gaps in the fields matching needs, so that layer stayed a&nbsp;specification.</p>
         </div>
         <div class="case-study-ledger__row">
           <p class="case-study-ledger__label">What needs validation</p>
-          <p class="case-study-ledger__body">The methodology rests on years in shops and on the water, on hundreds of conversations across a counter, and on informal feedback from surfers and friends during the build. <strong>None of that is structured testing</strong> &mdash; the sizing coefficients and the experience around them still have to go in front of a wider group of&nbsp;surfers.</p>
+          <p class="case-study-ledger__body">Years in shops and on the water, hundreds of conversations across a counter, informal feedback from surfers and friends during the build. <strong>None of it is structured testing</strong> &mdash; the sizing and the experience around it still have to face a wider group of&nbsp;surfers.</p>
         </div>
       </div>
 
