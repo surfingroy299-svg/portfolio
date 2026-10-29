@@ -58,6 +58,15 @@
     .qv-figs--2 { grid-template-columns: repeat(2, 1fr); }
     .qv-hero-actions--inline { margin: 32px 0 0; }
 
+    /* Question index — every question at a glance, as an editorial index rather
+       than nine cards. Conditional ones say so and explain nothing further. */
+    .qv-qlist { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; margin: 34px 0 0; padding: 0; list-style: none; }
+    .qv-q { display: grid; grid-template-columns: 24px 1fr; column-gap: 12px; align-items: start; padding: 13px 0; border-top: 1px solid var(--border); }
+    .qv-q__n { font-size: 12px; line-height: 1.6; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .project-page .qv-q__l { font-size: 14px; font-weight: 300; line-height: 1.5; color: var(--text-body); margin: 0; max-width: none; }
+    .qv-q__c { display: block; margin-top: 3px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .project-page .qv-qlist__after { margin-top: 34px; }
+
     /* Onboarding showcase — the two screens share a row, each introduced by the
        question it answers. Subgrid holds the eyebrow, heading, copy and mockup on
        the same four lines across both columns despite unequal copy lengths. */
@@ -77,6 +86,7 @@
     @media (max-width: 1099px) {
       .qv-screens { display: block; }
       .qv-screen { display: block; margin-top: 44px; }
+      .qv-qlist { grid-template-columns: 1fr 1fr; }
     }
 
     /* Matching — the prototype's own rack, lifted as vector and re-toned for
@@ -121,13 +131,39 @@
       .qv-match__toggle { display: none; }
     }
 
-    /* Annotated screen — pins ride the image in percentages, notes sit beside it */
-    .qv-annotated { display: grid; grid-template-columns: 1.55fr 1fr; gap: clamp(28px, 3vw, 52px); align-items: start; margin: 36px 0 0; }
-    .qv-annotated .screen-mockup { position: relative; }
-    .qv-pin { position: absolute; z-index: 2; pointer-events: none; left: var(--x); top: var(--y); width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; font-variant-numeric: tabular-nums; box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.75); transition: transform 0.2s; }
-    .qv-pin.is-active { transform: scale(1.25); }
-    .qv-notes .case-study-note.is-active .case-study-note__text { color: var(--text); }
-    .qv-notes .case-study-note { cursor: default; }
+    /* Profile — the screen is the centrepiece, with the four things it does named
+       either side of it. Markers ride the image edge at the matching height, so
+       nothing sits on top of the interface. */
+    .qv-profile { display: grid; grid-template-columns: 200px minmax(0, 1fr) 200px; column-gap: 22px; align-items: stretch; margin: 40px 0 0; }
+    .qv-profile__shot { position: relative; grid-column: 2; grid-row: 1; }
+    .qv-profile__shot .screen-mockup { border: 1px solid rgba(170, 195, 255, 0.16); border-radius: 8px; overflow: hidden; }
+    .qv-profile__shot img { width: 100%; height: auto; display: block; }
+    .qv-profile__side { position: relative; grid-row: 1; list-style: none; margin: 0; padding: 0; }
+    .qv-profile__side--l { grid-column: 1; }
+    .qv-profile__side--r { grid-column: 3; }
+
+    .qv-reg { position: absolute; top: var(--top); left: 0; right: 0; display: grid; grid-template-columns: 26px 1fr; column-gap: 12px; align-items: center; }
+    .project-page h3.qv-reg__t { grid-column: 2; font-size: 15px; font-weight: 400; line-height: 1.3; letter-spacing: -0.005em; color: var(--text); margin: 0; }
+    .project-page .qv-reg__b { grid-column: 1 / -1; font-size: 13.5px; font-weight: 300; line-height: 1.6; color: var(--text-body); margin: 10px 0 0; max-width: none; }
+    /* hairline across the gutter, meeting the dot on the image edge */
+    .qv-reg::after { content: ''; position: absolute; top: 13px; width: 22px; border-top: 1px solid var(--border); }
+    .qv-reg--l::after { right: -22px; }
+    .qv-reg--r::after { left: -22px; }
+    .qv-dot { position: absolute; top: var(--top); width: 7px; height: 7px; margin-top: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--bg); }
+    .qv-dot--l { left: -3px; }
+    .qv-dot--r { right: -3px; }
+    .qv-reg.is-active .qv-reg__t { color: var(--text); }
+    .qv-dot.is-active { transform: scale(1.5); }
+    .qv-dot { transition: transform 0.2s; }
+    /* placed after the base rules so it actually wins: the screen first, then
+       the four regions read as a plain list */
+    @media (max-width: 1099px) {
+      .qv-profile { display: block; }
+      .qv-profile__side { margin-top: 8px; }
+      .qv-reg { position: static; margin-top: 30px; }
+      .qv-reg::after, .qv-dot { display: none; }
+      .project-page .qv-reg__b { font-size: 15px; }
+    }
 
     /* Pipeline status — shape and label, never colour alone */
     .qv-legend { display: flex; flex-wrap: wrap; gap: 20px; margin: 28px 0 0; max-width: none; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
@@ -142,6 +178,7 @@
     .project-page .qv-node--spec { border-style: dotted; opacity: 0.8; }
 
     @media (max-width: 900px) { .project-page .qv-refs { grid-template-columns: 1fr; gap: 24px; } }
+    @media (max-width: 620px) { .qv-qlist { grid-template-columns: 1fr; } }
     @media (max-width: 900px) {
       .qv-figs--3, .qv-figs--2 { grid-template-columns: 1fr; }
       .qv-hero-actions { margin-bottom: 56px; }
@@ -152,8 +189,6 @@
       .qv-match figcaption { text-align: center; }
       .project-page .qv-match__caption { height: auto; min-height: 3.6em; }
       .qv-match__line { font-size: 15px; }
-      .qv-annotated { grid-template-columns: 1fr; }
-      .qv-pin { display: none; }
     }
   </style>
 </head>
@@ -317,30 +352,69 @@
     <!-- Onboarding & Information Collection -->
     <div class="content-section qv-wide">
       <p class="section-label">Onboarding</p>
-      <h2>Nine questions, and the two that carry the design</h2>
-      <p>Choosing the nine took longer than building them, under one rule &mdash; do not ask anything that cannot change the recommendation &mdash; and one precedence order: skill sets the boundaries, pain points outrank goals. Seven are a prompt and a list. Two are not, because the signal underneath them could not be collected honestly that&nbsp;way.</p>
+      <h2>Building a picture of the surfer</h2>
+      <p>Nine questions are defined and a surfer answers nine, eight or six. The board questions drop out when there is no regular board to describe, and the dimensions question when the surfer does not know them. Nothing is asked that cannot change the&nbsp;recommendation.</p>
+
+      <ol class="qv-qlist">
+        <li class="qv-q">
+          <span class="qv-q__n">01</span>
+          <p class="qv-q__l">The board you ride now</p>
+        </li>
+        <li class="qv-q">
+          <span class="qv-q__n">02</span>
+          <p class="qv-q__l">What that board feels like<span class="qv-q__c">if it applies</span></p>
+        </li>
+        <li class="qv-q">
+          <span class="qv-q__n">03</span>
+          <p class="qv-q__l">Whether you know its dimensions<span class="qv-q__c">if it applies</span></p>
+        </li>
+        <li class="qv-q">
+          <span class="qv-q__n">04</span>
+          <p class="qv-q__l">The dimensions themselves<span class="qv-q__c">if it applies</span></p>
+        </li>
+        <li class="qv-q">
+          <span class="qv-q__n">05</span>
+          <p class="qv-q__l">What holds you back</p>
+        </li>
+        <li class="qv-q">
+          <span class="qv-q__n">06</span>
+          <p class="qv-q__l">What you want more of</p>
+        </li>
+        <li class="qv-q">
+          <span class="qv-q__n">07</span>
+          <p class="qv-q__l">The waves you usually surf</p>
+        </li>
+        <li class="qv-q">
+          <span class="qv-q__n">08</span>
+          <p class="qv-q__l">What you can do consistently</p>
+        </li>
+        <li class="qv-q">
+          <span class="qv-q__n">09</span>
+          <p class="qv-q__l">Height and weight</p>
+        </li>
+      </ol>
+
+      <p class="qv-qlist__after">Seven of them are a prompt and a list. Two are not, because the signal underneath them is subjective, and asking for it in words returns an&nbsp;adjective.</p>
 
       <div class="qv-screens">
       <div class="qv-screen">
-        <p class="qv-screen__eyebrow">07 / 09 &middot; Environment</p>
+        <p class="qv-screen__eyebrow">07 &middot; Environment</p>
         <h3 class="qv-screen__q">Recognising a break, not grading one</h3>
-        <p>&ldquo;What kind of waves do you usually surf?&rdquo; asked in words gets you an adjective. Each option carries a photograph, a height chip and a single line of hint, so the answer comes from recognition rather than&nbsp;self-assessment.</p>
+        <p>Each option carries a photograph, a wave-height chip and one line of hint, so the answer comes from recognition rather than&nbsp;self-assessment.</p>
         <div class="screen-mockup">
           <img src="../assets/images/quiver-q7-waves.jpg" alt="Onboarding question seven: four wave conditions, each with a photograph, a wave-height chip and a one-line hint, with the counter reading 07 of 09" width="2224" height="1621" loading="lazy" data-lightbox>
         </div>
       </div>
 
       <div class="qv-screen">
-        <p class="qv-screen__eyebrow">08 / 09 &middot; Skill</p>
+        <p class="qv-screen__eyebrow">08 &middot; Skill</p>
         <h3 class="qv-screen__q">Behaviour, not self-image</h3>
-        <p>&ldquo;What is the most you can do consistently once you are riding?&rdquo; Nobody is asked whether they are a beginner or an advanced surfer, because that answer is an identity rather than a fact. Six rungs of observable behaviour instead, and choosing one claims everything below it &mdash; which the interface draws rather than leaving implied. It was specified as a multi-select and became a ladder, which is what made a skipped rung impossible to&nbsp;express.</p>
+        <p>Nobody is asked whether they are a beginner, because that is an identity rather than a fact. Six rungs of observable behaviour instead, and picking one visibly claims everything below&nbsp;it.</p>
         <div class="screen-mockup">
-          <img src="../assets/images/quiver-q8-ladder.png" alt="Onboarding question eight: a six-rung ability ladder with rung four selected and the three rungs beneath it marked as claimed" width="2224" height="1447" loading="lazy" data-lightbox>
+          <img src="../assets/images/quiver-q8-ladder.png" alt="Onboarding question eight: a six-rung ability ladder with rung four selected and the three rungs beneath it marked as claimed" width="2224" height="1621" loading="lazy" data-lightbox>
         </div>
       </div>
       </div>
-
-      <p class="qv-screen__after">The other seven are short: current board, how it feels, dimensions, what holds you back, what you want more of, height and weight. The ninth asks how often you surf and then says on screen that it does not change your size&nbsp;range.</p>
     </div>
 
     <hr class="divider">
@@ -349,39 +423,42 @@
     <div class="content-section qv-wide">
       <p class="section-label">The Profile</p>
       <h2>The screen that has to earn the recommendation</h2>
-      <p>Nine answers become five readings of a surfer, each with its own confidence and evidence. The profile shows that work instead of hiding it, because a recommendation you cannot interrogate is only an&nbsp;assertion.</p>
+      <p>The profile shows its work instead of hiding it, because a recommendation you cannot interrogate is only an assertion. Four regions carry it: who the surfer is, where they are heading, what to ride, and how to argue with any of&nbsp;it.</p>
 
-      <div class="qv-annotated">
-        <div class="screen-showcase">
+      <div class="qv-profile">
+        <div class="qv-profile__shot">
           <div class="screen-mockup">
-            <img src="../assets/images/quiver-profile.png" alt="The Quiver profile dashboard: the surfer's details and reading on the left, and the board recommendation, size range and calibration panel on the right" width="2880" height="1800" loading="lazy" data-lightbox>
-            <span class="qv-pin" data-note="1" style="--x:53.5%; --y:10.5%" aria-hidden="true">1</span>
-            <span class="qv-pin" data-note="2" style="--x:27%; --y:38%" aria-hidden="true">2</span>
-            <span class="qv-pin" data-note="3" style="--x:64%; --y:50.5%" aria-hidden="true">3</span>
-            <span class="qv-pin" data-note="4" style="--x:64%; --y:62%" aria-hidden="true">4</span>
-            <span class="qv-pin" data-note="5" style="--x:64%; --y:85.5%" aria-hidden="true">5</span>
+            <img src="../assets/images/quiver-profile.png" alt="The Quiver profile screen: the surfer's details and reading down the left, the recommended category, volume and length range on the right, and the calibration panel beneath it" width="2200" height="2562" loading="lazy" data-lightbox>
           </div>
+          <span class="qv-dot qv-dot--l" data-note="1" style="--top:10%" aria-hidden="true"></span>
+          <span class="qv-dot qv-dot--l" data-note="2" style="--top:52%" aria-hidden="true"></span>
+          <span class="qv-dot qv-dot--r" data-note="3" style="--top:10%" aria-hidden="true"></span>
+          <span class="qv-dot qv-dot--r" data-note="4" style="--top:61%" aria-hidden="true"></span>
         </div>
-        <ol class="case-study-notes qv-notes">
-          <li class="case-study-note">
+
+        <ol class="qv-profile__side qv-profile__side--l">
+          <li class="qv-reg qv-reg--l" data-note="1" style="--top:10%">
             <span class="case-study-note__num">1</span>
-            <p class="case-study-note__text">The level tracks the rung you picked; the engine keeps its own&nbsp;band.</p>
+            <h3 class="qv-reg__t">Your profile</h3>
+            <p class="qv-reg__b">Height, weight, how often you surf, the waves you surf and the board you ride now &mdash; the answers restated as one reading, in sentences rather than a&nbsp;score.</p>
           </li>
-          <li class="case-study-note">
+          <li class="qv-reg qv-reg--l" data-note="2" style="--top:52%">
             <span class="case-study-note__num">2</span>
-            <p class="case-study-note__text">Dimensions not given, so the range stays wide - and it says&nbsp;why.</p>
+            <h3 class="qv-reg__t">Where we&rsquo;re taking you</h3>
+            <p class="qv-reg__b">That reading turned into a direction: what holds this surfer back, what they want more of, and whether the board under them is the thing in the&nbsp;way.</p>
           </li>
-          <li class="case-study-note">
+        </ol>
+
+        <ol class="qv-profile__side qv-profile__side--r" start="3">
+          <li class="qv-reg qv-reg--r" data-note="3" style="--top:10%">
             <span class="case-study-note__num">3</span>
-            <p class="case-study-note__text">A zone with an emphasis marker, not a number pretending to be&nbsp;exact.</p>
+            <h3 class="qv-reg__t">Recommendation</h3>
+            <p class="qv-reg__b">A category and a volume range rather than one number, with the reasoning beside it &mdash; including when nothing argues for leaving standard&nbsp;sizing.</p>
           </li>
-          <li class="case-study-note">
+          <li class="qv-reg qv-reg--r" data-note="4" style="--top:61%">
             <span class="case-study-note__num">4</span>
-            <p class="case-study-note__text">It explains itself even when the answer is &ldquo;nothing unusual&nbsp;here&rdquo;.</p>
-          </li>
-          <li class="case-study-note">
-            <span class="case-study-note__num">5</span>
-            <p class="case-study-note__text">&ldquo;Not quite right?&rdquo; - argue with it in a&nbsp;sentence.</p>
+            <h3 class="qv-reg__t">Not quite right?</h3>
+            <p class="qv-reg__b">A sentence is enough to push back. Corrections are read as intent and layered over the profile, so the answer moves without re-answering&nbsp;anything.</p>
           </li>
         </ol>
       </div>
@@ -620,16 +697,18 @@
       });
     });
 
-    // Hovering a note lifts its pin on the screenshot. Pins are decorative
-    // (aria-hidden, pointer-events none) so the lightbox stays clickable.
-    document.querySelectorAll('.qv-annotated').forEach(function (block) {
-      block.querySelectorAll('.case-study-note').forEach(function (note, i) {
-        var pin = block.querySelector('.qv-pin[data-note="' + (i + 1) + '"]');
-        if (!pin) return;
-        var on = function () { pin.classList.add('is-active'); note.classList.add('is-active'); };
-        var off = function () { pin.classList.remove('is-active'); note.classList.remove('is-active'); };
-        note.addEventListener('mouseenter', on);
-        note.addEventListener('mouseleave', off);
+    // Hovering a region lifts its marker on the screenshot. Markers are
+    // decorative (aria-hidden) so the lightbox stays clickable.
+    document.querySelectorAll('.qv-profile').forEach(function (block) {
+      block.querySelectorAll('.qv-reg').forEach(function (note) {
+        var dot = block.querySelector('.qv-dot[data-note="' + note.dataset.note + '"]');
+        if (!dot) return;
+        var set = function (on) {
+          dot.classList.toggle('is-active', on);
+          note.classList.toggle('is-active', on);
+        };
+        note.addEventListener('mouseenter', function () { set(true); });
+        note.addEventListener('mouseleave', function () { set(false); });
       });
     });
   </script>
