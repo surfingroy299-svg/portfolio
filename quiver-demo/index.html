@@ -13,9 +13,76 @@
     />
     <script type="module" crossorigin src="./assets/index-DRrh5fT2.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-Brw9p0fc.css">
+    <style>
+      /* Portfolio demo affordance - added for designeroy.com, not part of the product
+         build. Visitors arrive cold from a case study and were missing the build's own
+         skip control, so it is given button weight here. The frame stays dashed so it
+         still reads as prototype scaffolding rather than product UI. Presentation only:
+         the bundle's stylesheet and markup are untouched. */
+      /* The stage reserves 72px below its footer and sizes itself to exactly one
+         viewport, so the control has to stay inside that band or it covers Back. */
+      .protoctl {
+        left: 20px;
+        bottom: 10px;
+        gap: 14px;
+        padding: 5px 12px;
+        border-color: var(--ink-3);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-panel);
+      }
+      .protoctl__tag { font-size: var(--fs-12); color: var(--ink-2); }
+      .protoctl__actions { gap: 10px; }
+      .protoctl__btn {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid var(--rule-strong);
+        border-radius: 999px;
+        font-size: var(--fs-15);
+        font-weight: 500;
+        color: var(--ink-2);
+        background: var(--paper);
+      }
+      .protoctl__btn:hover { color: var(--ink); border-color: var(--ink-3); }
+      .protoctl__btn:focus-visible { outline: 2px solid var(--tide); outline-offset: 2px; }
+      .protoctl__btn[data-proto="skip"] {
+        background: var(--tide);
+        border-color: var(--tide);
+        color: var(--paper-raised);
+      }
+      .protoctl__btn[data-proto="skip"]:hover {
+        background: var(--tide-ink);
+        border-color: var(--tide-ink);
+        color: var(--paper-raised);
+      }
+      @media (max-width: 620px) {
+        .protoctl { left: 10px; right: 10px; gap: 10px; padding: 5px 10px; }
+        .protoctl__tag { font-size: var(--fs-11); }
+        .protoctl__btn { padding: 0 12px; font-size: var(--fs-12); }
+        /* the question footer sticks to the viewport bottom here, so lift it clear */
+        .onboarding__foot { bottom: 64px; }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      // Portfolio demo affordance - added for designeroy.com, not part of the product
+      // build. Marks the build's own skip control so the stylesheet above can give it
+      // button weight. The control re-renders per stage (skip is hidden on the
+      // comparison, restart on the intro), so the stamp is reapplied on every change.
+      (function () {
+        var root = document.getElementById('root');
+        function stamp() {
+          document.querySelectorAll('.protoctl__btn').forEach(function (b) {
+            if (/skip/i.test(b.textContent || '')) b.setAttribute('data-proto', 'skip');
+          });
+        }
+        new MutationObserver(stamp).observe(root, { childList: true, subtree: true });
+        stamp();
+      })();
+    </script>
     <script>
       // Portfolio entry shim — added for designeroy.com, not part of the product build.
       // The journey stage is held in React state and deliberately kept out of the URL
@@ -35,7 +102,9 @@
             history.replaceState(null, '', location.pathname + location.hash);
             return;
           }
-          if (Date.now() - started < 8000) requestAnimationFrame(press);
+          // setTimeout rather than rAF: a demo opened in a background tab paints
+          // nothing, and the entry should still be waiting when it is brought forward.
+          if (Date.now() - started < 8000) setTimeout(press, 50);
         })();
       })();
     </script>

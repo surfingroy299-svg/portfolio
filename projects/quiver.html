@@ -58,14 +58,26 @@
     .qv-figs--2 { grid-template-columns: repeat(2, 1fr); }
     .qv-hero-actions--inline { margin: 32px 0 0; }
 
-    /* Onboarding showcase — two screens given the full page width, each
-       introduced by the question it answers. */
-    .qv-screen { margin: 52px 0 0; }
+    /* Onboarding showcase — the two screens share a row, each introduced by the
+       question it answers. Subgrid holds the eyebrow, heading, copy and mockup on
+       the same four lines across both columns despite unequal copy lengths. */
+    .qv-screens { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto auto; column-gap: 32px; margin: 48px 0 0; }
+    .qv-screen { display: grid; grid-template-rows: subgrid; grid-row: span 4; }
+    @supports not (grid-template-rows: subgrid) {
+      .qv-screen { display: flex; flex-direction: column; }
+      .qv-screen .screen-mockup { margin-top: auto; }
+    }
     .project-page .qv-screen__eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; margin: 0 0 10px; }
     .project-page h3.qv-screen__q { font-size: 20px; font-weight: 400; line-height: 1.35; letter-spacing: -0.01em; color: var(--text); margin: 0 0 12px; max-width: 680px; }
-    .qv-screen .screen-mockup { margin-top: 26px; border: 1px solid rgba(170, 195, 255, 0.16); border-radius: 8px; overflow: hidden; }
+    .qv-screen .screen-mockup { align-self: start; margin-top: 26px; border: 1px solid rgba(170, 195, 255, 0.16); border-radius: 8px; overflow: hidden; }
     .qv-screen .screen-mockup img { width: 100%; height: auto; display: block; }
     .qv-screen__after { margin-top: 44px; }
+    /* two columns are only honest while each screen still reads; below a laptop
+       width they stack */
+    @media (max-width: 1099px) {
+      .qv-screens { display: block; }
+      .qv-screen { display: block; margin-top: 44px; }
+    }
 
     /* Matching — the prototype's own rack, lifted as vector and re-toned for
        the dark page. The shapes are the build's; only the palette changed. */
@@ -308,6 +320,7 @@
       <h2>Nine questions, and the two that carry the design</h2>
       <p>Choosing the nine took longer than building them, under one rule &mdash; do not ask anything that cannot change the recommendation &mdash; and one precedence order: skill sets the boundaries, pain points outrank goals. Seven are a prompt and a list. Two are not, because the signal underneath them could not be collected honestly that&nbsp;way.</p>
 
+      <div class="qv-screens">
       <div class="qv-screen">
         <p class="qv-screen__eyebrow">07 / 09 &middot; Environment</p>
         <h3 class="qv-screen__q">Recognising a break, not grading one</h3>
@@ -324,6 +337,7 @@
         <div class="screen-mockup">
           <img src="../assets/images/quiver-q8-ladder.png" alt="Onboarding question eight: a six-rung ability ladder with rung four selected and the three rungs beneath it marked as claimed" width="2224" height="1447" loading="lazy" data-lightbox>
         </div>
+      </div>
       </div>
 
       <p class="qv-screen__after">The other seven are short: current board, how it feels, dimensions, what holds you back, what you want more of, height and weight. The ninth asks how often you surf and then says on screen that it does not change your size&nbsp;range.</p>
@@ -559,7 +573,7 @@
       <a href="gateway.html" class="project-nav__item project-nav__item--next">
         <div>
           <p class="np-label">Next</p>
-          <p class="np-title">GateWay</p>
+          <p class="np-title">GateWay - Preparing for the Right Opportunity</p>
         </div>
         <span class="np-arrow">
           <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h16"/><path d="M11 1l6 6-6 6"/></svg>
