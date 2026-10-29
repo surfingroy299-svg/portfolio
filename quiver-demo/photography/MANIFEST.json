@@ -1,0 +1,10 @@
+{
+  "comment": "What each photography slot expects. Tracked in git; the images are not. See /photography/REGISTER.md.",
+  "slots": {
+    "hero-barrel.jpg": { "use": "Intro hero", "orientation": "portrait", "needs": "large quiet field for the headline" },
+    "waves-small-weak.jpg": { "use": "Q7 small_weak_waves · 1–2 ft", "orientation": "landscape", "needs": "waist-high wall with no power in it, rider for scale" },
+    "waves-medium-push.jpg": { "use": "Q7 medium_waves_with_push · 2–4 ft", "orientation": "landscape", "needs": "clean rideable shoulder with push behind it, surfer riding it" },
+    "waves-powerful.jpg": { "use": "Q7 powerful_steep_waves · 5 ft +", "orientation": "landscape", "needs": "clearly overhead, steep and throwing, surfers for scale" },
+    "waves-variable.jpg": { "use": "Q7 variable_conditions", "orientation": "portrait", "needs": "disordered surf, no clean shape, no implied height" }
+  }
+}

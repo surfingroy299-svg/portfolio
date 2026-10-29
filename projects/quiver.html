@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiver - Finding the Right Board · Roy Vanounou</title>
+  <meta name="description" content="Case study: Quiver, a surfboard recommendation product that turns nine plain questions about how you surf into a size range and three boards worth comparing.">
+  <!-- Open Graph -->
+  <meta property="og:type"         content="website">
+  <meta property="og:site_name"    content="Roy Vanounou">
+  <meta property="og:title"        content="Quiver - Finding the Right Board">
+  <meta property="og:description"  content="Nine plain questions about how you surf, read into a structured profile, a defensible size range, and three genuinely different boards.">
+  <meta property="og:url"          content="https://designeroy.com/projects/quiver.html">
+  <meta property="og:image"        content="https://designeroy.com/assets/images/og-social.png">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <!-- Twitter / X -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Quiver - Finding the Right Board">
+  <meta name="twitter:description" content="Nine plain questions about how you surf, read into a structured profile, a defensible size range, and three genuinely different boards.">
+  <meta name="twitter:image"       content="https://designeroy.com/assets/images/og-social.png">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="../style.css">
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "yej298a69u");
+  </script>
+  <style>
+    /* Hero — the cover frame opens the page, wider than the prose column */
+    .qv-hero { margin: 0 0 28px; }
+    .qv-hero-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 72px; }
+    .qv-note { font-size: 13px; color: var(--muted); margin: 0; max-width: none; }
+
+    /* Research runs wider than the 760px prose cap; paragraphs keep their own measure */
+    .qv-wide { max-width: none; }
+    .project-page h3.qv-h3 { margin-top: 52px; }
+    .project-page .qv-refs { grid-template-columns: repeat(3, 1fr); gap: 30px 36px; }
+
+    /* Captioned figure rows */
+    .qv-figs { display: grid; gap: 16px; margin: 32px 0 0; align-items: start; }
+    .qv-figs--3 { grid-template-columns: repeat(3, 1fr); }
+    .qv-fig { display: flex; flex-direction: column; gap: 10px; margin: 0; }
+    /* dark UI on a dark page: a faint cool outline separates the frames
+       without turning them into bright cards (same approach as gateway.html) */
+    .qv-fig .screen-mockup { border: 1px solid rgba(170, 195, 255, 0.16); border-radius: 8px; overflow: hidden; }
+    .qv-fig .screen-mockup img { width: 100%; height: auto; display: block; }
+    .qv-fig figcaption { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+    .qv-figs-note { font-size: 14px; color: var(--muted); margin-top: 18px; }
+
+    .qv-figs--1 { grid-template-columns: 1fr; }
+    .qv-figs--2 { grid-template-columns: repeat(2, 1fr); }
+    .qv-hero-actions--inline { margin: 32px 0 0; }
+
+    /* Onboarding showcase — two screens given the full page width, each
+       introduced by the question it answers. */
+    .qv-screen { margin: 52px 0 0; }
+    .project-page .qv-screen__eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; margin: 0 0 10px; }
+    .project-page h3.qv-screen__q { font-size: 20px; font-weight: 400; line-height: 1.35; letter-spacing: -0.01em; color: var(--text); margin: 0 0 12px; max-width: 680px; }
+    .qv-screen .screen-mockup { margin-top: 26px; border: 1px solid rgba(170, 195, 255, 0.16); border-radius: 8px; overflow: hidden; }
+    .qv-screen .screen-mockup img { width: 100%; height: auto; display: block; }
+    .qv-screen__after { margin-top: 44px; }
+
+    /* Matching — the prototype's own rack, lifted as vector and re-toned for
+       the dark page. The shapes are the build's; only the palette changed. */
+    .qv-match { --qv-rail: #22262b; --qv-deck: #343a42; --qv-crown: #464e58; margin: 32px 0 44px; position: relative; }
+    .qv-match__stage { border: 1px solid rgba(170, 195, 255, 0.16); border-radius: 8px; padding: 30px 28px 22px; background: rgba(255, 255, 255, 0.015); }
+    .qv-rack { display: block; width: 100%; height: auto; overflow: visible; }
+    .qv-rack__floor { stroke: var(--border); stroke-width: 1; vector-effect: non-scaling-stroke; }
+    .qv-rack__contact { fill: rgba(0, 0, 0, 0.5); filter: blur(4px); }
+    .qv-rack__body { stroke: rgba(176, 198, 240, 0.5); stroke-width: 1.15; vector-effect: non-scaling-stroke; }
+    .qv-rack__stringer { stroke: rgba(176, 198, 240, 0.38); stroke-width: 0.8; fill: none; vector-effect: non-scaling-stroke; }
+    .qv-rack__fin { fill: #6d7784; opacity: 0.92; }
+
+    /* one 9s cycle: every shape, then the ones that fit, then the sized set,
+       resting on the narrowed rack for most of it */
+    @keyframes qv-recede { 0%, 15% { opacity: 1; } 26%, 90% { opacity: 0.08; } 97%, 100% { opacity: 1; } }
+    @keyframes qv-cap-1  { 0%, 14% { opacity: 1; } 18%, 93% { opacity: 0; } 97%, 100% { opacity: 1; } }
+    @keyframes qv-cap-2  { 0%, 15% { opacity: 0; } 19%, 29% { opacity: 1; } 33%, 100% { opacity: 0; } }
+    @keyframes qv-cap-3  { 0%, 30% { opacity: 0; } 34%, 90% { opacity: 1; } 94%, 100% { opacity: 0; } }
+    .qv-rack__board:not([data-keep]) { animation: qv-recede 9s cubic-bezier(0.22, 0.61, 0.36, 1) infinite; }
+    .qv-rack__board:not([data-keep]):nth-of-type(2n) { animation-delay: 0.12s; }
+    .qv-rack__board:not([data-keep]):nth-of-type(3n) { animation-delay: 0.26s; }
+
+    .project-page .qv-match__caption { position: relative; display: block; height: 1.9em; margin: 26px 0 0; max-width: none; text-align: center; }
+    .qv-match__line { position: absolute; inset: 0; font-size: 17px; font-weight: 300; color: var(--text); opacity: 0; }
+    .qv-match__line--1 { animation: qv-cap-1 9s linear infinite; }
+    .qv-match__line--2 { animation: qv-cap-2 9s linear infinite; }
+    .qv-match__line--3 { animation: qv-cap-3 9s linear infinite; }
+
+    .qv-match.is-paused .qv-rack__board, .qv-match.is-paused .qv-match__line { animation-play-state: paused; }
+    .qv-match__toggle { position: absolute; top: 14px; right: 16px; padding: 6px 12px; background: none; border: 1px solid var(--border); border-radius: 999px; font-family: var(--font); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); cursor: pointer; transition: color 0.2s, border-color 0.2s; }
+    .qv-match__toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    @media (hover: hover) { .qv-match__toggle:hover { color: var(--text); border-color: rgba(255, 255, 255, 0.3); } }
+    .qv-match figcaption { margin-top: 22px; font-size: 14px; color: var(--muted); text-align: center; }
+
+    @media (prefers-reduced-motion: reduce) {
+      /* no cycle: the rack rests narrowed and the last caption stands */
+      .qv-rack__board:not([data-keep]) { animation: none; opacity: 0.08; }
+      .qv-match__line { animation: none; }
+      .qv-match__line--1, .qv-match__line--2 { display: none; }
+      .qv-match__line--3 { opacity: 1; }
+      .qv-match__toggle { display: none; }
+    }
+
+    /* Annotated screen — pins ride the image in percentages, notes sit beside it */
+    .qv-annotated { display: grid; grid-template-columns: 1.55fr 1fr; gap: clamp(28px, 3vw, 52px); align-items: start; margin: 36px 0 0; }
+    .qv-annotated .screen-mockup { position: relative; }
+    .qv-pin { position: absolute; z-index: 2; pointer-events: none; left: var(--x); top: var(--y); width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; font-variant-numeric: tabular-nums; box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.75); transition: transform 0.2s; }
+    .qv-pin.is-active { transform: scale(1.25); }
+    .qv-notes .case-study-note.is-active .case-study-note__text { color: var(--text); }
+    .qv-notes .case-study-note { cursor: default; }
+
+    /* Pipeline status — shape and label, never colour alone */
+    .qv-legend { display: flex; flex-wrap: wrap; gap: 20px; margin: 28px 0 0; max-width: none; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+    .qv-key { display: inline-flex; align-items: center; gap: 8px; }
+    .qv-key::before { content: ''; width: 18px; height: 0; border-top: 2px solid currentColor; }
+    /* the line carries the colour; the label stays at the muted floor */
+    .qv-key--live::before { border-top-color: var(--accent); }
+    .qv-key--sim::before { border-top-style: dashed; }
+    .qv-key--spec::before { border-top-style: dotted; }
+    .qv-flow { margin-top: 24px; }
+    .project-page .qv-node--sim { border-style: dashed; }
+    .project-page .qv-node--spec { border-style: dotted; opacity: 0.8; }
+
+    @media (max-width: 900px) { .project-page .qv-refs { grid-template-columns: 1fr; gap: 24px; } }
+    @media (max-width: 900px) {
+      .qv-figs--3, .qv-figs--2 { grid-template-columns: 1fr; }
+      .qv-hero-actions { margin-bottom: 56px; }
+      .qv-screen { margin-top: 40px; }
+      .qv-match__stage { padding: 22px 16px 16px; }
+      .qv-match__toggle { position: static; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 6px 22px; margin: 10px auto 0; }
+      .qv-match { text-align: center; }
+      .qv-match figcaption { text-align: center; }
+      .project-page .qv-match__caption { height: auto; min-height: 3.6em; }
+      .qv-match__line { font-size: 15px; }
+      .qv-annotated { grid-template-columns: 1fr; }
+      .qv-pin { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <a href="../index.html" class="nav-logo">Roy Vanounou</a>
+    <nav>
+      <a href="../index.html" aria-current="true">Work</a>
+      <a href="../about.html">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg class="nav-toggle__open" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 6h16M3 11h16M3 16h16"/></svg>
+      <svg class="nav-toggle__close" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 5l12 12M17 5L5 17"/></svg>
+    </button>
+  </header>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu__scrim" data-menu-close></div>
+    <nav class="mobile-menu__panel" aria-label="Mobile">
+      <div class="mobile-menu__links">
+        <a href="../index.html" aria-current="true">Work</a>
+        <a href="../about.html">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+
+  <article class="project-page">
+
+    <a href="../index.html" class="back-link">Work</a>
+
+    <header class="project-header">
+      <h1>Quiver - Finding the Right Board</h1>
+      <dl class="project-attrs">
+        <div class="project-attr">
+          <dt>Context</dt>
+          <dd>Self-initiated</dd>
+        </div>
+        <div class="project-attr">
+          <dt>Type</dt>
+          <dd>Product Design &amp; Build</dd>
+        </div>
+        <div class="project-attr">
+          <dt>Platform</dt>
+          <dd>Desktop Web</dd>
+        </div>
+      </dl>
+      <p class="brief">
+        Surfers can describe exactly how a board feels - sluggish through turns, slow into waves, unstable underfoot. Almost none can turn that into a category, a set of dimensions, and a shortlist worth paying for. Quiver asks nine plain questions about how somebody surfs, reads them into a structured profile, and returns a size range with three genuinely different boards and the reasoning attached. I designed and built it end to end: intake, interpretation, sizing, and the comparison&nbsp;experience.
+      </p>
+    </header>
+
+    <!-- Hero — cover, not a product stage -->
+    <div class="screen-showcase qv-hero">
+      <div class="screen-mockup">
+        <img src="../assets/images/quiver-hero.png" alt="Quiver landing page on a laptop: a surf photograph beside the headline Tell us how you surf, we will tell you what to ride" width="2492" height="1600" data-lightbox>
+      </div>
+    </div>
+
+    <div class="qv-hero-actions">
+      <a href="../quiver-demo/" class="btn btn--primary" target="_blank" rel="noopener">
+        Try the interactive demo<span class="sr-only"> (opens in a new tab)</span>
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+      </a>
+      <p class="qv-note">Interactive prototype. Board examples use sample&nbsp;data.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Problem & Opportunity -->
+    <div class="content-section">
+      <p class="section-label">The Problem</p>
+      <h2>Surfers can describe the feeling, not the fix</h2>
+      <p>An intermediate surfer will tell you a board feels sluggish through turns, or that it dies when a section goes soft. That description is precise. What it is not is a category, a volume, or a&nbsp;length.</p>
+      <p>The advice that fills the gap is inconsistent and sometimes commercially motivated. The tools are worse: a volume calculator takes your weight and hands back a number, as if how you surf and where you surf were not part of the&nbsp;question.</p>
+      <div class="case-study-statement">
+        A recommendation has to be understandable as well as defensible. Being right but inscrutable fails the surfer, because nobody acts on advice they do not&nbsp;understand.
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Research & Discovery -->
+    <div class="content-section qv-wide">
+      <p class="section-label">Research &amp; Discovery</p>
+      <h2>Four questions, before any screen</h2>
+      <p>None of this was user research. It was exploratory: reading other products, costing approaches, weighing&nbsp;trade-offs.</p>
+
+      <div class="case-study-compare">
+        <div class="case-study-compare__side">
+          <p class="case-study-compare__title">How should it think?</p>
+          <p class="case-study-compare__lead">Hand the answers to a language model, or write the reasoning&nbsp;myself?</p>
+          <ul class="feature-list">
+            <li>A model reads anything, and explains itself differently every time</li>
+            <li>Chose fixed layers: narrower, and every number traces back to an answer</li>
+          </ul>
+        </div>
+        <div class="case-study-compare__rule" aria-hidden="true"></div>
+        <div class="case-study-compare__side">
+          <p class="case-study-compare__title">What data can it stand on?</p>
+          <p class="case-study-compare__lead">Where do reliable board specifications come from, and who keeps them&nbsp;current?</p>
+          <ul class="feature-list">
+            <li>Stock dimensions are scattered, inconsistent and often incomplete</li>
+            <li>Chose a small curated set for V1 over coverage I could not maintain</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="case-study-subheading qv-h3">How do people compare complex objects?</h3>
+      <p>The references I kept returning to were not recommendation products. They were interfaces built for inspecting&nbsp;things.</p>
+
+      <div class="case-study-index qv-refs">
+        <div class="case-study-index__item">
+          <span class="case-study-index__num">01</span>
+          <p class="case-study-index__title">Call of Duty, loadouts</p>
+          <p class="case-study-index__body">Stats read against the class, not against zero. Quiver's characteristic scales do the&nbsp;same.</p>
+        </div>
+        <div class="case-study-index__item">
+          <span class="case-study-index__num">02</span>
+          <p class="case-study-index__title">The Witcher 3, inventory</p>
+          <p class="case-study-index__body">Inspect one item without losing the list. Inspect became a layer over the comparison, not a&nbsp;page.</p>
+        </div>
+        <div class="case-study-index__item">
+          <span class="case-study-index__num">03</span>
+          <p class="case-study-index__title">NASA, spacecraft explorers</p>
+          <p class="case-study-index__body">Guided views of a complex object, each answering one&nbsp;question.</p>
+        </div>
+      </div>
+
+      <h3 class="case-study-subheading qv-h3">2D or 3D?</h3>
+      <p>The obvious ambition was a board you could rotate. I costed it and backed off: a free-rotating model assumes you know which angle matters, and a surfer choosing between three boards usually does&nbsp;not.</p>
+      <p>So inspection is guided 2D: a few views, each answering one question. The rendering sits behind one replaceable component, so 3D can drop in later without rebuilding the comparison&nbsp;around&nbsp;it.</p>
+
+      <div class="qv-figs qv-figs--3">
+        <figure class="qv-fig">
+          <div class="screen-mockup">
+            <img src="../assets/images/quiver-exploration-shaping-bay.png" alt="Exploration direction: surfboards presented as lit objects standing in a workshop" width="1440" height="900" loading="lazy" data-lightbox>
+          </div>
+          <figcaption>Shaping bay &middot; object presence</figcaption>
+        </figure>
+        <figure class="qv-fig">
+          <div class="screen-mockup">
+            <img src="../assets/images/quiver-exploration-measure-room.png" alt="Exploration direction: an instrument table with board outlines overlaid and a delta ruler" width="1440" height="900" loading="lazy" data-lightbox>
+          </div>
+          <figcaption>Measure room &middot; aligned overlay</figcaption>
+        </figure>
+        <figure class="qv-fig">
+          <div class="screen-mockup">
+            <img src="../assets/images/quiver-exploration-quiver-deck.png" alt="Exploration direction: a game table where boards are kept, rejected and re-dealt" width="1440" height="900" loading="lazy" data-lightbox>
+          </div>
+          <figcaption>Quiver deck &middot; keep or reject</figcaption>
+        </figure>
+      </div>
+      <p class="qv-figs-note">Three directions explored, then set aside. They sharpened the trade-offs rather than producing the shipped&nbsp;design.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Onboarding & Information Collection -->
+    <div class="content-section qv-wide">
+      <p class="section-label">Onboarding</p>
+      <h2>Nine questions, and the two that carry the design</h2>
+      <p>Choosing the nine took longer than building them, under one rule &mdash; do not ask anything that cannot change the recommendation &mdash; and one precedence order: skill sets the boundaries, pain points outrank goals. Seven are a prompt and a list. Two are not, because the signal underneath them could not be collected honestly that&nbsp;way.</p>
+
+      <div class="qv-screen">
+        <p class="qv-screen__eyebrow">07 / 09 &middot; Environment</p>
+        <h3 class="qv-screen__q">Recognising a break, not grading one</h3>
+        <p>&ldquo;What kind of waves do you usually surf?&rdquo; asked in words gets you an adjective. Each option carries a photograph, a height chip and a single line of hint, so the answer comes from recognition rather than&nbsp;self-assessment.</p>
+        <div class="screen-mockup">
+          <img src="../assets/images/quiver-q7-waves.jpg" alt="Onboarding question seven: four wave conditions, each with a photograph, a wave-height chip and a one-line hint, with the counter reading 07 of 09" width="2224" height="1621" loading="lazy" data-lightbox>
+        </div>
+      </div>
+
+      <div class="qv-screen">
+        <p class="qv-screen__eyebrow">08 / 09 &middot; Skill</p>
+        <h3 class="qv-screen__q">Behaviour, not self-image</h3>
+        <p>&ldquo;What is the most you can do consistently once you are riding?&rdquo; Nobody is asked whether they are a beginner or an advanced surfer, because that answer is an identity rather than a fact. Six rungs of observable behaviour instead, and choosing one claims everything below it &mdash; which the interface draws rather than leaving implied. It was specified as a multi-select and became a ladder, which is what made a skipped rung impossible to&nbsp;express.</p>
+        <div class="screen-mockup">
+          <img src="../assets/images/quiver-q8-ladder.png" alt="Onboarding question eight: a six-rung ability ladder with rung four selected and the three rungs beneath it marked as claimed" width="2224" height="1447" loading="lazy" data-lightbox>
+        </div>
+      </div>
+
+      <p class="qv-screen__after">The other seven are short: current board, how it feels, dimensions, what holds you back, what you want more of, height and weight. The ninth asks how often you surf and then says on screen that it does not change your size&nbsp;range.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Surfer Profile & Interpretation -->
+    <div class="content-section qv-wide">
+      <p class="section-label">The Profile</p>
+      <h2>The screen that has to earn the recommendation</h2>
+      <p>Nine answers become five readings of a surfer, each with its own confidence and evidence. The profile shows that work instead of hiding it, because a recommendation you cannot interrogate is only an&nbsp;assertion.</p>
+
+      <div class="qv-annotated">
+        <div class="screen-showcase">
+          <div class="screen-mockup">
+            <img src="../assets/images/quiver-profile.png" alt="The Quiver profile dashboard: the surfer's details and reading on the left, and the board recommendation, size range and calibration panel on the right" width="2880" height="1800" loading="lazy" data-lightbox>
+            <span class="qv-pin" data-note="1" style="--x:53.5%; --y:10.5%" aria-hidden="true">1</span>
+            <span class="qv-pin" data-note="2" style="--x:27%; --y:38%" aria-hidden="true">2</span>
+            <span class="qv-pin" data-note="3" style="--x:64%; --y:50.5%" aria-hidden="true">3</span>
+            <span class="qv-pin" data-note="4" style="--x:64%; --y:62%" aria-hidden="true">4</span>
+            <span class="qv-pin" data-note="5" style="--x:64%; --y:85.5%" aria-hidden="true">5</span>
+          </div>
+        </div>
+        <ol class="case-study-notes qv-notes">
+          <li class="case-study-note">
+            <span class="case-study-note__num">1</span>
+            <p class="case-study-note__text">The level tracks the rung you picked; the engine keeps its own&nbsp;band.</p>
+          </li>
+          <li class="case-study-note">
+            <span class="case-study-note__num">2</span>
+            <p class="case-study-note__text">Dimensions not given, so the range stays wide - and it says&nbsp;why.</p>
+          </li>
+          <li class="case-study-note">
+            <span class="case-study-note__num">3</span>
+            <p class="case-study-note__text">A zone with an emphasis marker, not a number pretending to be&nbsp;exact.</p>
+          </li>
+          <li class="case-study-note">
+            <span class="case-study-note__num">4</span>
+            <p class="case-study-note__text">It explains itself even when the answer is &ldquo;nothing unusual&nbsp;here&rdquo;.</p>
+          </li>
+          <li class="case-study-note">
+            <span class="case-study-note__num">5</span>
+            <p class="case-study-note__text">&ldquo;Not quite right?&rdquo; - argue with it in a&nbsp;sentence.</p>
+          </li>
+        </ol>
+      </div>
+
+      <h3 class="case-study-subheading qv-h3">Arguing with the system</h3>
+      <p>The calibration panel understands six intents - cap the volume, raise it, lean performance or support, correct a measurement, prefer a category. It refuses rather than guesses: a bare number gets &ldquo;Is 39 L a ceiling or a floor?&rdquo; Adjustments sit on top as an overlay, so a preference moves where you sit in the range, never the rules that produced&nbsp;it.</p>
+
+      <div class="qv-hero-actions qv-hero-actions--inline">
+        <a href="../quiver-demo/?start=sample" class="btn btn--secondary" target="_blank" rel="noopener">
+          Explore the profile<span class="sr-only"> in the interactive demo (opens in a new tab)</span>
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Recommendation Logic & Sizing -->
+    <div class="content-section qv-wide">
+      <p class="section-label">The System</p>
+      <h2>Understanding is a different job from deciding</h2>
+      <p>Reading what somebody told you and deciding what to recommend are different jobs, so they are different layers. Interpretation describes and is forbidden from choosing. The decision layer may answer &ldquo;we are not sure&rdquo; rather than force a binary. Sizing has its own contract, so it can be checked&nbsp;alone.</p>
+
+      <p class="qv-legend"><span class="qv-key qv-key--live">Runs live</span><span class="qv-key qv-key--sim">Simulated</span><span class="qv-key qv-key--spec">Specified, not built</span></p>
+
+      <div class="case-study-flow qv-flow">
+        <div class="case-study-flow__node">
+          <p class="case-study-flow__title">Nine answers</p>
+          <p class="case-study-flow__meta">Kept throughout</p>
+        </div>
+        <div class="case-study-flow__pipe case-study-flow__pipe--accent" aria-hidden="true"></div>
+        <div class="case-study-flow__node case-study-flow__node--accent">
+          <p class="case-study-flow__title">Interpretation</p>
+          <p class="case-study-flow__meta">Runs live</p>
+          <p class="case-study-flow__body">Five readings of the surfer. It describes; it does not choose.</p>
+        </div>
+        <div class="case-study-flow__pipe case-study-flow__pipe--accent" aria-hidden="true"></div>
+        <div class="case-study-flow__node case-study-flow__node--accent">
+          <p class="case-study-flow__title">Guidance</p>
+          <p class="case-study-flow__meta">Runs live</p>
+          <p class="case-study-flow__body">Six signals, including where the reading is uncertain.</p>
+        </div>
+        <div class="case-study-flow__pipe case-study-flow__pipe--accent" aria-hidden="true"></div>
+        <div class="case-study-flow__node case-study-flow__node--accent">
+          <p class="case-study-flow__title">Sizing</p>
+          <p class="case-study-flow__meta">Runs live</p>
+          <p class="case-study-flow__body">Volume and length ranges &mdash; 31.7 to 42.8 L here.</p>
+        </div>
+        <div class="case-study-flow__pipe" aria-hidden="true"></div>
+        <div class="case-study-flow__fork">
+          <div class="case-study-flow__node qv-node--sim">
+            <p class="case-study-flow__title">Three example boards</p>
+            <p class="case-study-flow__meta">Simulated</p>
+            <p class="case-study-flow__body">A fixed set, disclosed on screen.</p>
+          </div>
+          <div class="case-study-flow__node qv-node--spec">
+            <p class="case-study-flow__title">Board matching</p>
+            <p class="case-study-flow__meta">Specified, not built</p>
+            <p class="case-study-flow__body">Evaluate a real catalogue against the profile.</p>
+          </div>
+          <div class="case-study-flow__node qv-node--spec">
+            <p class="case-study-flow__title">Explanation agent</p>
+            <p class="case-study-flow__meta">Specified, not built</p>
+            <p class="case-study-flow__body">Roles and trade-offs written per surfer.</p>
+          </div>
+        </div>
+      </div>
+
+      <p>The pay-off is traceability. Every number on the profile walks back to an answer, which is what makes arguing with it meaningful. The last two layers are designed and not built, and the diagram says&nbsp;so.</p>
+
+      <div class="case-study-statement">
+        Ranges are wide on purpose. A narrower number would be more satisfying and less&nbsp;true.
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Comparison & Inspection -->
+    <div class="content-section qv-wide">
+      <p class="section-label">Comparison</p>
+      <h2>Three different answers, not a ranking</h2>
+      <p>Between the profile and the shortlist, eleven shapes stand on a rack and most of them leave. No counts, no percentages: inventing precision there would undercut everything around&nbsp;it.</p>
+
+      <figure class="qv-match">
+        <div class="qv-match__stage">
+          <svg class="qv-rack" preserveAspectRatio="xMidYMax meet" viewBox="0 0 1755.841071308414 704.0666666666666" aria-hidden="true" focusable="false"><defs><linearGradient id="qv-rail" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--qv-rail)"/><stop offset="0.22" stop-color="var(--qv-deck)"/><stop offset="0.5" stop-color="var(--qv-crown)"/><stop offset="0.78" stop-color="var(--qv-deck)"/><stop offset="1" stop-color="var(--qv-rail)"/></linearGradient></defs><line class="qv-rack__floor" x1="13" y1="667.6666666666666" x2="1742.841071308414" y2="667.6666666666666"/><ellipse class="qv-rack__contact" cx="95.98237521488136" cy="667.6666666666666" rx="51.449999999999996" ry="12.25"/><ellipse class="qv-rack__contact" cx="250.53087191042704" cy="667.6666666666666" rx="50.224999999999994" ry="11.958333333333334"/><ellipse class="qv-rack__contact" cx="407.55323440658697" cy="667.6666666666666" rx="50.8375" ry="12.104166666666668"/><ellipse class="qv-rack__contact" cx="568.3163034220203" cy="667.6666666666666" rx="49" ry="11.666666666666668"/><ellipse class="qv-rack__contact" cx="718.5641242061365" cy="667.6666666666666" rx="48.387499999999996" ry="11.520833333333334"/><ellipse class="qv-rack__contact" cx="869.1026330388794" cy="667.6666666666666" rx="47.775" ry="11.375"/><ellipse class="qv-rack__contact" cx="1020.2965828832755" cy="667.6666666666666" rx="45.9375" ry="10.9375"/><ellipse class="qv-rack__contact" cx="1164.7264643693813" cy="667.6666666666666" rx="45.9375" ry="10.9375"/><ellipse class="qv-rack__contact" cx="1320.326928261093" cy="667.6666666666666" rx="51.449999999999996" ry="12.25"/><ellipse class="qv-rack__contact" cx="1486.6551487949937" cy="667.6666666666666" rx="52.675" ry="12.541666666666668"/><ellipse class="qv-rack__contact" cx="1654.5287122179357" cy="667.6666666666666" rx="55.73749999999999" ry="13.270833333333332"/><g class="qv-rack__board" data-board="fish-56" transform="translate(95.98237521488136 667.6666666666666) rotate(2.6) translate(0 -385) rotate(90)"><path class="qv-rack__body" d="M 6.664 -7.84 C 45.164 -43.953 96.09599999999999 -61.25 184.79999999999998 -61.25 C 304.15000000000003 -56.962500000000006 358.05 -51.8616 385 -46.305 Q 389.6305 -25.467750000000002 384.0739 -15.7437 Q 369.2563 -2.7782999999999998 368.3302 0 Q 369.2563 2.7782999999999998 384.0739 15.7437 Q 389.6305 25.467750000000002 385 46.305 C 358.05 51.8616 304.15000000000003 56.962500000000006 184.79999999999998 61.25 C 96.09599999999999 61.25 45.164 43.953 6.664 7.84 C -1.9600000000000009 4.704 -1.9600000000000009 -4.704 6.664 -7.84 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 17.325 0 L 371.525 0"/><path class="qv-rack__fin" d="M 321.7375 -36.75 Q 337.414 -33.4425 352.66 -40.8156 Q 335.3812 -31.2375 332.7625 -36.75 Z"/><path class="qv-rack__fin" d="M 321.7375 36.75 Q 337.414 33.4425 352.66 40.8156 Q 335.3812 42.2625 332.7625 36.75 Z"/></g><g class="qv-rack__board" data-board="grov-57" transform="translate(250.53087191042704 667.6666666666666) rotate(-1.4) translate(0 -390.8333333333333) rotate(90)"><path class="qv-rack__body" d="M 6.708625 -7.8925 C 45.79195833333333 -45.10683333333333 101.61666666666666 -59.791666666666664 195.41666666666666 -59.791666666666664 C 308.7583333333333 -55.60625 363.475 -41.519333333333336 390.8333333333333 -37.07083333333333 C 400.47175 -27.432416666666665 400.47175 27.432416666666665 390.8333333333333 37.07083333333333 C 363.475 41.519333333333336 308.7583333333333 55.60625 195.41666666666666 59.791666666666664 C 101.61666666666666 59.791666666666664 45.79195833333333 45.10683333333333 6.708625 7.8925 C -1.9731250000000014 4.7355 -1.9731250000000014 -4.7355 6.708625 -7.8925 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 17.5875 0 L 377.15416666666664 0"/><path class="qv-rack__fin" d="M 314.04479166666664 -34.67916666666666 Q 327.1275 -31.98854166666666 340.025 -38.11849999999999 Q 325.4078333333333 -30.19479166666666 323.01354166666664 -34.67916666666666 Z"/><path class="qv-rack__fin" d="M 314.04479166666664 34.67916666666666 Q 327.1275 31.98854166666666 340.025 38.11849999999999 Q 325.4078333333333 39.16354166666666 323.01354166666664 34.67916666666666 Z"/><path class="qv-rack__fin" d="M 347.04140625 0 Q 361.20816666666667 0 375.3954166666667 0 Q 359.3165333333333 4.70859375 356.45859375 0 Z"/></g><g class="qv-rack__board" data-board="grov-59" data-keep transform="translate(407.55323440658697 667.6666666666666) rotate(3.4) translate(0 -402.5) rotate(90)"><path class="qv-rack__body" d="M 6.7904375 -7.9887500000000005 C 47.0404375 -45.65691666666667 104.65 -60.520833333333336 201.25 -60.520833333333336 C 317.975 -56.284375000000004 374.32500000000005 -45.38772000000001 402.5 -40.524750000000004 Q 406.552475 -22.288612500000003 401.689505 -13.778415000000003 Q 388.721585 -2.4314850000000003 387.91109 0 Q 388.721585 2.4314850000000003 401.689505 13.778415000000003 Q 406.552475 22.288612500000003 402.5 40.524750000000004 C 374.32500000000005 45.38772000000001 317.975 56.284375000000004 201.25 60.520833333333336 C 104.65 60.520833333333336 47.0404375 45.65691666666667 6.7904375 7.9887500000000005 C -1.9971875000000017 4.7932500000000005 -1.9971875000000017 -4.7932500000000005 6.7904375 -7.9887500000000005 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 18.1125 0 L 388.41249999999997 0"/><path class="qv-rack__fin" d="M 321.4859375 -36.3125 Q 334.88 -33.5890625 348.16249999999997 -39.8545 Q 333.109 -31.7734375 330.5640625 -36.3125 Z"/><path class="qv-rack__fin" d="M 321.4859375 36.3125 Q 334.88 33.5890625 348.16249999999997 39.8545 Q 333.109 40.8515625 330.5640625 36.3125 Z"/><path class="qv-rack__fin" d="M 352.354296875 -25.41875 Q 363.73924999999997 -23.103828125 375.02937499999996 -28.42945 Q 362.23389999999995 -21.560546875 360.07070312499997 -25.41875 Z"/><path class="qv-rack__fin" d="M 352.354296875 25.41875 Q 363.73924999999997 23.103828125 375.02937499999996 28.42945 Q 362.23389999999995 29.276953125 360.07070312499997 25.41875 Z"/></g><g class="qv-rack__board" data-board="hyb-510" transform="translate(568.3163034220203 667.6666666666666) rotate(-2.8) translate(0 -408.3333333333333) rotate(90)"><path class="qv-rack__body" d="M 5.95 -7 C 46.78333333333334 -37.56666666666667 110.41333333333334 -58.333333333333336 212.33333333333334 -58.333333333333336 C 322.5833333333333 -54.25000000000001 379.75 -36.58666666666667 408.3333333333333 -32.66666666666667 C 416.82666666666665 -24.173333333333336 416.82666666666665 24.173333333333336 408.3333333333333 32.66666666666667 C 379.75 36.58666666666667 322.5833333333333 54.25000000000001 212.33333333333334 58.333333333333336 C 110.41333333333334 58.333333333333336 46.78333333333334 37.56666666666667 5.95 7 C -1.7500000000000009 4.2 -1.7500000000000009 -4.2 5.95 -7 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 18.375 0 L 394.04166666666663 0"/><path class="qv-rack__fin" d="M 328.41666666666663 -33.833333333333336 Q 341.775 -31.208333333333336 355.24999999999994 -37.42666666666667 Q 339.9783333333333 -29.458333333333336 337.16666666666663 -33.833333333333336 Z"/><path class="qv-rack__fin" d="M 328.41666666666663 33.833333333333336 Q 341.775 31.208333333333336 355.24999999999994 37.42666666666667 Q 339.9783333333333 38.208333333333336 337.16666666666663 33.833333333333336 Z"/><path class="qv-rack__fin" d="M 362.90625 0 Q 377.38166666666666 0 392.20416666666665 0 Q 375.4053333333333 4.59375 372.09375 0 Z"/></g><g class="qv-rack__board" data-board="hyb-511" data-keep transform="translate(718.5641242061365 667.6666666666666) rotate(1.2) translate(0 -414.1666666666667) rotate(90)"><path class="qv-rack__body" d="M 5.875624999999999 -6.9125 C 47.29229166666667 -37.09708333333333 111.99066666666667 -57.604166666666664 215.36666666666667 -57.604166666666664 C 327.1916666666667 -53.571875 385.175 -33.23898666666667 414.1666666666667 -29.677666666666667 C 439.68946 -23.742133333333335 439.68946 23.742133333333335 414.1666666666667 29.677666666666667 C 385.175 33.23898666666667 327.1916666666667 53.571875 215.36666666666667 57.604166666666664 C 111.99066666666667 57.604166666666664 47.29229166666667 37.09708333333333 5.875624999999999 6.9125 C -1.7281250000000004 4.1475 -1.7281250000000004 -4.1475 5.875624999999999 -6.9125 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 18.6375 0 L 399.67083333333335 0"/><path class="qv-rack__fin" d="M 331.1546875 -34.5625 Q 344.5866666666667 -31.9703125 358.2541666666667 -38.207166666666666 Q 342.76433333333335 -30.2421875 339.7953125 -34.5625 Z"/><path class="qv-rack__fin" d="M 331.1546875 34.5625 Q 344.5866666666667 31.9703125 358.2541666666667 38.207166666666666 Q 342.76433333333335 38.8828125 339.7953125 34.5625 Z"/><path class="qv-rack__fin" d="M 362.865234375 -24.193749999999998 Q 374.2824166666667 -21.990390624999996 385.8997916666667 -27.291716666666666 Q 372.7334333333334 -20.521484374999996 370.20976562500005 -24.193749999999998 Z"/><path class="qv-rack__fin" d="M 362.865234375 24.193749999999998 Q 374.2824166666667 21.990390624999996 385.8997916666667 27.291716666666666 Q 372.7334333333334 27.866015625 370.20976562500005 24.193749999999998 Z"/><path class="qv-rack__fin" d="M 368.213671875 0 Q 382.7728333333333 0 397.80708333333337 0 Q 380.76826666666665 4.536328125 377.286328125 0 Z"/></g><g class="qv-rack__board" data-board="ev-60" data-keep transform="translate(869.1026330388794 667.6666666666666) rotate(-3.2) translate(0 -420) rotate(90)"><path class="qv-rack__body" d="M 5.3178125 -6.25625 C 47.3178125 -31.395000000000003 117.936 -56.875 226.8 -56.875 C 331.8 -52.893750000000004 390.6 -33.124 420 -29.575 C 427.6895 -21.8855 427.6895 21.8855 420 29.575 C 390.6 33.124 331.8 52.893750000000004 226.8 56.875 C 117.936 56.875 47.3178125 31.395000000000003 5.3178125 6.25625 C -1.5640625000000004 3.7537499999999997 -1.5640625000000004 -3.7537499999999997 5.3178125 -6.25625 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 18.9 0 L 405.3 0"/><path class="qv-rack__fin" d="M 338.034375 -32.9875 Q 351.54 -30.428124999999998 365.40000000000003 -36.683499999999995 Q 349.692 -28.721874999999997 346.565625 -32.9875 Z"/><path class="qv-rack__fin" d="M 338.034375 32.9875 Q 351.54 30.428124999999998 365.40000000000003 36.683499999999995 Q 349.692 37.253125 346.565625 32.9875 Z"/><path class="qv-rack__fin" d="M 373.52109375 0 Q 388.164 0 403.41 0 Q 386.1312 4.4789062500000005 382.47890625 0 Z"/></g><g class="qv-rack__board" data-board="perf-62" transform="translate(1020.2965828832755 667.6666666666666) rotate(2.1) translate(0 -431.6666666666667) rotate(90)"><path class="qv-rack__body" d="M 4.4624999999999995 -5.25 C 47.62916666666667 -23.14375 127.946 -54.6875 246.04999999999998 -54.6875 C 341.0166666666667 -50.859375 401.45000000000005 -25.921000000000003 431.6666666666667 -23.14375 C 451.57029166666666 -18.515 451.57029166666666 18.515 431.6666666666667 23.14375 C 401.45000000000005 25.921000000000003 341.0166666666667 50.859375 246.04999999999998 54.6875 C 127.946 54.6875 47.62916666666667 23.14375 4.4624999999999995 5.25 C -1.3125000000000009 3.15 -1.3125000000000009 -3.15 4.4624999999999995 -5.25 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 19.425 0 L 416.55833333333334 0"/><path class="qv-rack__fin" d="M 347.70677083333334 -31.718749999999996 Q 361.305 -29.257812499999996 375.55 -35.51741666666666 Q 359.40566666666666 -27.617187499999996 355.90989583333334 -31.718749999999996 Z"/><path class="qv-rack__fin" d="M 347.70677083333334 31.718749999999996 Q 361.305 29.257812499999996 375.55 35.51741666666666 Q 359.40566666666666 35.8203125 355.90989583333334 31.718749999999996 Z"/><path class="qv-rack__fin" d="M 384.193359375 0 Q 398.9463333333333 0 414.61583333333334 0 Q 396.85706666666664 4.306640625 392.806640625 0 Z"/></g><g class="qv-rack__board" data-board="step-66" transform="translate(1164.7264643693813 667.6666666666666) rotate(-1.8) translate(0 -455) rotate(90)"><path class="qv-rack__body" d="M 4.2765625 -5.03125 C 49.7765625 -21.13125 137.22799999999998 -54.6875 263.9 -54.6875 C 359.45 -50.859375 423.15000000000003 -15.435000000000002 455 -13.78125 C 475.671875 -6.2015625000000005 475.671875 6.2015625000000005 455 13.78125 C 423.15000000000003 15.435000000000002 359.45 50.859375 263.9 54.6875 C 137.22799999999998 54.6875 49.7765625 21.13125 4.2765625 5.03125 C -1.2578125000000009 3.01875 -1.2578125000000009 -3.01875 4.2765625 -5.03125 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 20.474999999999998 0 L 439.075 0"/><path class="qv-rack__fin" d="M 366.7234375 -31.718749999999996 Q 380.835 -29.257812499999996 395.84999999999997 -35.72275 Q 378.83299999999997 -27.617187499999996 374.9265625 -31.718749999999996 Z"/><path class="qv-rack__fin" d="M 366.7234375 31.718749999999996 Q 380.835 29.257812499999996 395.84999999999997 35.72275 Q 378.83299999999997 35.8203125 374.9265625 31.718749999999996 Z"/><path class="qv-rack__fin" d="M 405.193359375 0 Q 420.511 0 437.0275 0 Q 418.3088 4.306640625 413.806640625 0 Z"/></g><g class="qv-rack__board" data-board="mid-610" transform="translate(1320.326928261093 667.6666666666666) rotate(3) translate(0 -478.3333333333333) rotate(90)"><path class="qv-rack__body" d="M 7.28875 -8.575000000000001 C 55.122083333333336 -50.715 124.36666666666666 -61.25 239.16666666666666 -61.25 C 377.8833333333333 -56.962500000000006 444.85 -36.604960000000005 478.3333333333333 -32.683 C 506.4407133333333 -26.1464 506.4407133333333 26.1464 478.3333333333333 32.683 C 444.85 36.604960000000005 377.8833333333333 56.962500000000006 239.16666666666666 61.25 C 124.36666666666666 61.25 55.122083333333336 50.715 7.28875 8.575000000000001 C -2.1437500000000025 5.1450000000000005 -2.1437500000000025 -5.1450000000000005 7.28875 -8.575000000000001 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 21.525 0 L 461.59166666666664 0"/><path class="qv-rack__fin" d="M 385.24791666666664 -35.525 Q 400.36499999999995 -32.76875 416.15 -39.73433333333333 Q 398.2603333333333 -30.93125 394.43541666666664 -35.525 Z"/><path class="qv-rack__fin" d="M 385.24791666666664 35.525 Q 400.36499999999995 32.76875 416.15 39.73433333333333 Q 398.2603333333333 40.11875 394.43541666666664 35.525 Z"/><path class="qv-rack__fin" d="M 425.6765625 0 Q 442.0756666666667 0 459.43916666666667 0 Q 439.76053333333334 4.8234375 435.3234375 0 Z"/></g><g class="qv-rack__board" data-board="mid-74" transform="translate(1486.6551487949937 667.6666666666666) rotate(-2.2) translate(0 -513.3333333333333) rotate(90)"><path class="qv-rack__body" d="M 7.462291666666668 -8.779166666666669 C 58.795624999999994 -51.9225 133.46666666666664 -62.708333333333336 256.66666666666663 -62.708333333333336 C 405.5333333333333 -58.31875000000001 477.4 -37.476506666666666 513.3333333333333 -33.461166666666664 C 542.1099366666666 -26.768933333333333 542.1099366666666 26.768933333333333 513.3333333333333 33.461166666666664 C 477.4 37.476506666666666 405.5333333333333 58.31875000000001 256.66666666666663 62.708333333333336 C 133.46666666666664 62.708333333333336 58.795624999999994 51.9225 7.462291666666668 8.779166666666669 C -2.194791666666668 5.267500000000001 -2.194791666666668 -5.267500000000001 7.462291666666668 -8.779166666666669 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 23.099999999999994 0 L 495.36666666666656 0"/><path class="qv-rack__fin" d="M 421.1283854166666 0 Q 438.48933333333326 0 457.1233333333333 0 Q 436.00479999999993 4.93828125 431.0049479166666 0 Z"/></g><g class="qv-rack__board" data-board="log-92" transform="translate(1654.5287122179357 667.6666666666666) rotate(1.6) translate(0 -641.6666666666666) rotate(90)"><path class="qv-rack__body" d="M 8.178151041666666 -9.621354166666666 C 72.34481770833334 -57.99354166666666 160.15999999999997 -66.35416666666666 307.99999999999994 -66.35416666666666 C 506.9166666666667 -61.709374999999994 596.75 -45.125080000000004 641.6666666666666 -40.29025 C 676.3162816666667 -32.2322 676.3162816666667 32.2322 641.6666666666666 40.29025 C 596.75 45.125080000000004 506.9166666666667 61.709374999999994 307.99999999999994 66.35416666666666 C 160.15999999999997 66.35416666666666 72.34481770833334 57.99354166666666 8.178151041666666 9.621354166666666 C -2.4053385416666675 5.7728125 -2.4053385416666675 -5.7728125 8.178151041666666 -9.621354166666666 Z" fill="url(#qv-rail)"/><path class="qv-rack__stringer" d="M 28.874999999999996 0 L 619.2083333333333 0"/><path class="qv-rack__fin" d="M 527.3579427083332 0 Q 548.1116666666666 0 571.4041666666666 0 Q 545.006 5.225390624999999 537.8087239583333 0 Z"/></g></svg>
+        </div>
+        <p class="qv-match__caption" aria-hidden="true">
+          <span class="qv-match__line qv-match__line--1">Every shape we know</span>
+          <span class="qv-match__line qv-match__line--2">Shapes that work in small, weak surf</span>
+          <span class="qv-match__line qv-match__line--3">Sized 31.7 &ndash; 42.8 L</span>
+        </p>
+        <button type="button" class="qv-match__toggle" data-match-toggle>Pause<span class="sr-only"> the matching animation</span></button>
+        <figcaption>Narrowing the rack &middot; the prototype&rsquo;s own shapes, replayed. The sequence is scripted and the three it keeps are&nbsp;fixed.</figcaption>
+      </figure>
+
+      <p>The comparison refuses to pick a winner: three qualified boards across four views, with the live profile carried in the top&nbsp;bar.</p>
+
+      <div class="qv-figs qv-figs--1">
+        <figure class="qv-fig">
+          <div class="screen-mockup">
+            <img src="../assets/images/quiver-comparison-overview.png" alt="Comparison overview: the three boards as objects, each with its dimensions, construction and four characteristic scales from wave catching to speed generation" width="2560" height="2632" loading="lazy" data-lightbox>
+          </div>
+          <figcaption>Overview &middot; three boards as objects</figcaption>
+        </figure>
+        <figure class="qv-fig">
+          <div class="screen-mockup">
+            <img src="../assets/images/quiver-comparison-outline.png" alt="Comparison outline view: three board outlines overlaid and aligned at the tail" width="2560" height="1868" loading="lazy" data-lightbox>
+          </div>
+          <figcaption>Outline &middot; overlaid, tail-aligned</figcaption>
+        </figure>
+        <figure class="qv-fig">
+          <div class="screen-mockup">
+            <img src="../assets/images/quiver-comparison-rocker.png" alt="Comparison rocker view: side profiles with nose rocker and maximum thickness callouts" width="2560" height="2541" loading="lazy" data-lightbox>
+          </div>
+          <figcaption>Rocker &middot; side profiles with callouts</figcaption>
+        </figure>
+        <figure class="qv-fig">
+          <div class="screen-mockup">
+            <img src="../assets/images/quiver-comparison-tail-fins.png" alt="Comparison tail and fins view: round, squash and swallow tails with three, five and two fin boxes" width="2560" height="2297" loading="lazy" data-lightbox>
+          </div>
+          <figcaption>Tail &amp; fins &middot; shape and setup</figcaption>
+        </figure>
+      </div>
+
+      <p>Every observation carries its consequence and its cost. &ldquo;Pronounced nose rocker&rdquo; is followed by &ldquo;the nose stays clear on a late drop. The cost is a slower&nbsp;paddle.&rdquo;</p>
+
+      <h3 class="case-study-subheading qv-h3">Inspect</h3>
+      <p>Inspect opens as a layer over the comparison, so you never lose the set you were comparing. It separates the spec grid from what the board means for you &mdash; why it fits, what you will notice, and the trade-off. Every board gets one; none is purely good. The stock, the stores and the assistant are all simulated: no model is called and no shop is&nbsp;queried.</p>
+
+      <div class="qv-figs qv-figs--1">
+        <figure class="qv-fig">
+          <div class="screen-mockup">
+            <img src="../assets/images/quiver-inspect.png" alt="The Inspect layer for the Tidalform Edge: a specification grid, three characteristic chips, the why it fits, what you'll notice and trade-off sections, and an availability card with contact, directions and save actions" width="2800" height="2840" loading="lazy" data-lightbox>
+          </div>
+          <figcaption>Inspect &middot; the spec grid, what it means for you, and a simulated availability card</figcaption>
+        </figure>
+      </div>
+
+      <div class="qv-hero-actions qv-hero-actions--inline">
+        <a href="../quiver-demo/?start=sample" class="btn btn--secondary" target="_blank" rel="noopener">
+          Compare the boards yourself<span class="sr-only"> in the interactive demo (opens in a new tab)</span>
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9L9 2"/><path d="M4 2h5v5"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Iterations, Delivery & Reflection -->
+    <div class="content-section" style="margin-bottom: 0;">
+      <p class="section-label">Reflection</p>
+      <h2>What I&rsquo;d change, and what isn&rsquo;t real yet</h2>
+      <p>Building the reasoning before the interface was the decision that paid off most. The honest parts &mdash; the widened range, the preserved ambiguity, the disclosure &mdash; came out of that order rather than being added to&nbsp;it.</p>
+
+      <div class="case-study-ledger">
+        <div class="case-study-ledger__row">
+          <p class="case-study-ledger__label">What runs</p>
+          <p class="case-study-ledger__body">Onboarding, <strong>interpretation, guidance and sizing</strong>. The profile re-derives from scratch on every answer change, so correcting one thing leaves nothing stale&nbsp;behind.</p>
+        </div>
+        <div class="case-study-ledger__row">
+          <p class="case-study-ledger__label">What is staged</p>
+          <p class="case-study-ledger__body">The narrowing sequence and the <strong>three example boards</strong>, which are the same every time. The product says so on the profile&nbsp;screen.</p>
+        </div>
+        <div class="case-study-ledger__row">
+          <p class="case-study-ledger__label">What is missing</p>
+          <p class="case-study-ledger__body">A catalogue worth matching against. The dataset is <strong>one brand and ten models</strong>, with gaps in the fields matching would need &mdash; so that layer stayed a&nbsp;specification.</p>
+        </div>
+        <div class="case-study-ledger__row">
+          <p class="case-study-ledger__label">What I did not do</p>
+          <p class="case-study-ledger__body">Talk to surfers. <strong>There is no user research here</strong> &mdash; the audience is an assumption and the sizing coefficients are industry-informed, not validated. That is the honest gap in the&nbsp;work.</p>
+        </div>
+      </div>
+
+      <h3 class="case-study-subheading qv-h3">What comes next</h3>
+      <p>Board matching against a real catalogue, and a first calibration of the sizing coefficients against what surfers end up riding. The measure I would want, not taken yet: how often the board someone chooses lands inside the recommended&nbsp;range.</p>
+    </div>
+
+    <nav class="project-nav">
+      <a href="mobile-dashboard.html" class="project-nav__item project-nav__item--prev">
+        <span class="np-arrow">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7H1"/><path d="M7 1L1 7l6 6"/></svg>
+        </span>
+        <div>
+          <p class="np-label">Previous</p>
+          <p class="np-title">Spines - Mobile Dashboard Redesign</p>
+        </div>
+      </a>
+      <a href="gateway.html" class="project-nav__item project-nav__item--next">
+        <div>
+          <p class="np-label">Next</p>
+          <p class="np-title">GateWay</p>
+        </div>
+        <span class="np-arrow">
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h16"/><path d="M11 1l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </nav>
+
+  </article>
+
+  <footer id="contact" class="contact-footer" tabindex="-1">
+    <div class="container">
+      <h2 class="contact-footer__heading">Let's talk.</h2>
+      <p class="contact-footer__lead"><span>Have a role, project, or idea in mind?</span> <span>I'd love to hear about it.</span></p>
+      <div class="contact-footer__actions">
+        <a href="mailto:Roee299@gmail.com" class="btn btn--tertiary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6 8.5-6"/></svg>
+          Email
+        </a>
+        <a href="https://wa.me/972548308128" target="_blank" rel="noopener noreferrer" class="btn btn--tertiary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35zM12.04 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1-1.44-5.01c0-5.19 4.23-9.41 9.43-9.41 2.52 0 4.88.98 6.66 2.76a9.36 9.36 0 0 1 2.76 6.66c-.01 5.19-4.24 9.41-9.42 9.41zM20.52 3.49A11.76 11.76 0 0 0 12.04 0C5.46 0 .1 5.35.1 11.92c0 2.1.55 4.15 1.6 5.96L0 24l6.29-1.65a11.9 11.9 0 0 0 5.74 1.46h.01c6.58 0 11.94-5.35 11.94-11.92 0-3.19-1.24-6.19-3.49-8.45z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <footer class="site-footer">
+    <p>Built with <span class="footer-accent">Claude Code</span></p>
+  </footer>
+
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&#x2715;</button>
+    <img src="" alt="" id="lightbox-img">
+  </div>
+  <script src="../site.js"></script>
+
+  <script>
+    // The matching rack loops, so it carries its own pause control (WCAG 2.2.2).
+    document.querySelectorAll('[data-match-toggle]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var fig = btn.closest('.qv-match');
+        var paused = fig.classList.toggle('is-paused');
+        btn.firstChild.nodeValue = paused ? 'Play' : 'Pause';
+      });
+    });
+
+    // Hovering a note lifts its pin on the screenshot. Pins are decorative
+    // (aria-hidden, pointer-events none) so the lightbox stays clickable.
+    document.querySelectorAll('.qv-annotated').forEach(function (block) {
+      block.querySelectorAll('.case-study-note').forEach(function (note, i) {
+        var pin = block.querySelector('.qv-pin[data-note="' + (i + 1) + '"]');
+        if (!pin) return;
+        var on = function () { pin.classList.add('is-active'); note.classList.add('is-active'); };
+        var off = function () { pin.classList.remove('is-active'); note.classList.remove('is-active'); };
+        note.addEventListener('mouseenter', on);
+        note.addEventListener('mouseleave', off);
+      });
+    });
+  </script>
+
+</body>
+</html>
